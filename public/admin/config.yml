@@ -1,0 +1,21 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/tech-and-the-city-next
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "content/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Read time", name: "read", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
