@@ -1,4 +1,4 @@
-import { Sparkles, Github, Linkedin, Instagram } from "lucide-react";
+import { Sparkles, Github, Linkedin, Instagram, Twitter } from "lucide-react";
 export default function Footer(){
   return (
     <footer className="border-t border-white/10 bg-black/40 mt-16">
@@ -16,16 +16,18 @@ export default function Footer(){
           <div className="font-semibold mb-2">Sections</div>
           <ul className="space-y-1">
             <li><a className="hover:text-white" href="/articles">Articles</a></li>
-            <li><a className="hover:text-white" href="/street">Street Series</a></li>
             <li><a className="hover:text-white" href="/events">Events</a></li>
+            <li><a className="hover:text-white" href="/about">About</a></li>
+            <li><a className="hover:text-white" href="/contact">Contact</a></li>
           </ul>
         </div>
         <div className="text-sm text-white/70">
           <div className="font-semibold mb-2">Connect</div>
           <div className="flex items-center gap-3">
-            <a className="hover:text-white" href="#" aria-label="Instagram"><Instagram className="h-5 w-5" /></a>
-            <a className="hover:text-white" href="#" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
-            <a className="hover:text-white" href="#" aria-label="GitHub"><Github className="h-5 w-5" /></a>
+            <a className="hover:text-white" href="https://instagram.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram className="h-5 w-5" /></a>
+            <a className="hover:text-white" href="https://linkedin.com/company/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
+            <a className="hover:text-white" href="https://x.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><Twitter className="h-5 w-5" /></a>
+            <a className="hover:text-white" href="https://github.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-5 w-5" /></a>
           </div>
         </div>
       </div>

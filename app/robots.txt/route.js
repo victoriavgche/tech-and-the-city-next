@@ -1,9 +1,16 @@
 export function GET() {
-  return new Response(
-`User-agent: *
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  
+  const robotsTxt = `User-agent: *
 Allow: /
-Sitemap: ${process.env.SITE_URL || "https://example.com"}/sitemap.xml
-`,
-    { headers: { "Content-Type": "text/plain" } }
-  );
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: ${baseUrl}/sitemap.xml`;
+
+  return new Response(robotsTxt, {
+    headers: {
+      'Content-Type': 'text/plain',
+    },
+  });
 }

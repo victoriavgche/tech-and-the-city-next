@@ -1,24 +1,37 @@
-import { Sparkles, Newspaper } from "lucide-react";
+'use client';
+
+import { Sparkles, Newspaper, Search } from "lucide-react";
+import SimpleLanguageSwitcher from "./SimpleLanguageSwitcher";
+import Logo from "./Logo";
+import SearchBar from "./SearchBar";
+import { useTranslation } from "../lib/useTranslation";
+
 export default function Nav(){
+  const { t } = useTranslation();
   return (
-    <nav className="sticky top-0 z-40 backdrop-blur-xl border-b border-cyber-blue/20 bg-cyber-steel/20">
+    <nav className="sticky top-0 z-40 bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 border-b border-purple-600">
       <div className="container py-4 flex items-center justify-between">
+        <Logo />
+            <div className="hidden md:flex items-center gap-6 text-sm text-white">
+              <a className="hover:text-blue-400 transition-colors duration-200" href="/">{t('nav.home')}</a>
+              <a className="hover:text-blue-400 transition-colors duration-200" href="/about">{t('nav.about')}</a>
+              <a className="hover:text-blue-400 transition-colors duration-200" href="/articles">{t('nav.articles')}</a>
+              <a className="hover:text-blue-400 transition-colors duration-200" href="/events">{t('nav.events')}</a>
+              <a className="hover:text-blue-400 transition-colors duration-200" href="/subscribe">{t('nav.subscribe')}</a>
+              <a className="hover:text-blue-400 transition-colors duration-200" href="/contact">Contact</a>
+              <a className="hover:text-blue-400 transition-colors duration-200" href="/admin/login">Admin</a>
+            </div>
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-cyber-gradient grid place-items-center cyber-glow">
-            <Sparkles className="h-5 w-5 text-white" />
+          <div className="hidden lg:block w-64">
+            {/* SearchBar temporarily disabled */}
           </div>
-          <span className="font-semibold text-cyber-silver neon-text">Tech & the City</span>
-          <span className="text-cyber-silver/60 hidden sm:inline">· curated by The Pharmacist</span>
+          <SimpleLanguageSwitcher />
         </div>
-        <div className="hidden md:flex items-center gap-6 text-sm text-cyber-silver/80">
-          <a className="hover:text-cyber-blue transition-colors duration-200" href="/">Home</a>
-          <a className="hover:text-cyber-blue transition-colors duration-200" href="/articles">Articles</a>
-          <a className="hover:text-cyber-blue transition-colors duration-200" href="/street">Street</a>
-          <a className="hover:text-cyber-blue transition-colors duration-200" href="/events">Events</a>
-          <a className="hover:text-cyber-blue transition-colors duration-200" href="/about">About</a>
-          <a className="hover:text-cyber-blue transition-colors duration-200" href="/subscribe">Subscribe</a>
+        
+        {/* Mobile Search Bar - Only visible on mobile */}
+        <div className="lg:hidden mt-3 px-4 pb-2">
+          {/* SearchBar temporarily disabled */}
         </div>
-        <a className="btn text-sm" href="/subscribe"><Newspaper className="h-4 w-4" /> Subscribe</a>
       </div>
     </nav>
   )

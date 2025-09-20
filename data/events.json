@@ -1,18 +1,29 @@
-{
-  "upcoming": [
-    {
-      "id": "ath-therapy",
-      "name": "Startup Therapy Night \u00b7 Athens",
-      "date": "2025-10-10",
-      "city": "Athens",
-      "desc": "Comedy \u00d7 techno \u00d7 founders. RSVP only."
-    },
-    {
-      "id": "vie-onfeet",
-      "name": "On\u2011Feet @ Vienna",
-      "date": "2025-10-22",
-      "city": "Vienna",
-      "desc": "Street interviews at Cult\u2011Tech week."
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "title": "Tech Innovation Summit 2024",
+    "date": "2024-03-15",
+    "location": "Athens, Greece",
+    "description": "Join us for the biggest tech innovation event of the year.",
+    "image": "/events/tech-summit.jpg",
+    "url": "https://example.com/tech-summit"
+  },
+  {
+    "id": 2,
+    "title": "Smart Cities Conference",
+    "date": "2024-04-20",
+    "location": "Thessaloniki, Greece",
+    "description": "Exploring the future of urban technology.",
+    "image": "/events/smart-cities.jpg",
+    "url": "https://example.com/smart-cities"
+  },
+  {
+    "id": 3,
+    "title": "AI & Machine Learning Workshop",
+    "date": "2024-05-10",
+    "location": "Patras, Greece",
+    "description": "Hands-on workshop on AI and ML technologies.",
+    "image": "/events/ai-workshop.jpg",
+    "url": "https://example.com/ai-workshop"
+  }
+]

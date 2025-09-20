@@ -14,7 +14,8 @@ module.exports = {
           steel: "#1e293b",   // Dark Steel
           pink: "#ff0080",    // Neon Pink
           green: "#00ff88",    // Matrix Green
-          orange: "#ff6b35"   // Warning Orange
+          orange: "#ff6b35",   // Warning Orange
+          dark: "#0a0a0f"     // Background reference
         },
         // Legacy support
         satc: { pink: "#ff0080" }
