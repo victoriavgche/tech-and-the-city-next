@@ -105,3 +105,8 @@ temp/
 /public/videos/*.mp4
 /videos/*.mp4
 /public/videos/*.mp4
+# Ignore all videos
+*.mp4
+*.mov
+*.avi
+*.mkv
