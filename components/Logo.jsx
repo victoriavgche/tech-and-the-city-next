@@ -1,16 +1,15 @@
 export default function Logo() {
   return (
-    <div className="flex flex-col items-start gap-2">
-      {/* Logo - T&C without box */}
-      <div className="relative">
-        <div className="text-white font-bold italic text-4xl tracking-wide relative">
-          <span className="relative z-10">T</span>
-          <span className="relative z-20">&</span>
-          <span className="relative z-30">C</span>
-        </div>
+    <div className="flex items-center gap-3">
+      {/* Logo Icon */}
+      <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center">
+        <span className="text-white font-bold text-lg">⚡</span>
       </div>
-      {/* Text below - larger, bold and normal case */}
-      <span className="text-white text-xl font-bold tracking-wide">Tech & the City</span>
+      {/* Text */}
+      <div className="flex flex-col">
+        <span className="text-white text-lg font-semibold tracking-wide">Tech & the City</span>
+        <span className="text-gray-400 text-xs">curated by The Pharmacist</span>
+      </div>
     </div>
   );
 }

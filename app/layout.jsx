@@ -59,7 +59,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>
+      <body className="bg-gradient-to-b from-gray-800 to-gray-600 text-white antialiased">
         <Nav />
         {children}
         <Footer />
