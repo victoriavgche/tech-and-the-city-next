@@ -102,3 +102,6 @@ dist
 # Temporary folders
 tmp/
 temp/
+/public/videos/*.mp4
+/videos/*.mp4
+/public/videos/*.mp4
