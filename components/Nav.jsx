@@ -17,21 +17,21 @@ export default function Nav(){
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Mobile: Logo only, Desktop: Logo + Title */}
         <div className="md:hidden">
-          <div className="relative bg-gray-800 p-4 w-20 h-16">
+          <div className="relative bg-gray-800 p-2 w-10 h-8">
             {/* Frame lines - uniform thickness */}
             <div className="absolute inset-0">
               {/* Top line - full width */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-white"></div>
+              <div className="absolute top-0 left-0 w-full h-0.5 bg-white"></div>
               {/* Right line - full height */}
-              <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
+              <div className="absolute top-0 right-0 w-0.5 h-full bg-white"></div>
               {/* Bottom line - only right part, no left part */}
-              <div className="absolute bottom-0 right-0 w-8 h-1 bg-white"></div>
+              <div className="absolute bottom-0 right-0 w-4 h-0.5 bg-white"></div>
               {/* Left line - only top part, no bottom part */}
-              <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
+              <div className="absolute top-0 left-0 w-0.5 h-4 bg-white"></div>
               {/* Bottom-left corner is completely missing */}
             </div>
             {/* T&C Text */}
-            <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
+            <div className="text-white font-bold text-xs tracking-wide relative z-10 flex items-center justify-center h-full">
               T&C
             </div>
           </div>
@@ -42,7 +42,7 @@ export default function Nav(){
         
         {/* Mobile: Centered Title */}
         <div className="md:hidden flex-1 flex justify-center">
-          <div className="text-white text-2xl font-bold tracking-wide">
+          <div className="text-white text-xl font-bold tracking-wide">
             Tech & the City
           </div>
         </div>
