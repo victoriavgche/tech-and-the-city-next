@@ -34,8 +34,34 @@ export default function Footer(){
           </div>
         </div>
         
-        {/* Desktop Layout - Centered Sections and Connect */}
-        <div className="hidden md:flex justify-center items-start gap-16">
+        {/* Desktop Layout - Logo, Sections, and Connect */}
+        <div className="hidden md:flex justify-between items-start">
+          {/* Logo and Title */}
+          <div className="flex items-center gap-3">
+            <div className="relative bg-gray-800 p-4 w-20 h-16">
+              {/* Frame lines - uniform thickness */}
+              <div className="absolute inset-0">
+                {/* Top line - full width */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-white"></div>
+                {/* Right line - full height */}
+                <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
+                {/* Bottom line - only right part, no left part */}
+                <div className="absolute bottom-0 right-0 w-8 h-1 bg-white"></div>
+                {/* Left line - only top part, no bottom part */}
+                <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
+                {/* Bottom-left corner is completely missing */}
+              </div>
+              {/* T&C Text */}
+              <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
+                T&C
+              </div>
+            </div>
+            {/* Company Name */}
+            <div className="text-white text-xl font-bold tracking-wide">
+              Tech & the City
+            </div>
+          </div>
+          
           {/* Sections */}
           <div className="text-sm text-gray-300 text-center">
             <div className="font-semibold text-white mb-3">{t('footer.sections')}</div>
