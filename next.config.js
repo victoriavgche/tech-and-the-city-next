@@ -4,6 +4,10 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   
+  // Domain configuration
+  trailingSlash: false,
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],

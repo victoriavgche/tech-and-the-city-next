@@ -2,6 +2,7 @@ import { getAllPostsMeta, getPostBySlug } from "../../../lib/posts";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import ClientWrapper from "../../../components/ClientWrapper";
 
 export async function generateStaticParams() {
   const posts = await getAllPostsMeta();
@@ -42,7 +43,7 @@ export default async function ArticlePage({ params }) {
             {post.title}
           </h1>
           <p className="text-gray-600 text-lg mb-4">
-            {post.excerpt}
+            <ClientWrapper content={post.excerpt} />
           </p>
           <div className="text-sm text-gray-500">
             {new Date(post.date).toLocaleDateString()}
@@ -75,7 +76,7 @@ export default async function ArticlePage({ params }) {
         {/* Article content */}
         <article className="bg-white/90 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-gray-200">
           <div className="prose prose-lg max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            <ClientWrapper content={post.content} />
           </div>
         </article>
       </div>

@@ -5,7 +5,6 @@
     "events": "Events",
     "about": "About",
     "subscribe": "Subscribe",
-    "curatedBy": "curated by The Pharmacist"
   },
   "home": {
     "title": "Culture × Tech, with a pulse.",
@@ -19,7 +18,7 @@
   },
   "about": {
     "title": "About",
-    "description": "Tech & the City is a culture × tech journal curated by The Pharmacist. We cover European startups with Athens energy — essays, on‑feet interviews, and field notes."
+    "description": "Tech & the City is a culture × tech journal. We cover European startups with Athens energy — essays, on‑feet interviews, and field notes."
   },
   "events": {
     "title": "Events"

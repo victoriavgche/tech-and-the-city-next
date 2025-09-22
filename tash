@@ -1,0 +1,143 @@
+warning: in the working copy of '.next/app-build-manifest.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.next/build-manifest.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.next/server/server-reference-manifest.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.next/trace', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/admin/login/page.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/api/auth/login/route.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/articles/[slug]/page.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/page.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/Footer.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/Logo.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/Nav.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'lib/auth.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'lib/useTranslation.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'messages/en.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'next.config.js', LF will be replaced by CRLF the next time Git touches it
+.gitignore
+.next/app-build-manifest.json
+.next/build-manifest.json
+.next/cache/webpack/client-development-fallback/0.pack.gz
+.next/cache/webpack/client-development-fallback/index.pack.gz
+.next/cache/webpack/client-development/0.pack.gz
+.next/cache/webpack/client-development/1.pack.gz
+.next/cache/webpack/client-development/2.pack.gz
+.next/cache/webpack/client-development/3.pack.gz
+.next/cache/webpack/client-development/4.pack.gz
+.next/cache/webpack/client-development/5.pack.gz
+.next/cache/webpack/client-development/index.pack.gz
+.next/cache/webpack/client-development/index.pack.gz.old
+.next/cache/webpack/server-development/0.pack.gz
+.next/cache/webpack/server-development/1.pack.gz
+.next/cache/webpack/server-development/2.pack.gz
+.next/cache/webpack/server-development/3.pack.gz
+.next/cache/webpack/server-development/4.pack.gz
+.next/cache/webpack/server-development/index.pack.gz
+.next/cache/webpack/server-development/index.pack.gz.old
+.next/server/app-paths-manifest.json
+.next/server/app/articles/[slug]/page.js
+.next/server/app/articles/[slug]/page_client-reference-manifest.js
+.next/server/app/page.js
+.next/server/app/page_client-reference-manifest.js
+.next/server/middleware-build-manifest.js
+.next/server/server-reference-manifest.js
+.next/server/server-reference-manifest.json
+.next/server/vendor-chunks/@swc.js
+.next/server/vendor-chunks/@ungap.js
+.next/server/vendor-chunks/bail.js
+.next/server/vendor-chunks/ccount.js
+.next/server/vendor-chunks/character-entities-html4.js
+.next/server/vendor-chunks/character-entities-legacy.js
+.next/server/vendor-chunks/character-entities.js
+.next/server/vendor-chunks/comma-separated-tokens.js
+.next/server/vendor-chunks/debug.js
+.next/server/vendor-chunks/decode-named-character-reference.js
+.next/server/vendor-chunks/dequal.js
+.next/server/vendor-chunks/devlop.js
+.next/server/vendor-chunks/esprima.js
+.next/server/vendor-chunks/extend-shallow.js
+.next/server/vendor-chunks/extend.js
+.next/server/vendor-chunks/gray-matter.js
+.next/server/vendor-chunks/hast-util-sanitize.js
+.next/server/vendor-chunks/hast-util-to-html.js
+.next/server/vendor-chunks/hast-util-whitespace.js
+.next/server/vendor-chunks/html-void-elements.js
+.next/server/vendor-chunks/is-extendable.js
+.next/server/vendor-chunks/is-plain-obj.js
+.next/server/vendor-chunks/js-yaml.js
+.next/server/vendor-chunks/kind-of.js
+.next/server/vendor-chunks/longest-streak.js
+.next/server/vendor-chunks/lucide-react.js
+.next/server/vendor-chunks/mdast-util-from-markdown.js
+.next/server/vendor-chunks/mdast-util-phrasing.js
+.next/server/vendor-chunks/mdast-util-to-hast.js
+.next/server/vendor-chunks/mdast-util-to-markdown.js
+.next/server/vendor-chunks/mdast-util-to-string.js
+.next/server/vendor-chunks/micromark-core-commonmark.js
+.next/server/vendor-chunks/micromark-factory-destination.js
+.next/server/vendor-chunks/micromark-factory-label.js
+.next/server/vendor-chunks/micromark-factory-space.js
+.next/server/vendor-chunks/micromark-factory-title.js
+.next/server/vendor-chunks/micromark-factory-whitespace.js
+.next/server/vendor-chunks/micromark-util-character.js
+.next/server/vendor-chunks/micromark-util-chunked.js
+.next/server/vendor-chunks/micromark-util-classify-character.js
+.next/server/vendor-chunks/micromark-util-combine-extensions.js
+.next/server/vendor-chunks/micromark-util-decode-numeric-character-reference.js
+.next/server/vendor-chunks/micromark-util-decode-string.js
+.next/server/vendor-chunks/micromark-util-encode.js
+.next/server/vendor-chunks/micromark-util-html-tag-name.js
+.next/server/vendor-chunks/micromark-util-normalize-identifier.js
+.next/server/vendor-chunks/micromark-util-resolve-all.js
+.next/server/vendor-chunks/micromark-util-sanitize-uri.js
+.next/server/vendor-chunks/micromark-util-subtokenize.js
+.next/server/vendor-chunks/micromark-util-symbol.js
+.next/server/vendor-chunks/micromark.js
+.next/server/vendor-chunks/ms.js
+.next/server/vendor-chunks/next.js
+.next/server/vendor-chunks/property-information.js
+.next/server/vendor-chunks/remark-html.js
+.next/server/vendor-chunks/remark-parse.js
+.next/server/vendor-chunks/remark-stringify.js
+.next/server/vendor-chunks/remark.js
+.next/server/vendor-chunks/section-matter.js
+.next/server/vendor-chunks/space-separated-tokens.js
+.next/server/vendor-chunks/stringify-entities.js
+.next/server/vendor-chunks/strip-bom-string.js
+.next/server/vendor-chunks/trim-lines.js
+.next/server/vendor-chunks/trough.js
+.next/server/vendor-chunks/unified.js
+.next/server/vendor-chunks/unist-util-is.js
+.next/server/vendor-chunks/unist-util-position.js
+.next/server/vendor-chunks/unist-util-stringify-position.js
+.next/server/vendor-chunks/unist-util-visit-parents.js
+.next/server/vendor-chunks/unist-util-visit.js
+.next/server/vendor-chunks/vfile-message.js
+.next/server/vendor-chunks/vfile.js
+.next/server/vendor-chunks/zwitch.js
+.next/server/webpack-runtime.js
+.next/static/chunks/app-pages-internals.js
+.next/static/chunks/app/articles/[slug]/page.js
+.next/static/chunks/app/layout.js
+.next/static/chunks/app/page.js
+.next/static/chunks/main-app.js
+.next/static/chunks/webpack.js
+.next/static/css/app/layout.css
+.next/static/webpack/633457081244afec._.hot-update.json
+.next/trace
+.next/types/app/articles/[slug]/page.ts
+.next/types/app/layout.ts
+.next/types/app/page.ts
+app/admin/login/page.jsx
+app/api/auth/login/route.js
+app/articles/[slug]/page.jsx
+app/page.jsx
+components/Footer.jsx
+components/Logo.jsx
+components/Nav.jsx
+lib/auth.js
+lib/useTranslation.js
+messages/en.json
+next.config.js
+public/images/vr-headset.svg
+videos/hero1.mp4.mp4
+videos/hero3.mp4.mp4

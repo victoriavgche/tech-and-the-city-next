@@ -49,6 +49,13 @@ export default function LoginPage() {
           <p className="mt-2 text-center text-sm text-gray-600">
             Tech and the City Admin Panel
           </p>
+          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
+            <p className="text-sm text-blue-800">
+              <strong>Default Credentials:</strong><br/>
+              Username: <code className="bg-blue-100 px-1 rounded">admin</code><br/>
+              Password: <code className="bg-blue-100 px-1 rounded">TechAndTheCity2024!Secure</code>
+            </p>
+          </div>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
