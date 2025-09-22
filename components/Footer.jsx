@@ -14,26 +14,26 @@ export default function Footer(){
           <div className="flex items-start justify-between gap-4">
             {/* Logo and Title */}
             <div className="flex items-center gap-2 flex-1">
-              <div className="relative bg-gray-800 p-3 w-16 h-12">
+              <div className="relative bg-gray-800 p-1.5 w-8 h-6">
                 {/* Frame lines - uniform thickness */}
                 <div className="absolute inset-0">
                   {/* Top line - full width */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-white"></div>
+                  <div className="absolute top-0 left-0 w-full h-0.5 bg-white"></div>
                   {/* Right line - full height */}
-                  <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
+                  <div className="absolute top-0 right-0 w-0.5 h-full bg-white"></div>
                   {/* Bottom line - only right part, no left part */}
-                  <div className="absolute bottom-0 right-0 w-6 h-1 bg-white"></div>
+                  <div className="absolute bottom-0 right-0 w-3 h-0.5 bg-white"></div>
                   {/* Left line - only top part, no bottom part */}
-                  <div className="absolute top-0 left-0 w-1 h-6 bg-white"></div>
+                  <div className="absolute top-0 left-0 w-0.5 h-3 bg-white"></div>
                   {/* Bottom-left corner is completely missing */}
                 </div>
                 {/* T&C Text */}
-                <div className="text-white font-bold text-base tracking-wide relative z-10 flex items-center justify-center h-full">
+                <div className="text-white font-bold text-xs tracking-wide relative z-10 flex items-center justify-center h-full">
                   T&C
                 </div>
               </div>
               {/* Company Name */}
-              <div className="text-white text-base font-bold tracking-wide">
+              <div className="text-white text-xs font-bold tracking-wide">
                 Tech & the City
               </div>
             </div>
@@ -65,26 +65,26 @@ export default function Footer(){
         <div className="hidden md:flex justify-between items-start">
           {/* Logo and Title */}
           <div className="flex items-center gap-3">
-            <div className="relative bg-gray-800 p-4 w-20 h-16">
+            <div className="relative bg-gray-800 p-2 w-10 h-8">
               {/* Frame lines - uniform thickness */}
               <div className="absolute inset-0">
                 {/* Top line - full width */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-white"></div>
+                <div className="absolute top-0 left-0 w-full h-0.5 bg-white"></div>
                 {/* Right line - full height */}
-                <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
+                <div className="absolute top-0 right-0 w-0.5 h-full bg-white"></div>
                 {/* Bottom line - only right part, no left part */}
-                <div className="absolute bottom-0 right-0 w-8 h-1 bg-white"></div>
+                <div className="absolute bottom-0 right-0 w-4 h-0.5 bg-white"></div>
                 {/* Left line - only top part, no bottom part */}
-                <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
+                <div className="absolute top-0 left-0 w-0.5 h-4 bg-white"></div>
                 {/* Bottom-left corner is completely missing */}
               </div>
               {/* T&C Text */}
-              <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
+              <div className="text-white font-bold text-xs tracking-wide relative z-10 flex items-center justify-center h-full">
                 T&C
               </div>
             </div>
             {/* Company Name */}
-            <div className="text-white text-xl font-bold tracking-wide">
+            <div className="text-white text-sm font-bold tracking-wide">
               Tech & the City
             </div>
           </div>
