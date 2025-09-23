@@ -22,22 +22,22 @@ export default function Logo() {
       </div>
       {/* Company Name */}
         <div className="text-white text-xl font-bold tracking-wide" style={{
-          fontFamily: '"Courier New", "Monaco", "Consolas", monospace',
-          fontWeight: '600',
-          letterSpacing: '-0.02em',
-          wordSpacing: '-0.2em',
+          fontFamily: '"Inter", "SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
+          fontWeight: '500',
+          letterSpacing: '0.01em',
+          wordSpacing: '-0.1em',
           fontSize: '1.73rem',
           fontStyle: 'normal',
           textShadow: 'none',
-          textTransform: 'uppercase',
-          fontStretch: 'ultra-condensed',
+          textTransform: 'none',
+          fontStretch: 'normal',
           textRendering: 'geometricPrecision',
           fontVariant: 'normal',
-          fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1, "cv01" 1, "cv02" 1',
+          fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1',
           fontOpticalSizing: 'none',
-          fontVariationSettings: '"wght" 600, "slnt" 0'
+          fontVariationSettings: '"wght" 500, "slnt" 0'
         }}>
-          TECH <span style={{ fontWeight: '400', fontSize: '1.15rem' }}>&</span> THE CITY
+          Tech <span style={{ fontWeight: '400', fontSize: '1.5rem' }}>&</span> the City
         </div>
     </div>
   );
