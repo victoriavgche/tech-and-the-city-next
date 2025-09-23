@@ -79,7 +79,7 @@ export default function Footer(){
         <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="text-gray-400 text-xs">
-              © {new Date().getFullYear()} Tech & the City. All rights reserved.
+              © {new Date().getFullYear()} Tech & the City • Made with attitude
             </div>
             <div className="flex flex-wrap gap-4 text-xs text-gray-400">
               <a className="hover:text-gray-300 transition-colors" href="/privacy">Privacy Policy</a>
