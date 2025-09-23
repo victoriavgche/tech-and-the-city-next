@@ -22,8 +22,8 @@ export default function Logo() {
       </div>
       {/* Company Name */}
         <div className="text-white text-xl font-bold tracking-wide" style={{
-          fontFamily: '"Inter", "SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
-          fontWeight: '600',
+          fontFamily: '"Space Grotesk", "Inter", "SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
+          fontWeight: '700',
           letterSpacing: '0.01em',
           fontSize: '1.73rem',
           fontStyle: 'normal',
@@ -34,18 +34,9 @@ export default function Logo() {
           fontVariant: 'normal',
           fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1, "cv01" 1, "cv02" 1',
           fontOpticalSizing: 'none',
-          fontVariationSettings: '"wght" 600, "slnt" 0'
+          fontVariationSettings: '"wght" 700, "slnt" 0'
         }}>
-          T<span style={{ 
-            fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1, "cv01" 1, "cv02" 1, "cv03" 1',
-            fontVariationSettings: '"wght" 600, "slnt" 0, "XTRA" 1'
-          }}>e</span>ch <span style={{ fontWeight: '400' }}>&</span> th<span style={{ 
-            fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1, "cv01" 1, "cv02" 1, "cv03" 1',
-            fontVariationSettings: '"wght" 600, "slnt" 0, "XTRA" 1'
-          }}>e</span> <span style={{ 
-            fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1, "cv01" 1, "cv02" 1, "cv03" 1',
-            fontVariationSettings: '"wght" 600, "slnt" 0, "XTRA" 1'
-          }}>C</span>ity
+          Tech <span style={{ fontWeight: '400' }}>&</span> the City
         </div>
     </div>
   );
