@@ -44,16 +44,17 @@ export default function Nav(){
         <div className="md:hidden flex-1 flex justify-center">
           <div className="text-white text-xl font-bold tracking-wide" style={{
             fontFamily: '"SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
-            fontWeight: '700',
-            letterSpacing: '0.15em',
-            fontSize: '1.5rem',
+            fontWeight: '800',
+            letterSpacing: '0.18em',
+            fontSize: '1.6rem',
             fontStyle: 'normal',
             textShadow: 'none',
-            textTransform: 'none',
+            textTransform: 'uppercase',
             fontStretch: 'condensed',
-            textRendering: 'geometricPrecision'
+            textRendering: 'geometricPrecision',
+            fontVariant: 'small-caps'
           }}>
-            Tech & the City
+            TECH & THE CITY
           </div>
         </div>
         
