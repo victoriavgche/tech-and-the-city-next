@@ -46,7 +46,7 @@ export default function Nav(){
             fontFamily: '"SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
             fontWeight: '800',
             letterSpacing: '0.25em',
-            fontSize: '1.3rem',
+            fontSize: '1.73rem',
             fontStyle: 'normal',
             textShadow: 'none',
             textTransform: 'none',
