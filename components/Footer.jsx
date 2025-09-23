@@ -11,7 +11,7 @@ export default function Footer(){
         {/* Main Footer Content */}
         <div className="flex flex-col md:flex-row items-start justify-between gap-8">
           {/* Logo */}
-          <div className="flex items-start">
+          <div className="flex items-start flex-1">
             <div className="relative bg-gray-800 p-3 w-16 h-12">
               {/* Frame lines - uniform thickness */}
               <div className="absolute inset-0">
