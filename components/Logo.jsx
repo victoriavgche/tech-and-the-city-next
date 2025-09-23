@@ -23,16 +23,17 @@ export default function Logo() {
       {/* Company Name */}
         <div className="text-white text-xl font-bold tracking-wide" style={{
           fontFamily: '"SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
-          fontWeight: '700',
-          letterSpacing: '0.18em',
+          fontWeight: '800',
+          letterSpacing: '0.25em',
           fontSize: '1.3rem',
           fontStyle: 'normal',
           textShadow: 'none',
           textTransform: 'none',
-          fontStretch: 'condensed',
+          fontStretch: 'ultra-condensed',
           textRendering: 'geometricPrecision',
           fontVariant: 'small-caps',
-          fontFeatureSettings: '"ss01" 1, "ss02" 1'
+          fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1',
+          fontOpticalSizing: 'none'
         }}>
           Tech & the City
         </div>
