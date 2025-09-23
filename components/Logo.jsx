@@ -21,17 +21,17 @@ export default function Logo() {
         </div>
       </div>
       {/* Company Name */}
-      <div className="text-white text-xl font-bold tracking-wide" style={{
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        fontWeight: '800',
-        letterSpacing: '0.15em',
-        textTransform: 'lowercase',
-        fontSize: '1.2rem',
-        fontStyle: 'normal',
-        textShadow: '0 0 10px rgba(255,255,255,0.3)'
-      }}>
-        tech & the city
-      </div>
+        <div className="text-white text-xl font-bold tracking-wide" style={{
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          fontWeight: '700',
+          letterSpacing: '0.08em',
+          fontSize: '1.3rem',
+          fontStyle: 'normal',
+          textShadow: '0 0 8px rgba(255,255,255,0.2)',
+          textTransform: 'none'
+        }}>
+          Tech & the City
+        </div>
     </div>
   );
 }
