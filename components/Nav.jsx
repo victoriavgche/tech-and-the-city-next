@@ -44,7 +44,7 @@ export default function Nav(){
         <div className="md:hidden flex-1 flex justify-center">
           <div className="text-white text-xl font-bold tracking-wide" style={{
             fontFamily: '"SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
-            fontWeight: '800',
+            fontWeight: '700',
             letterSpacing: '0.18em',
             fontSize: '1.6rem',
             fontStyle: 'normal',
