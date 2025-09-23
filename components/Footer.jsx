@@ -10,36 +10,31 @@ export default function Footer(){
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo and Brand */}
-          <div className="md:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="relative bg-gray-800 p-3 w-16 h-12">
-                {/* Frame lines - uniform thickness */}
-                <div className="absolute inset-0">
-                  {/* Top line - full width */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-white"></div>
-                  {/* Right line - full height */}
-                  <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
-                  {/* Bottom line - only right part, no left part */}
-                  <div className="absolute bottom-0 right-0 w-6 h-1 bg-white"></div>
-                  {/* Left line - only top part, no bottom part */}
-                  <div className="absolute top-0 left-0 w-1 h-6 bg-white"></div>
-                  {/* Bottom-left corner is completely missing */}
-                </div>
-                {/* T&C Text */}
-                <div className="text-white font-bold text-sm tracking-wide relative z-10 flex items-center justify-center h-full">
-                  T&C
-                </div>
+          {/* Logo Only */}
+          <div className="md:col-span-1 flex items-start">
+            <div className="relative bg-gray-800 p-3 w-16 h-12">
+              {/* Frame lines - uniform thickness */}
+              <div className="absolute inset-0">
+                {/* Top line - full width */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-white"></div>
+                {/* Right line - full height */}
+                <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
+                {/* Bottom line - only right part, no left part */}
+                <div className="absolute bottom-0 right-0 w-6 h-1 bg-white"></div>
+                {/* Left line - only top part, no bottom part */}
+                <div className="absolute top-0 left-0 w-1 h-6 bg-white"></div>
+                {/* Bottom-left corner is completely missing */}
               </div>
-              <div className="text-white text-lg font-bold tracking-wide">
-                Tech & the City
+              {/* T&C Text */}
+              <div className="text-white font-bold text-sm tracking-wide relative z-10 flex items-center justify-center h-full">
+                T&C
               </div>
             </div>
           </div>
 
           {/* Sections Column */}
           <div className="md:col-span-1">
-            <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4 text-center">
+            <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
               SECTIONS
             </div>
             <ul className="space-y-2 text-center">
@@ -52,7 +47,7 @@ export default function Footer(){
 
           {/* Connect Column */}
           <div className="md:col-span-1">
-            <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4 text-center">
+            <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
               FOLLOW US
             </div>
             <div className="flex items-center justify-center gap-3">
