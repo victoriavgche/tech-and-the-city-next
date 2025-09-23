@@ -36,7 +36,10 @@ export default function Logo() {
           fontOpticalSizing: 'none',
           fontVariationSettings: '"wght" 600, "slnt" 0'
         }}>
-          Tech <span style={{ fontWeight: '400' }}>&</span> the City
+          Tech <span style={{ fontWeight: '400' }}>&</span> the <span style={{ 
+            fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1, "cv01" 1, "cv02" 1, "cv03" 1',
+            fontVariationSettings: '"wght" 600, "slnt" 0, "XTRA" 1'
+          }}>C</span>ity
         </div>
     </div>
   );
