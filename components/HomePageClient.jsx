@@ -21,7 +21,7 @@ export default function HomePageClient({ posts }) {
       <section className="py-1">
         <div className="max-w-4xl mx-auto px-6 text-center">
                 <h1 className="text-2xl md:text-3xl font-bold text-white mb-0 leading-tight">
-                  WHERE CULTURE MEETS CODE
+                  Latest from Athens' cultural & tech scene with an atypical lens
                 </h1>
                 <p className="text-xs text-gray-300 max-w-2xl mx-auto leading-relaxed">
                   LATEST from Athens' cultural & tech scene with an atypical lens.
