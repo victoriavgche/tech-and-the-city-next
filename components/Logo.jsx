@@ -21,8 +21,8 @@ export default function Logo() {
         </div>
       </div>
       {/* Company Name */}
-      <div className="text-white text-xl font-bold tracking-wide" style={{fontFamily: 'Arial, sans-serif', fontWeight: '600', letterSpacing: '0.05em'}}>
-        Tech & the City
+      <div className="text-white text-xl font-bold tracking-wide" style={{fontFamily: 'Helvetica Neue, Arial, sans-serif', fontWeight: '700', letterSpacing: '0.1em', textTransform: 'lowercase', fontSize: '1.1rem'}}>
+        tech & the city
       </div>
     </div>
   );
