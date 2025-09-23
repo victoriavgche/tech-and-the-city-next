@@ -43,13 +43,14 @@ export default function Nav(){
         {/* Mobile: Centered Title */}
         <div className="md:hidden flex-1 flex justify-center">
           <div className="text-white text-xl font-bold tracking-wide" style={{
-            fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-            fontWeight: '700',
-            letterSpacing: '0.08em',
-            fontSize: '1.3rem',
+            fontFamily: '"SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
+            fontWeight: '600',
+            letterSpacing: '0.12em',
+            fontSize: '1.4rem',
             fontStyle: 'normal',
-            textShadow: '0 0 8px rgba(255,255,255,0.2)',
-            textTransform: 'none'
+            textShadow: 'none',
+            textTransform: 'none',
+            fontStretch: 'condensed'
           }}>
             Tech & the City
           </div>
