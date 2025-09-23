@@ -24,7 +24,7 @@ export default function HomePageClient({ posts }) {
                   WHERE CULTURE MEETS CODE
                 </h1>
                 <p className="text-xs text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                  No buzzwords, just vibes.
+                  Latest from Athens' cultural & tech scene with an atypical lens.
                 </p>
         </div>
       </section>
