@@ -56,7 +56,7 @@ export default function Nav(){
             fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1',
             fontOpticalSizing: 'none'
           }}>
-            Tech <span style={{ fontWeight: '400' }}>&</span> the City
+            Tech <span style={{ fontWeight: '300', fontSize: '1.2rem' }}>&</span> the City
           </div>
         </div>
         
