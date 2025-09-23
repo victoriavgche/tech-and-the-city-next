@@ -9,7 +9,7 @@ export default function Footer(){
     <footer className="border-t border-gray-700 bg-gray-800 mt-16">
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Main Footer Content */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-8">
           {/* Logo */}
           <div className="flex items-start">
             <div className="relative bg-gray-800 p-3 w-16 h-12">
@@ -81,8 +81,6 @@ export default function Footer(){
             <div className="flex flex-wrap gap-4 text-xs text-gray-400">
               <a className="hover:text-gray-300 transition-colors" href="/privacy">Privacy Policy</a>
               <a className="hover:text-gray-300 transition-colors" href="/terms">Terms of Service</a>
-              <a className="hover:text-gray-300 transition-colors" href="/contact">Contact</a>
-              <a className="hover:text-gray-300 transition-colors" href="/about">About Us</a>
             </div>
           </div>
         </div>
