@@ -9,9 +9,9 @@ export default function Footer(){
     <footer className="border-t border-gray-700 bg-gray-800 mt-16">
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo Only */}
-          <div className="md:col-span-1 flex items-start">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          {/* Logo */}
+          <div className="flex items-start">
             <div className="relative bg-gray-800 p-3 w-16 h-12">
               {/* Frame lines - uniform thickness */}
               <div className="absolute inset-0">
@@ -33,11 +33,11 @@ export default function Footer(){
           </div>
 
           {/* Sections Column */}
-          <div className="md:col-span-1">
+          <div className="flex-1 text-center">
             <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
               SECTIONS
             </div>
-            <ul className="space-y-2 text-center">
+            <ul className="space-y-2">
               <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">{t('nav.about')}</a></li>
               <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">{t('nav.articles')}</a></li>
               <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">{t('nav.events')}</a></li>
@@ -46,7 +46,7 @@ export default function Footer(){
           </div>
 
           {/* Connect Column */}
-          <div className="md:col-span-1">
+          <div className="flex-1 text-center">
             <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
               FOLLOW US
             </div>
@@ -68,9 +68,6 @@ export default function Footer(){
               </a>
             </div>
           </div>
-
-          {/* Empty column for spacing */}
-          <div className="md:col-span-1"></div>
         </div>
       </div>
       
