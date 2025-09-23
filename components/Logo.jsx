@@ -23,10 +23,10 @@ export default function Logo() {
       {/* Company Name */}
         <div className="text-white text-xl font-bold tracking-wide" style={{
           fontFamily: '"Space Grotesk", "Inter", "SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
-          fontWeight: '600',
-          letterSpacing: '-0.01em',
-          wordSpacing: '0.02em',
-          fontSize: '1.8rem',
+          fontWeight: '500',
+          letterSpacing: '-0.02em',
+          wordSpacing: '0.01em',
+          fontSize: '1.5rem',
           fontStyle: 'normal',
           textShadow: 'none',
           textTransform: 'uppercase',
@@ -35,9 +35,10 @@ export default function Logo() {
           fontVariant: 'normal',
           fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1',
           fontOpticalSizing: 'none',
-          fontVariationSettings: '"wght" 600, "slnt" 0'
+          fontVariationSettings: '"wght" 500, "slnt" 0',
+          transform: 'scaleX(0.95)'
         }}>
-          TECH <span style={{ fontWeight: '400', fontSize: '1.4rem' }}>&</span> THE CITY
+          TECH <span style={{ fontWeight: '400', fontSize: '1.2rem' }}>&</span> THE CITY
         </div>
     </div>
   );
