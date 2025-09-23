@@ -30,7 +30,6 @@ export default function Logo() {
           textShadow: 'none',
           textTransform: 'none',
           fontStretch: 'condensed',
-          fontVariant: 'small-caps',
           textRendering: 'geometricPrecision'
         }}>
           Tech & the City

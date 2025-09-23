@@ -51,7 +51,6 @@ export default function Nav(){
             textShadow: 'none',
             textTransform: 'none',
             fontStretch: 'condensed',
-            fontVariant: 'small-caps',
             textRendering: 'geometricPrecision'
           }}>
             Tech & the City
