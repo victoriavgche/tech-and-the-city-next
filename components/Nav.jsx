@@ -42,7 +42,7 @@ export default function Nav(){
         
         {/* Mobile: Centered Title */}
         <div className="md:hidden flex-1 flex justify-center">
-          <div className="text-white text-xl font-bold tracking-wide">
+          <div className="text-white text-xl font-bold tracking-wide" style={{fontFamily: 'Arial, sans-serif', fontWeight: '600', letterSpacing: '0.05em'}}>
             Tech & the City
           </div>
         </div>
