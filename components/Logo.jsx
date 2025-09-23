@@ -23,8 +23,8 @@ export default function Logo() {
       {/* Company Name */}
         <div className="text-white text-xl font-bold tracking-wide" style={{
           fontFamily: '"JetBrains Mono", "Fira Code", "Monaco", "Consolas", "Courier New", monospace',
-          fontWeight: '700',
-          letterSpacing: '0.01em',
+          fontWeight: '500',
+          letterSpacing: '-0.02em',
           fontSize: '1.73rem',
           fontStyle: 'normal',
           textShadow: 'none',
@@ -34,7 +34,7 @@ export default function Logo() {
           fontVariant: 'normal',
           fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1, "cv01" 1, "cv02" 1',
           fontOpticalSizing: 'none',
-          fontVariationSettings: '"wght" 700, "slnt" 0'
+          fontVariationSettings: '"wght" 500, "slnt" 0'
         }}>
           Tech <span style={{ fontWeight: '400' }}>&</span> the City
         </div>
