@@ -35,7 +35,7 @@ export default function Logo() {
           fontFeatureSettings: '"ss01" 1, "ss02" 1, "ss03" 1',
           fontOpticalSizing: 'none'
         }}>
-          Tech & the City
+          Tech <span style={{ fontWeight: '400' }}>&</span> the City
         </div>
     </div>
   );
