@@ -26,6 +26,9 @@ export default function HomePageClient({ posts }) {
                 <p className="text-xs text-gray-300 max-w-2xl mx-auto leading-relaxed">
                   LATEST from Athens' cultural & tech scene with an atypical lens.
                 </p>
+                <p className="text-xs text-gray-400 max-w-2xl mx-auto leading-relaxed mt-2">
+                  Just vibes, by Whistledown.
+                </p>
         </div>
       </section>
 
