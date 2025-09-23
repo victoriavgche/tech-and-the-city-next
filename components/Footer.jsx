@@ -6,8 +6,8 @@ import { useTranslation } from "../lib/useTranslation";
 export default function Footer(){
   const { t } = useTranslation();
   return (
-    <footer className="border-t border-gray-700 bg-gray-800 mt-16">
-      <div className="max-w-6xl mx-auto px-6 py-12">
+    <footer className="border-t border-gray-700 bg-gray-800 mt-12 sm:mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Main Footer Content */}
         <div className="flex flex-col md:flex-row items-start justify-between gap-8">
           {/* Mobile Layout - Same as Desktop: Logo left, sections center, follow us right */}
