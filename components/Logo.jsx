@@ -25,6 +25,7 @@ export default function Logo() {
           fontFamily: '"JetBrains Mono", "Fira Code", "Monaco", "Consolas", "Courier New", monospace',
           fontWeight: '500',
           letterSpacing: '-0.02em',
+          wordSpacing: '-0.1em',
           fontSize: '1.73rem',
           fontStyle: 'normal',
           textShadow: 'none',
