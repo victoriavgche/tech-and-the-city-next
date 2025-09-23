@@ -8,11 +8,11 @@ export default function Footer(){
   return (
     <footer className="border-t border-gray-700 bg-gray-800 mt-16">
       <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Mobile Layout - Centered Sections and Connect */}
+        {/* Mobile Layout - Sections left, Connect right */}
         <div className="md:hidden">
-          <div className="flex items-center justify-center gap-8">
-            {/* Sections */}
-            <div className="text-xs text-gray-300 text-center">
+          <div className="flex justify-between items-start">
+            {/* Sections - Left */}
+            <div className="text-xs text-gray-300 text-left">
               <div className="font-semibold text-white mb-2">{t('footer.sections')}</div>
               <ul className="space-y-1">
                 <li><a className="hover:text-blue-400 transition-colors" href="/about">{t('nav.about')}</a></li>
@@ -22,10 +22,10 @@ export default function Footer(){
               </ul>
             </div>
             
-            {/* Connect */}
-            <div className="text-xs text-gray-300 text-center">
+            {/* Connect - Right */}
+            <div className="text-xs text-gray-300 text-right">
               <div className="font-semibold text-white mb-2">{t('footer.connect')}</div>
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-end gap-2">
                 <a className="hover:text-blue-400 transition-colors" href="https://instagram.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram className="h-4 w-4" /></a>
                 <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-4 w-4" /></a>
                 <a className="hover:text-blue-400 transition-colors" href="https://x.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="X"><span className="text-white font-bold text-sm">𝕏</span></a>
@@ -34,36 +34,10 @@ export default function Footer(){
           </div>
         </div>
         
-        {/* Desktop Layout - Logo, Sections, and Connect */}
+        {/* Desktop Layout - Sections left, Connect right */}
         <div className="hidden md:flex justify-between items-start">
-          {/* Logo and Title */}
-          <div className="flex items-center gap-3">
-            <div className="relative bg-gray-800 p-4 w-20 h-16">
-              {/* Frame lines - uniform thickness */}
-              <div className="absolute inset-0">
-                {/* Top line - full width */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-white"></div>
-                {/* Right line - full height */}
-                <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
-                {/* Bottom line - only right part, no left part */}
-                <div className="absolute bottom-0 right-0 w-8 h-1 bg-white"></div>
-                {/* Left line - only top part, no bottom part */}
-                <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
-                {/* Bottom-left corner is completely missing */}
-              </div>
-              {/* T&C Text */}
-              <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
-                T&C
-              </div>
-            </div>
-            {/* Company Name */}
-            <div className="text-white text-xl font-bold tracking-wide">
-              Tech & the City
-            </div>
-          </div>
-          
-          {/* Sections */}
-          <div className="text-sm text-gray-300 text-center">
+          {/* Sections - Left */}
+          <div className="text-sm text-gray-300 text-left">
             <div className="font-semibold text-white mb-3">{t('footer.sections')}</div>
             <ul className="space-y-2">
               <li><a className="hover:text-blue-400 transition-colors" href="/about">{t('nav.about')}</a></li>
@@ -73,10 +47,10 @@ export default function Footer(){
             </ul>
           </div>
           
-          {/* Connect */}
-          <div className="text-sm text-gray-300 text-center">
+          {/* Connect - Right */}
+          <div className="text-sm text-gray-300 text-right">
             <div className="font-semibold text-white mb-3">{t('footer.connect')}</div>
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-end gap-4">
               <a className="hover:text-blue-400 transition-colors" href="https://instagram.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram className="h-5 w-5" /></a>
               <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
               <a className="hover:text-blue-400 transition-colors" href="https://x.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="X"><span className="text-white font-bold text-lg">𝕏</span></a>
