@@ -23,9 +23,6 @@ export default function HomePageClient({ posts }) {
                 <h1 className="text-2xl md:text-3xl font-bold text-white mb-0 leading-tight">
                   Latest from Athens' cultural & tech scene with an atypical lens
                 </h1>
-                <p className="text-xs text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                  LATEST from Athens' cultural & tech scene with an atypical lens.
-                </p>
                 <p className="text-xs text-gray-400 max-w-2xl mx-auto leading-relaxed mt-2">
                   No buzzwords. Just vibes, by Whistledown.
                 </p>
