@@ -22,7 +22,7 @@ export default function Logo() {
       </div>
       {/* Company Name */}
         <div className="text-white text-xl font-bold tracking-wide" style={{
-          fontFamily: '"Space Grotesk", "Inter", "SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
+          fontFamily: '"JetBrains Mono", "Fira Code", "Monaco", "Consolas", "Courier New", monospace',
           fontWeight: '700',
           letterSpacing: '0.01em',
           fontSize: '1.73rem',
