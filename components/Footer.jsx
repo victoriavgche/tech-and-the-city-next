@@ -14,7 +14,7 @@ export default function Footer(){
           <div className="md:hidden w-full flex items-start justify-between gap-4">
             {/* Logo - Left */}
             <div className="flex items-start">
-              <div className="relative bg-gray-800 p-3 w-16 h-12">
+              <div className="relative bg-gray-800 p-4 w-20 h-16">
                 {/* Frame lines - uniform thickness */}
                 <div className="absolute inset-0">
                   {/* Top line - full width */}
@@ -22,13 +22,13 @@ export default function Footer(){
                   {/* Right line - full height */}
                   <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
                   {/* Bottom line - only right part, no left part */}
-                  <div className="absolute bottom-0 right-0 w-6 h-1 bg-white"></div>
+                  <div className="absolute bottom-0 right-0 w-8 h-1 bg-white"></div>
                   {/* Left line - only top part, no bottom part */}
-                  <div className="absolute top-0 left-0 w-1 h-6 bg-white"></div>
+                  <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
                   {/* Bottom-left corner is completely missing */}
                 </div>
                 {/* T&C Text */}
-                <div className="text-white font-bold text-sm tracking-wide relative z-10 flex items-center justify-center h-full">
+                <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
                   T&C
                 </div>
               </div>
@@ -78,7 +78,7 @@ export default function Footer(){
           <div className="hidden md:flex w-full items-start justify-between gap-8">
             {/* Logo - Far Left */}
             <div className="flex items-start">
-              <div className="relative bg-gray-800 p-3 w-16 h-12">
+              <div className="relative bg-gray-800 p-4 w-20 h-16">
                 {/* Frame lines - uniform thickness */}
                 <div className="absolute inset-0">
                   {/* Top line - full width */}
@@ -86,13 +86,13 @@ export default function Footer(){
                   {/* Right line - full height */}
                   <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
                   {/* Bottom line - only right part, no left part */}
-                  <div className="absolute bottom-0 right-0 w-6 h-1 bg-white"></div>
+                  <div className="absolute bottom-0 right-0 w-8 h-1 bg-white"></div>
                   {/* Left line - only top part, no bottom part */}
-                  <div className="absolute top-0 left-0 w-1 h-6 bg-white"></div>
+                  <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
                   {/* Bottom-left corner is completely missing */}
                 </div>
                 {/* T&C Text */}
-                <div className="text-white font-bold text-sm tracking-wide relative z-10 flex items-center justify-center h-full">
+                <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
                   T&C
                 </div>
               </div>
