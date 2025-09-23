@@ -10,8 +10,8 @@ export default function Footer(){
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Main Footer Content */}
         <div className="flex flex-col md:flex-row items-start justify-between gap-8">
-          {/* Logo */}
-          <div className="flex items-start flex-1">
+          {/* Logo - Far Left */}
+          <div className="flex items-start">
             <div className="relative bg-gray-800 p-3 w-16 h-12">
               {/* Frame lines - uniform thickness */}
               <div className="absolute inset-0">
@@ -32,7 +32,7 @@ export default function Footer(){
             </div>
           </div>
 
-          {/* Sections Column */}
+          {/* Sections Column - Center */}
           <div className="flex-1 text-center">
             <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
               SECTIONS
@@ -45,27 +45,29 @@ export default function Footer(){
             </ul>
           </div>
 
-          {/* Connect Column */}
-          <div className="flex-1 text-center">
-            <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-              FOLLOW US
-            </div>
-            <div className="flex items-center justify-center gap-3">
-              <a className="hover:text-blue-400 transition-colors" href="https://instagram.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
-                  <Instagram className="h-4 w-4 text-white" />
-                </div>
-              </a>
-              <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
-                  <Linkedin className="h-4 w-4 text-white" />
-                </div>
-              </a>
-              <a className="hover:text-blue-400 transition-colors" href="https://x.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="X">
-                <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">𝕏</span>
-                </div>
-              </a>
+          {/* Connect Column - Far Right */}
+          <div className="flex items-start">
+            <div className="text-center">
+              <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
+                FOLLOW US
+              </div>
+              <div className="flex items-center justify-center gap-3">
+                <a className="hover:text-blue-400 transition-colors" href="https://instagram.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
+                    <Instagram className="h-4 w-4 text-white" />
+                  </div>
+                </a>
+                <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                  <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
+                    <Linkedin className="h-4 w-4 text-white" />
+                  </div>
+                </a>
+                <a className="hover:text-blue-400 transition-colors" href="https://x.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="X">
+                  <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">𝕏</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
