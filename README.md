@@ -40,12 +40,13 @@ npm run dev
 
 ## Admin Panel
 
-Access the admin panel at `/admin`:
+Access the secret admin panel at `/secret-admin`:
 
-- No login required - direct access to admin dashboard
+- **Password**: `techandthecity2024`
 - Edit, delete, and create articles
 - Image upload support
 - Inline editing with cursor
+- Hidden from public navigation
 
 ### Admin Features
 
