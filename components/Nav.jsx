@@ -71,10 +71,6 @@ export default function Nav(){
         </div>
         
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="hidden lg:block w-32 xl:w-40">
-            <SearchBar />
-          </div>
-          
           {/* Language Switcher */}
           <SimpleLanguageSwitcher />
           
@@ -127,11 +123,6 @@ export default function Nav(){
             >
               {t('nav.contact')}
             </a>
-            
-            {/* Mobile Search */}
-            <div className="pt-4 border-t border-gray-700">
-              <SearchBar isMobile={true} />
-            </div>
             
             {/* Mobile Language Switcher */}
             <div className="pt-4 border-t border-gray-700">
