@@ -57,7 +57,7 @@ html, body {
   background: linear-gradient(135deg, rgba(230,224,248,0.2) 0%, rgba(248,187,217,0.2) 100%);
 }
 
-h1,h2,h3,h4 { 
+h2,h3,h4 { 
   @apply tracking-tight font-bold;
   background: linear-gradient(135deg, var(--cyber-silver) 0%, var(--cyber-blue) 50%, var(--cyber-purple) 100%);
   -webkit-background-clip: text;
@@ -83,36 +83,55 @@ h1 {
   font-weight: 900;
 }
 
-h1::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(45deg, rgba(0,212,255,0.1) 0%, rgba(139,92,246,0.1) 100%);
-  border-radius: 12px;
-  z-index: -1;
-  filter: blur(20px);
-}
-
-h1::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(0,212,255,0.05) 0%, rgba(139,92,246,0.05) 100%);
-  border-radius: 8px;
-  z-index: -1;
-  transform: scale(1.02);
-}
-
 
 .prose p { @apply text-slate-700/80 leading-relaxed; }
 .prose h2 { @apply text-2xl font-semibold mt-6 mb-2; }
 .prose ul { @apply list-disc pl-6; }
+
+/* Dark theme prose styles */
+.prose-invert {
+  color: #e2e8f0;
+}
+
+.prose-invert p {
+  color: #cbd5e1;
+  line-height: 1.7;
+}
+
+.prose-invert h1, .prose-invert h2, .prose-invert h3, .prose-invert h4, .prose-invert h5, .prose-invert h6 {
+  color: #f1f5f9;
+}
+
+.prose-invert strong {
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+.prose-invert a {
+  color: #60a5fa;
+}
+
+.prose-invert a:hover {
+  color: #93c5fd;
+}
+
+.prose-invert ul, .prose-invert ol {
+  color: #cbd5e1;
+}
+
+.prose-invert li {
+  color: #cbd5e1;
+}
+
+.prose-invert blockquote {
+  color: #94a3b8;
+  border-left-color: #475569;
+}
+
+.prose-invert code {
+  color: #f1f5f9;
+  background-color: #1e293b;
+}
 
 /* Cyber scrollbar */
 ::-webkit-scrollbar {

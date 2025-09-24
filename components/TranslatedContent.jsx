@@ -97,12 +97,12 @@ export default function TranslatedContent({
   }
 
   return (
-    <div className={className}>
+    <span className={className}>
       {typeof translatedContent === 'string' && translatedContent.includes('<') ? (
-        <div dangerouslySetInnerHTML={{ __html: translatedContent }} />
+        <span dangerouslySetInnerHTML={{ __html: translatedContent }} />
       ) : (
-        <div>{translatedContent}</div>
+        <span>{translatedContent}</span>
       )}
-    </div>
+    </span>
   );
 }

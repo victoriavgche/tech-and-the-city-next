@@ -6,8 +6,8 @@ import { useTranslation } from "../lib/useTranslation";
 export default function Footer(){
   const { t } = useTranslation();
   return (
-    <footer className="border-t border-gray-700 bg-gray-800 mt-12 sm:mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  <footer className="border-t border-gray-700 bg-gray-800 mt-16">
+    <div className="max-w-7xl mx-auto px-8 py-12">
         {/* Main Footer Content */}
         <div className="flex flex-col md:flex-row items-start justify-between gap-8">
           {/* Mobile Layout - Same as Desktop: Logo left, sections center, follow us right */}
@@ -78,7 +78,7 @@ export default function Footer(){
           <div className="hidden md:flex w-full items-start justify-between gap-8">
             {/* Logo - Far Left */}
             <div className="flex items-start">
-              <div className="relative bg-gray-800 p-4 w-20 h-16">
+              <div className="relative bg-gray-800 p-5 w-22 h-18">
                 {/* Frame lines - uniform thickness */}
                 <div className="absolute inset-0">
                   {/* Top line - full width */}
@@ -86,13 +86,13 @@ export default function Footer(){
                   {/* Right line - full height */}
                   <div className="absolute top-0 right-0 w-1 h-full bg-white"></div>
                   {/* Bottom line - only right part, no left part */}
-                  <div className="absolute bottom-0 right-0 w-8 h-1 bg-white"></div>
+                  <div className="absolute bottom-0 right-0 w-9 h-1 bg-white"></div>
                   {/* Left line - only top part, no bottom part */}
-                  <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
+                  <div className="absolute top-0 left-0 w-1 h-9 bg-white"></div>
                   {/* Bottom-left corner is completely missing */}
                 </div>
                 {/* T&C Text */}
-                <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
+                <div className="text-white font-bold text-2xl tracking-wide relative z-10 flex items-center justify-center h-full">
                   T&C
                 </div>
               </div>
