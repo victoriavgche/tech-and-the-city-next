@@ -8,6 +8,7 @@ export default function SecretAdminDashboard() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -37,18 +38,19 @@ export default function SecretAdminDashboard() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (password === 'techandthecity2024') {
+    if (email === 'admin@techandthecity.com' && password === 'TechAndTheCity2024!') {
       setAuthenticated(true);
       localStorage.setItem('admin_auth', 'true');
       fetchPosts();
     } else {
-      setError('Wrong password');
+      setError('Invalid email or password');
     }
   };
 
   const handleLogout = () => {
     setAuthenticated(false);
     localStorage.removeItem('admin_auth');
+    setEmail('');
     setPassword('');
   };
 
@@ -78,16 +80,29 @@ export default function SecretAdminDashboard() {
           <div className="text-center mb-6">
             <Lock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-white mb-2">Admin Access</h1>
-            <p className="text-gray-400">Enter password to continue</p>
+            <p className="text-gray-400">Enter your credentials to continue</p>
           </div>
           
           <form onSubmit={handleLogin}>
             <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@techandthecity.com"
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Enter your password"
                 className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
                 required
               />

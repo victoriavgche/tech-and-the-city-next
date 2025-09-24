@@ -42,7 +42,8 @@ npm run dev
 
 Access the secret admin panel at `/secret-admin`:
 
-- **Password**: `techandthecity2024`
+- **Email**: `admin@techandthecity.com`
+- **Password**: `TechAndTheCity2024!`
 - Edit, delete, and create articles
 - Image upload support
 - Inline editing with cursor
