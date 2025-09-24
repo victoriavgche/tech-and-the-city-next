@@ -13,10 +13,10 @@
 }
 
 html, body { 
-  background: linear-gradient(to bottom, #1a1a2e 0%, #1a1a2e 33.33%, #f8f4f0 33.33%, #f8f4f0 100%);
   color: #2d3748;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+  background: #4b5563;
 }
 
 .font-handwriting {
@@ -139,7 +139,7 @@ h1 {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--cyber-dark);
+  background: #4b5563;
 }
 
 ::-webkit-scrollbar-thumb {

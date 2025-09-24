@@ -1,15 +1,15 @@
 # Tech & the City
 
-A modern blog platform showcasing culture and technology across Europe, with Athens energy. Built with Next.js 14, featuring responsive design, multilingual support, and a secure admin panel.
+A modern blog platform showcasing culture and technology across Europe, with Athens energy. Built with Next.js 14, featuring responsive design, clean UI, and a secure admin panel.
 
 ## Features
 
-- 🌍 **Multilingual Support**: English/Greek translation with Google Translate API
 - 📱 **Responsive Design**: Optimized for desktop, tablet, and mobile
 - 🎨 **Modern UI**: Dark theme with gradient backgrounds and smooth animations
 - 🔐 **Secure Admin Panel**: Hidden admin system with customizable credentials
 - ✏️ **Rich Content Management**: Create, edit, and delete articles with image support
 - 🚀 **Performance**: Static generation with Next.js 14
+- 🎯 **Events Section**: Dynamic events page with filtering and interactive features
 
 ## Tech Stack
 
@@ -70,12 +70,13 @@ Access the secret admin panel at `/admin-TC25`:
 │   ├── Nav.jsx              # Navigation component
 │   ├── Footer.jsx           # Footer component
 │   ├── Logo.jsx             # Logo component
-│   └── TranslatedContent.jsx # Translation wrapper
+│   ├── HomePageClient.jsx   # Homepage client component
+│   ├── ShareDropdown.jsx    # Social sharing component
+│   └── ClientWrapper.jsx    # Client wrapper component
 ├── content/
 │   └── posts/               # Markdown articles
 ├── lib/
-│   ├── posts.js             # Post utilities
-│   └── useTranslation.js    # Translation hook
+│   └── posts.js             # Post utilities
 └── public/                  # Static assets
 ```
 

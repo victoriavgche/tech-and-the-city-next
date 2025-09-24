@@ -1,6 +1,6 @@
 export default function Logo() {
   return (
-    <div className="flex items-center gap-3">
+    <a href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
       {/* Logo with frame - slightly larger */}
       <div className="relative bg-gray-800 p-5 w-22 h-18">
         {/* Frame lines - uniform thickness */}
@@ -40,6 +40,6 @@ export default function Logo() {
         }}>
           TECH <span style={{ fontWeight: '400', fontSize: '1.4rem' }}>&</span> THE CITY
         </div>
-    </div>
+    </a>
   );
 }

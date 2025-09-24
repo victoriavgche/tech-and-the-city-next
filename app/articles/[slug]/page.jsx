@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ClientWrapper from "../../../components/ClientWrapper";
+import SocialShare from "../../../components/SocialShare";
 
 export async function generateStaticParams() {
   const posts = await getAllPostsMeta();
@@ -21,19 +22,13 @@ export default async function ArticlePage({ params }) {
   return (
     <main className="min-h-screen bg-slate-900 py-8">
       <div className="container max-w-4xl mx-auto px-4">
-        {/* Back button and Edit button */}
-        <div className="flex justify-between items-center mb-8">
+        {/* Back button */}
+        <div className="flex justify-start items-center mb-8">
           <Link 
             href="/articles" 
             className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
           >
             ← Back to Articles
-          </Link>
-          <Link 
-            href={`/admin/edit/${params.slug}`}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-colors"
-          >
-            ✏️ Edit Article
           </Link>
         </div>
 
@@ -62,6 +57,13 @@ export default async function ArticlePage({ params }) {
             </div>
           </div>
         )}
+
+        {/* Social Share */}
+        <SocialShare 
+          title={post.title}
+          url={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://techandthecity.com'}/articles/${params.slug}`}
+          excerpt={post.excerpt}
+        />
 
         {/* Article content */}
         <article className="bg-slate-800 rounded-lg p-8 shadow-lg border border-slate-700">

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Edit, Trash2, Plus, Eye, Lock, Settings, Save, X } from 'lucide-react';
+import { Edit, Trash2, Plus, Eye, Lock, Settings, Save, X, Share2 } from 'lucide-react';
 
 export default function SecretAdminDashboard() {
   const [posts, setPosts] = useState([]);
@@ -20,7 +20,14 @@ export default function SecretAdminDashboard() {
 
   useEffect(() => {
     // Check if already authenticated
-    const isAuth = localStorage.getItem('admin_auth') === 'true';
+    let isAuth = false;
+    try {
+      isAuth = localStorage.getItem('admin_auth') === 'true';
+    } catch (error) {
+      // If localStorage fails, start fresh
+      isAuth = false;
+    }
+    
     setAuthenticated(isAuth);
     
     if (isAuth) {
@@ -45,13 +52,31 @@ export default function SecretAdminDashboard() {
   const handleLogin = (e) => {
     e.preventDefault();
     
-    // Get credentials from localStorage or use defaults
-    const adminEmail = localStorage.getItem('admin_email') || 'admin@techandthecity.com';
-    const adminPassword = localStorage.getItem('admin_password') || 'TechAndTheCity2024!';
+    // Default credentials that always work
+    const defaultEmail = 'admin@techandthecity.com';
+    const defaultPassword = 'TechAndTheCity2024!';
     
-    if (email === adminEmail && password === adminPassword) {
+    // Get custom credentials from localStorage (if they exist)
+    let adminEmail, adminPassword;
+    try {
+      adminEmail = localStorage.getItem('admin_email') || defaultEmail;
+      adminPassword = localStorage.getItem('admin_password') || defaultPassword;
+    } catch (error) {
+      // If localStorage fails, use defaults
+      adminEmail = defaultEmail;
+      adminPassword = defaultPassword;
+    }
+    
+    // Check against both default and custom credentials
+    if ((email === defaultEmail && password === defaultPassword) || 
+        (email === adminEmail && password === adminPassword)) {
       setAuthenticated(true);
-      localStorage.setItem('admin_auth', 'true');
+      try {
+        localStorage.setItem('admin_auth', 'true');
+      } catch (error) {
+        // If localStorage fails, continue anyway
+        // localStorage not available, continuing without persistence
+      }
       fetchPosts();
     } else {
       setError('Invalid email or password');
@@ -60,7 +85,12 @@ export default function SecretAdminDashboard() {
 
   const handleLogout = () => {
     setAuthenticated(false);
-    localStorage.removeItem('admin_auth');
+    try {
+      localStorage.removeItem('admin_auth');
+    } catch (error) {
+      // If localStorage fails, continue anyway
+      // localStorage not available during logout
+    }
     setEmail('');
     setPassword('');
   };
@@ -87,8 +117,13 @@ export default function SecretAdminDashboard() {
     }
 
     // Save new credentials to localStorage
-    localStorage.setItem('admin_email', newEmail);
-    localStorage.setItem('admin_password', newPassword);
+    try {
+      localStorage.setItem('admin_email', newEmail);
+      localStorage.setItem('admin_password', newPassword);
+    } catch (error) {
+      setSettingsError('Could not save credentials (localStorage not available)');
+      return;
+    }
     
     setSettingsSuccess('Credentials updated successfully!');
     setShowSettings(false);
@@ -108,6 +143,14 @@ export default function SecretAdminDashboard() {
     setShowSettings(true);
     setSettingsError('');
     setSettingsSuccess('');
+  };
+
+  const handleLinkedInShare = (post) => {
+    const articleUrl = `${window.location.origin}/articles/${post.slug}`;
+    const shareText = `Check out this article from Tech & the City: "${post.title}"`;
+    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}&title=${encodeURIComponent(post.title)}&summary=${encodeURIComponent(post.excerpt)}`;
+    
+    window.open(linkedinUrl, '_blank', 'width=600,height=400');
   };
 
   const handleDelete = async (slug) => {
@@ -264,24 +307,31 @@ export default function SecretAdminDashboard() {
               </div>
               
               {/* Actions */}
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <Link
                   href={`/articles/${post.slug}`}
-                  className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-1"
+                  className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
                 >
                   <Eye className="h-4 w-4" />
                   View
                 </Link>
                 <Link
                   href={`/admin/edit/${post.slug}`}
-                  className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-1"
+                  className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
                 >
                   <Edit className="h-4 w-4" />
                   Edit
                 </Link>
                 <button
+                  onClick={() => handleLinkedInShare(post)}
+                  className="flex-1 bg-blue-700 text-white px-3 py-2 rounded text-sm hover:bg-blue-800 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
+                >
+                  <Share2 className="h-4 w-4" />
+                  LinkedIn
+                </button>
+                <button
                   onClick={() => handleDelete(post.slug)}
-                  className="flex-1 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700 transition-colors inline-flex items-center justify-center gap-1"
+                  className="flex-1 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
                 >
                   <Trash2 className="h-4 w-4" />
                   Delete

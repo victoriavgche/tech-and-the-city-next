@@ -1,15 +1,13 @@
 'use client';
 
-import { Github, Linkedin, Instagram } from "lucide-react";
-import { useTranslation } from "../lib/useTranslation";
+import { Linkedin } from "lucide-react";
 
 export default function Footer(){
-  const { t } = useTranslation();
   return (
   <footer className="border-t border-gray-700 bg-gray-800 mt-16">
-    <div className="max-w-7xl mx-auto px-8 py-12">
+    <div className="max-w-7xl mx-auto px-8 py-4">
         {/* Main Footer Content */}
-        <div className="flex flex-col md:flex-row items-start justify-between gap-8">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-4">
           {/* Mobile Layout - Same as Desktop: Logo left, sections center, follow us right */}
           <div className="md:hidden w-full flex items-start justify-between gap-4">
             {/* Logo - Left */}
@@ -40,10 +38,10 @@ export default function Footer(){
                 SECTIONS
               </div>
               <ul className="space-y-2">
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">{t('nav.about')}</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">{t('nav.articles')}</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">{t('nav.events')}</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">{t('nav.contact')}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">About</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">Articles</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">Events</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">Contact</a></li>
               </ul>
             </div>
 
@@ -53,20 +51,10 @@ export default function Footer(){
                 <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
                   FOLLOW US
                 </div>
-                <div className="flex items-center justify-center gap-3">
-                  <a className="hover:text-blue-400 transition-colors" href="https://instagram.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
-                      <Instagram className="h-4 w-4 text-white" />
-                    </div>
-                  </a>
+                <div className="flex items-center justify-center">
                   <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
                       <Linkedin className="h-4 w-4 text-white" />
-                    </div>
-                  </a>
-                  <a className="hover:text-blue-400 transition-colors" href="https://x.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="X">
-                    <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">𝕏</span>
                     </div>
                   </a>
                 </div>
@@ -104,10 +92,10 @@ export default function Footer(){
                 SECTIONS
               </div>
               <ul className="space-y-2">
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">{t('nav.about')}</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">{t('nav.articles')}</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">{t('nav.events')}</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">{t('nav.contact')}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">About</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">Articles</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">Events</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">Contact</a></li>
               </ul>
             </div>
 
@@ -117,20 +105,10 @@ export default function Footer(){
                 <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
                   FOLLOW US
                 </div>
-                <div className="flex items-center justify-center gap-3">
-                  <a className="hover:text-blue-400 transition-colors" href="https://instagram.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
-                      <Instagram className="h-4 w-4 text-white" />
-                    </div>
-                  </a>
+                <div className="flex items-center justify-center">
                   <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
                       <Linkedin className="h-4 w-4 text-white" />
-                    </div>
-                  </a>
-                  <a className="hover:text-blue-400 transition-colors" href="https://x.com/techandthecity" target="_blank" rel="noopener noreferrer" aria-label="X">
-                    <div className="w-8 h-8 bg-gray-600 rounded flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">𝕏</span>
                     </div>
                   </a>
                 </div>
@@ -141,8 +119,8 @@ export default function Footer(){
       </div>
       
       {/* Bottom Copyright Section */}
-      <div className="border-t border-gray-700 bg-gray-900">
-        <div className="max-w-6xl mx-auto px-6 py-6">
+      <div className="border-t border-gray-700 bg-gray-800">
+        <div className="max-w-6xl mx-auto px-6 py-2">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="text-gray-400 text-xs">
               © {new Date().getFullYear()} Tech & the City • Made with attitude • All rights reserved.

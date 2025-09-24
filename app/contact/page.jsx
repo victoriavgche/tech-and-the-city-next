@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Linkedin, Instagram, Twitter } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -50,21 +50,24 @@ export default function Contact() {
   };
 
   return (
-    <main className="container py-8">
-      <header className="mb-8 bg-gradient-to-br from-white/95 to-amber-50/95 backdrop-blur-sm rounded-lg p-6 shadow-lg border border-amber-200">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-800 to-indigo-800 bg-clip-text text-transparent mb-2">Contact</h1>
-        <p className="text-slate-600 max-w-2xl">Get in touch with us. We'd love to hear from you!</p>
-      </header>
+    <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
+      <div className="container py-8">
+        <header className="mb-8">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Contact</h1>
+            <p className="text-gray-300 text-lg max-w-2xl">Get in touch with us. We'd love to hear from you!</p>
+          </div>
+        </header>
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Contact Form */}
-        <div className="bg-gradient-to-br from-white/95 to-amber-50/95 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-amber-200">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
+          <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                   Name
                 </label>
                 <input
@@ -74,12 +77,12 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900"
+                  className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                   Email
                 </label>
                 <input
@@ -89,14 +92,14 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900"
+                  className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
                   placeholder="your@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
                 Subject
               </label>
               <input
@@ -106,13 +109,13 @@ export default function Contact() {
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900"
+                className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
                 placeholder="What's this about?"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                 Message
               </label>
               <textarea
@@ -122,7 +125,7 @@ export default function Contact() {
                 onChange={handleChange}
                 rows="6"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900"
+                className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
                 placeholder="Tell us what's on your mind..."
               />
             </div>
@@ -130,15 +133,15 @@ export default function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg font-semibold"
+              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg font-semibold"
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
           </form>
 
           {message && (
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-800 font-medium">{message}</p>
+            <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
+              <p className="text-green-400 font-medium">{message}</p>
             </div>
           )}
         </div>
@@ -146,85 +149,33 @@ export default function Contact() {
         {/* Contact Info & Social Links */}
         <div className="space-y-6">
           {/* Contact Information */}
-          <div className="bg-gradient-to-br from-white/95 to-amber-50/95 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-amber-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
+            <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
             
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Mail className="h-6 w-6 text-purple-600" />
+                <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center">
+                  <Mail className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Email</h3>
-                  <p className="text-gray-600">hello@techandthecity.com</p>
+                  <h3 className="font-semibold text-white">Email</h3>
+                  <p className="text-gray-300">techandthecity101@gmail.com</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Phone className="h-6 w-6 text-purple-600" />
+                <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center">
+                  <MapPin className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">+30 210 123 4567</p>
+                  <h3 className="font-semibold text-white">Location</h3>
+                  <p className="text-gray-300">Athens, Greece</p>
                 </div>
               </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <MapPin className="h-6 w-6 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">Location</h3>
-                  <p className="text-gray-600">Athens, Greece</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Social Links */}
-          <div className="bg-gradient-to-br from-white/95 to-amber-50/95 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-amber-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Follow Us</h2>
-            
-            <div className="grid grid-cols-3 gap-4">
-              <a 
-                href="https://linkedin.com/company/techandthecity" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-purple-50 transition-colors group"
-              >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-                  <Linkedin className="h-6 w-6 text-blue-600" />
-                </div>
-                <span className="text-sm font-medium text-gray-700">LinkedIn</span>
-              </a>
-
-              <a 
-                href="https://instagram.com/techandthecity" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-purple-50 transition-colors group"
-              >
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center group-hover:bg-pink-200 transition-colors">
-                  <Instagram className="h-6 w-6 text-pink-600" />
-                </div>
-                <span className="text-sm font-medium text-gray-700">Instagram</span>
-              </a>
-
-              <a 
-                href="https://x.com/techandthecity" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-purple-50 transition-colors group"
-              >
-                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Twitter className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm font-medium text-gray-700">X (Twitter)</span>
-              </a>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </main>
   );

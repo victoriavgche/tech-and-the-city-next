@@ -1,13 +1,10 @@
 'use client';
 
-import SimpleLanguageSwitcher from "./SimpleLanguageSwitcher";
 import Logo from "./Logo";
-import { useTranslation } from "../lib/useTranslation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 export default function Nav(){
-  const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   return (
@@ -40,7 +37,7 @@ export default function Nav(){
         
         {/* Mobile: Centered Title */}
         <div className="md:hidden flex-1 flex justify-center">
-          <div className="text-white text-xl font-bold tracking-wide" style={{
+          <a href="/" className="text-white text-xl font-bold tracking-wide hover:text-blue-400 transition-colors" style={{
             fontFamily: '"Space Grotesk", "Inter", "SF Pro Display", "Helvetica Neue", "Avenir Next", "Segoe UI", Roboto, sans-serif',
             fontWeight: '500',
             letterSpacing: '-0.02em',
@@ -58,22 +55,19 @@ export default function Nav(){
             transform: 'scaleX(0.95)'
           }}>
             TECH <span style={{ fontWeight: '400', fontSize: '1.2rem' }}>&</span> THE CITY
-          </div>
+          </a>
         </div>
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8 text-base lg:text-lg text-white">
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/">{t('nav.home')}</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/about">{t('nav.about')}</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/articles">{t('nav.articles')}</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/events">{t('nav.events')}</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/contact">{t('nav.contact')}</a>
+          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/">Home</a>
+          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/about">About</a>
+          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/articles">Articles</a>
+          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/events">Events</a>
+          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/contact">Contact</a>
         </div>
         
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Language Switcher */}
-          <SimpleLanguageSwitcher />
-          
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -93,41 +87,36 @@ export default function Nav(){
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t('nav.home')}
+              Home
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/about"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t('nav.about')}
+              About
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/articles"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t('nav.articles')}
+              Articles
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/events"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t('nav.events')}
+              Events
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/contact"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t('nav.contact')}
+              Contact
             </a>
-            
-            {/* Mobile Language Switcher */}
-            <div className="pt-4 border-t border-gray-700">
-              <SimpleLanguageSwitcher />
-            </div>
           </div>
         </div>
       )}
