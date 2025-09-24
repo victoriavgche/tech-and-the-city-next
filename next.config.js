@@ -45,11 +45,7 @@ const nextConfig = {
   // Redirects
   async redirects() {
     return [
-      {
-        source: '/admin',
-        destination: '/admin/login',
-        permanent: false,
-      },
+      // No redirects needed - admin dashboard is directly accessible
     ];
   },
   

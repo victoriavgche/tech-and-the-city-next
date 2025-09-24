@@ -70,6 +70,7 @@ export default function Nav(){
           <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/articles">{t('nav.articles')}</a>
           <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/events">{t('nav.events')}</a>
           <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/contact">{t('nav.contact')}</a>
+          <a className="hover:text-purple-400 transition-colors duration-200 font-medium text-purple-300" href="/admin">Admin</a>
         </div>
         
         <div className="flex items-center gap-2 sm:gap-3">
@@ -128,6 +129,13 @@ export default function Nav(){
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {t('nav.contact')}
+            </a>
+            <a 
+              className="block text-purple-300 hover:text-purple-400 transition-colors duration-200 font-medium text-base" 
+              href="/admin"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Admin
             </a>
             
             {/* Mobile Search */}

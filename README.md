@@ -40,10 +40,12 @@ npm run dev
 
 ## Admin Panel
 
-Access the admin panel at `/admin/login`:
+Access the admin panel at `/admin`:
 
-- **Username**: `admin`
-- **Password**: `techandthecity2024`
+- No login required - direct access to admin dashboard
+- Edit, delete, and create articles
+- Image upload support
+- Inline editing with cursor
 
 ### Admin Features
 
