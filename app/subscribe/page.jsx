@@ -76,6 +76,7 @@ export default function Subscribe() {
           </div>
         </div>
       </div>
+      </div>
     </main>
   );
 }
