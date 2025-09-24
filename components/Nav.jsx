@@ -1,9 +1,7 @@
 'use client';
 
-import { Sparkles, Newspaper, Search } from "lucide-react";
 import SimpleLanguageSwitcher from "./SimpleLanguageSwitcher";
 import Logo from "./Logo";
-import SearchBar from "./SearchBar";
 import { useTranslation } from "../lib/useTranslation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";

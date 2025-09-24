@@ -2,14 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Edit, Trash2, Plus, Eye, Lock } from 'lucide-react';
+import { Edit, Trash2, Plus, Eye, Lock, Settings, Save, X } from 'lucide-react';
 
 export default function SecretAdminDashboard() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showSettings, setShowSettings] = useState(false);
+  const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [settingsError, setSettingsError] = useState('');
+  const [settingsSuccess, setSettingsSuccess] = useState('');
 
   useEffect(() => {
     // Check if already authenticated
@@ -37,19 +44,70 @@ export default function SecretAdminDashboard() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (password === 'techandthecity2024') {
+    
+    // Get credentials from localStorage or use defaults
+    const adminEmail = localStorage.getItem('admin_email') || 'admin@techandthecity.com';
+    const adminPassword = localStorage.getItem('admin_password') || 'TechAndTheCity2024!';
+    
+    if (email === adminEmail && password === adminPassword) {
       setAuthenticated(true);
       localStorage.setItem('admin_auth', 'true');
       fetchPosts();
     } else {
-      setError('Wrong password');
+      setError('Invalid email or password');
     }
   };
 
   const handleLogout = () => {
     setAuthenticated(false);
     localStorage.removeItem('admin_auth');
+    setEmail('');
     setPassword('');
+  };
+
+  const handleUpdateCredentials = (e) => {
+    e.preventDefault();
+    setSettingsError('');
+    setSettingsSuccess('');
+
+    // Validation
+    if (!newEmail || !newPassword) {
+      setSettingsError('Please fill in all fields');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setSettingsError('Passwords do not match');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setSettingsError('Password must be at least 6 characters');
+      return;
+    }
+
+    // Save new credentials to localStorage
+    localStorage.setItem('admin_email', newEmail);
+    localStorage.setItem('admin_password', newPassword);
+    
+    setSettingsSuccess('Credentials updated successfully!');
+    setShowSettings(false);
+    setNewEmail('');
+    setNewPassword('');
+    setConfirmPassword('');
+  };
+
+  const handleOpenSettings = () => {
+    // Load current credentials
+    const currentEmail = localStorage.getItem('admin_email') || 'admin@techandthecity.com';
+    const currentPassword = localStorage.getItem('admin_password') || 'TechAndTheCity2024!';
+    
+    setNewEmail(currentEmail);
+    setNewPassword(currentPassword);
+    setConfirmPassword(currentPassword);
+    setShowSettings(true);
+    setSettingsError('');
+    setSettingsSuccess('');
   };
 
   const handleDelete = async (slug) => {
@@ -78,16 +136,29 @@ export default function SecretAdminDashboard() {
           <div className="text-center mb-6">
             <Lock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-white mb-2">Admin Access</h1>
-            <p className="text-gray-400">Enter password to continue</p>
+            <p className="text-gray-400">Enter your credentials to continue</p>
           </div>
           
           <form onSubmit={handleLogin}>
             <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@techandthecity.com"
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Enter your password"
                 className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
                 required
               />
@@ -137,6 +208,13 @@ export default function SecretAdminDashboard() {
             <p className="text-gray-400 mt-2">Secret Admin Panel</p>
           </div>
           <div className="flex gap-4">
+            <button
+              onClick={handleOpenSettings}
+              className="bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors inline-flex items-center gap-2"
+            >
+              <Settings className="h-5 w-5" />
+              Settings
+            </button>
             <Link
               href="/admin/new"
               className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2"
@@ -223,6 +301,85 @@ export default function SecretAdminDashboard() {
               <Plus className="h-5 w-5" />
               Create First Article
             </Link>
+          </div>
+        )}
+
+        {/* Settings Modal */}
+        {showSettings && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-slate-800 p-8 rounded-lg border border-slate-700 max-w-md w-full mx-4">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Update Credentials</h2>
+                <button
+                  onClick={() => setShowSettings(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              
+              <form onSubmit={handleUpdateCredentials}>
+                <div className="mb-4">
+                  <label className="block text-gray-300 text-sm mb-2">New Email</label>
+                  <input
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                    required
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label className="block text-gray-300 text-sm mb-2">New Password</label>
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                    required
+                    minLength={6}
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label className="block text-gray-300 text-sm mb-2">Confirm Password</label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                    required
+                    minLength={6}
+                  />
+                </div>
+                
+                {settingsError && (
+                  <div className="text-red-400 text-sm mb-4 text-center">{settingsError}</div>
+                )}
+                
+                {settingsSuccess && (
+                  <div className="text-green-400 text-sm mb-4 text-center">{settingsSuccess}</div>
+                )}
+                
+                <div className="flex gap-3">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-2"
+                  >
+                    <Save className="h-4 w-4" />
+                    Save Changes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowSettings(false)}
+                    className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
       </div>

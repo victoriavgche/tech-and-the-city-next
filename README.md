@@ -1,28 +1,29 @@
-# Tech and the City
+# Tech & the City
 
-A modern blog platform exploring technology, innovation, and the future of cities.
+A modern blog platform showcasing culture and technology across Europe, with Athens energy. Built with Next.js 14, featuring responsive design, multilingual support, and a secure admin panel.
 
 ## Features
 
-- 🚀 **Modern Tech Stack**: Next.js 14, React 18, Tailwind CSS
-- 📝 **Content Management**: Markdown-based blog posts with admin panel
-- 🔐 **Secure Admin**: Protected admin area with authentication
-- 📱 **Responsive Design**: Mobile-first, beautiful UI
-- ⚡ **Performance**: Optimized for speed and SEO
-- 🌐 **Internationalization**: Multi-language support ready
+- 🌍 **Multilingual Support**: English/Greek translation with Google Translate API
+- 📱 **Responsive Design**: Optimized for desktop, tablet, and mobile
+- 🎨 **Modern UI**: Dark theme with gradient backgrounds and smooth animations
+- 🔐 **Secure Admin Panel**: Hidden admin system with customizable credentials
+- ✏️ **Rich Content Management**: Create, edit, and delete articles with image support
+- 🚀 **Performance**: Static generation with Next.js 14
 
-## Quick Start
+## Tech Stack
 
-### Prerequisites
+- **Framework**: Next.js 14
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Content**: Markdown with front matter
+- **Deployment**: Vercel-ready
 
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
+## Getting Started
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone <repository-url>
 cd tech-and-the-city-next
 ```
 
@@ -31,7 +32,7 @@ cd tech-and-the-city-next
 npm install
 ```
 
-3. Start development server:
+3. Run the development server:
 ```bash
 npm run dev
 ```
@@ -40,137 +41,56 @@ npm run dev
 
 ## Admin Panel
 
-Access the secret admin panel at `/secret-admin`:
+Access the secret admin panel at `/admin-TC25`:
 
-- **Email**: `admin@techandthecity.com`
-- **Password**: `TechAndTheCity2024!`
-- Edit, delete, and create articles
-- Image upload support
-- Inline editing with cursor
-- Hidden from public navigation
+- **Default Email**: `admin@techandthecity.com`
+- **Default Password**: `TechAndTheCity2024!`
+- **Features**: Edit, delete, and create articles with image upload support
+- **Security**: Hidden from public navigation, customizable credentials
+- **Settings**: Change email and password through the Settings panel
 
 ### Admin Features
 
-- 📊 **Dashboard**: Overview of posts and statistics
-- ✏️ **Create Posts**: Rich text editor with image upload
-- 📋 **Manage Posts**: Edit, delete, and organize content
-- 📈 **Analytics**: Track performance and engagement
-- 🔒 **Secure**: Session-based authentication
+- 📊 **Dashboard**: Overview of all posts with thumbnails
+- ✏️ **Create Posts**: Rich text editor with image upload (URL or file)
+- 🔧 **Edit Posts**: Inline editing with cursor support
+- 🗑️ **Delete Posts**: One-click article deletion
+- ⚙️ **Settings**: Customize admin credentials
+- 👁️ **Preview**: View articles before publishing
 
 ## Project Structure
 
 ```
-├── app/                    # Next.js app directory
-│   ├── admin/             # Admin panel pages
-│   ├── api/               # API routes
-│   ├── posts/             # Blog post pages
-│   └── globals.css        # Global styles
-├── components/            # Reusable components
-├── content/               # Markdown content
-│   └── posts/            # Blog posts
-├── lib/                  # Utility functions
-├── public/               # Static assets
-└── middleware.js         # Route protection
+├── app/
+│   ├── admin-TC25/          # Secret admin panel
+│   ├── articles/            # Article pages
+│   ├── api/                 # API routes
+│   └── globals.css          # Global styles
+├── components/
+│   ├── Nav.jsx              # Navigation component
+│   ├── Footer.jsx           # Footer component
+│   ├── Logo.jsx             # Logo component
+│   └── TranslatedContent.jsx # Translation wrapper
+├── content/
+│   └── posts/               # Markdown articles
+├── lib/
+│   ├── posts.js             # Post utilities
+│   └── useTranslation.js    # Translation hook
+└── public/                  # Static assets
 ```
 
 ## Deployment
 
-### Vercel (Recommended)
+The project is ready for deployment on Vercel:
 
 1. Push your code to GitHub
-2. Connect your repository to [Vercel](https://vercel.com)
-3. Set environment variables in Vercel dashboard
-4. Deploy automatically
-
-### Other Platforms
-
-#### Build for Production
-
-```bash
-npm run build
-npm start
-```
-
-#### Environment Variables
-
-Create a `.env.local` file:
-
-```env
-ADMIN_USERNAME=your-admin-username
-ADMIN_PASSWORD=your-secure-password
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-NEXT_PUBLIC_SITE_NAME=Your Site Name
-```
-
-## Content Management
-
-### Creating Posts
-
-1. Login to admin panel
-2. Go to "Create New Post"
-3. Fill in title, excerpt, content
-4. Upload featured image
-5. Publish
-
-### Post Format
-
-Posts are stored as Markdown files in `content/posts/`:
-
-```markdown
----
-title: "Your Post Title"
-excerpt: "Brief description"
-date: "2024-01-01"
-image: "/path/to/image.jpg"
----
-
-Your content here...
-```
-
-## Customization
-
-### Styling
-
-- Modify `app/globals.css` for global styles
-- Update Tailwind config in `tailwind.config.js`
-- Customize components in `components/` directory
-
-### Content
-
-- Add new pages in `app/` directory
-- Modify navigation in `components/Nav.jsx`
-- Update footer in `components/Footer.jsx`
-
-## Performance
-
-- ⚡ **Image Optimization**: Automatic WebP/AVIF conversion
-- 🚀 **Code Splitting**: Automatic route-based splitting
-- 📦 **Bundle Analysis**: Run `npm run analyze`
-- 🔄 **Caching**: Optimized caching strategies
-
-## Security
-
-- 🔐 **Authentication**: Secure session management
-- 🛡️ **Headers**: Security headers configured
-- 🚫 **CSRF Protection**: Built-in protection
-- 🔒 **Environment Variables**: Sensitive data protection
+2. Connect your repository to Vercel
+3. Deploy automatically
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+This is a private project. For any issues or suggestions, please contact the development team.
 
 ## License
 
-This project is licensed under the MIT License.
-
-## Support
-
-For support, email support@techandthecity.com or create an issue on GitHub.
-
----
-
-Built with ❤️ using Next.js
+All rights reserved. © 2024 Tech & the City
