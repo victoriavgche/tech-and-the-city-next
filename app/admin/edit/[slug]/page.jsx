@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Save, ArrowLeft, Eye, AlertCircle } from 'lucide-react';
+import { Save, ArrowLeft, Eye, AlertCircle, Bold, Italic, List, ListOrdered, Quote, Code, Link as LinkIcon, Heading1, Heading2, Heading3, Type } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditPost() {
@@ -13,6 +13,7 @@ export default function EditPost() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [cursorPosition, setCursorPosition] = useState(0);
 
   useEffect(() => {
     fetchPost();
@@ -61,6 +62,43 @@ export default function EditPost() {
     } finally {
       setSaving(false);
     }
+  };
+
+  // Formatting functions
+  const insertText = (before, after = '', placeholder = '') => {
+    const textarea = document.getElementById('markdown-editor');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    const textToInsert = selectedText || placeholder;
+    
+    const newContent = content.substring(0, start) + before + textToInsert + after + content.substring(end);
+    setContent(newContent);
+    
+    // Set cursor position
+    const newCursorPos = start + before.length + textToInsert.length + after.length;
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  };
+
+  const formatText = {
+    bold: () => insertText('**', '**', 'bold text'),
+    italic: () => insertText('*', '*', 'italic text'),
+    heading1: () => insertText('\n# ', '\n', 'Heading 1'),
+    heading2: () => insertText('\n## ', '\n', 'Heading 2'),
+    heading3: () => insertText('\n### ', '\n', 'Heading 3'),
+    quote: () => insertText('\n> ', '\n', 'Quote text'),
+    code: () => insertText('`', '`', 'code'),
+    link: () => insertText('[', '](url)', 'link text'),
+    list: () => insertText('\n- ', '\n', 'List item'),
+    orderedList: () => insertText('\n1. ', '\n', 'Numbered item')
+  };
+
+  const handleTextareaChange = (e) => {
+    setContent(e.target.value);
+    setCursorPosition(e.target.selectionStart);
   };
 
   if (loading) {
@@ -128,30 +166,138 @@ export default function EditPost() {
         {/* Editor */}
         <div className="bg-slate-800 rounded-lg border border-slate-700">
           <div className="p-4 border-b border-slate-700">
-            <h2 className="text-lg font-semibold text-white">Markdown Editor</h2>
-            <p className="text-gray-400 text-sm">Edit the markdown content of your post</p>
+            <h2 className="text-lg font-semibold text-white">Rich Text Editor</h2>
+            <p className="text-gray-400 text-sm">Edit your article with formatting options</p>
+          </div>
+          
+          {/* Formatting Toolbar */}
+          <div className="p-3 border-b border-slate-700 bg-slate-750">
+            <div className="flex flex-wrap gap-2">
+              {/* Text Formatting */}
+              <button
+                onClick={formatText.bold}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Bold (Ctrl+B)"
+              >
+                <Bold className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.italic}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Italic (Ctrl+I)"
+              >
+                <Italic className="h-4 w-4" />
+              </button>
+              
+              <div className="w-px h-8 bg-slate-600 mx-1"></div>
+              
+              {/* Headings */}
+              <button
+                onClick={formatText.heading1}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Heading 1"
+              >
+                <Heading1 className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.heading2}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Heading 2"
+              >
+                <Heading2 className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.heading3}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Heading 3"
+              >
+                <Heading3 className="h-4 w-4" />
+              </button>
+              
+              <div className="w-px h-8 bg-slate-600 mx-1"></div>
+              
+              {/* Lists */}
+              <button
+                onClick={formatText.list}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Bullet List"
+              >
+                <List className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.orderedList}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Numbered List"
+              >
+                <ListOrdered className="h-4 w-4" />
+              </button>
+              
+              <div className="w-px h-8 bg-slate-600 mx-1"></div>
+              
+              {/* Special Formatting */}
+              <button
+                onClick={formatText.quote}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Quote"
+              >
+                <Quote className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.code}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Code"
+              >
+                <Code className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.link}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Link"
+              >
+                <LinkIcon className="h-4 w-4" />
+              </button>
+            </div>
           </div>
           
           <div className="p-4">
             <textarea
+              id="markdown-editor"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={handleTextareaChange}
               className="w-full h-96 bg-slate-700 text-white p-4 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none font-mono text-sm resize-none"
-              placeholder="Enter your markdown content here..."
+              placeholder="Start writing your article... Use the toolbar above for formatting or type markdown directly."
             />
           </div>
         </div>
 
         {/* Help Text */}
         <div className="mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-          <h3 className="text-white font-semibold mb-2">Markdown Tips:</h3>
-          <ul className="text-gray-400 text-sm space-y-1">
-            <li>• Use <code className="bg-slate-700 px-1 rounded"># Title</code> for headings</li>
-            <li>• Use <code className="bg-slate-700 px-1 rounded">**bold**</code> for bold text</li>
-            <li>• Use <code className="bg-slate-700 px-1 rounded">*italic*</code> for italic text</li>
-            <li>• Use <code className="bg-slate-700 px-1 rounded">[link](url)</code> for links</li>
-            <li>• Use <code className="bg-slate-700 px-1 rounded">![alt](image-url)</code> for images</li>
-          </ul>
+          <h3 className="text-white font-semibold mb-2">Formatting Options:</h3>
+          <div className="grid md:grid-cols-2 gap-4 text-gray-400 text-sm">
+            <div>
+              <h4 className="text-white font-medium mb-2">Toolbar Buttons:</h4>
+              <ul className="space-y-1">
+                <li>• <strong>Bold</strong> - Makes text <strong>bold</strong></li>
+                <li>• <em>Italic</em> - Makes text <em>italic</em></li>
+                <li>• <strong>H1, H2, H3</strong> - Creates headings</li>
+                <li>• <strong>Lists</strong> - Bullet and numbered lists</li>
+                <li>• <strong>Quote</strong> - Block quotes</li>
+                <li>• <strong>Code</strong> - Inline code</li>
+                <li>• <strong>Link</strong> - Create links</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-medium mb-2">Manual Markdown:</h4>
+              <ul className="space-y-1">
+                <li>• <code className="bg-slate-700 px-1 rounded">**text**</code> for bold</li>
+                <li>• <code className="bg-slate-700 px-1 rounded">*text*</code> for italic</li>
+                <li>• <code className="bg-slate-700 px-1 rounded"># Heading</code> for headings</li>
+                <li>• <code className="bg-slate-700 px-1 rounded">- item</code> for lists</li>
+                <li>• <code className="bg-slate-700 px-1 rounded">> quote</code> for quotes</li>
+                <li>• <code className="bg-slate-700 px-1 rounded">`code`</code> for code</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
