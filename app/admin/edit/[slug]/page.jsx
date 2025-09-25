@@ -270,35 +270,6 @@ export default function EditPost() {
           </div>
         </div>
 
-        {/* Help Text */}
-        <div className="mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
-          <h3 className="text-white font-semibold mb-2">Formatting Options:</h3>
-          <div className="grid md:grid-cols-2 gap-4 text-gray-400 text-sm">
-            <div>
-              <h4 className="text-white font-medium mb-2">Toolbar Buttons:</h4>
-              <ul className="space-y-1">
-                <li>• <strong>Bold</strong> - Makes text <strong>bold</strong></li>
-                <li>• <em>Italic</em> - Makes text <em>italic</em></li>
-                <li>• <strong>H1, H2, H3</strong> - Creates headings</li>
-                <li>• <strong>Lists</strong> - Bullet and numbered lists</li>
-                <li>• <strong>Quote</strong> - Block quotes</li>
-                <li>• <strong>Code</strong> - Inline code</li>
-                <li>• <strong>Link</strong> - Create links</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-medium mb-2">Manual Markdown:</h4>
-              <ul className="space-y-1">
-                <li>• <code className="bg-slate-700 px-1 rounded">**text**</code> for bold</li>
-                <li>• <code className="bg-slate-700 px-1 rounded">*text*</code> for italic</li>
-                <li>• <code className="bg-slate-700 px-1 rounded"># Heading</code> for headings</li>
-                <li>• <code className="bg-slate-700 px-1 rounded">- item</code> for lists</li>
-                <li>• <code className="bg-slate-700 px-1 rounded">> quote</code> for quotes</li>
-                <li>• <code className="bg-slate-700 px-1 rounded">`code`</code> for code</li>
-              </ul>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

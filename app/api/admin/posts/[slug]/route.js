@@ -26,10 +26,27 @@ export async function PUT(request, { params }) {
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
-    fs.writeFileSync(filePath, content);
+    // Ensure directory exists
+    if (!fs.existsSync(postsDir)) {
+      fs.mkdirSync(postsDir, { recursive: true });
+    }
+    
+    // Validate content
+    if (!content || typeof content !== 'string') {
+      return NextResponse.json({ error: 'Invalid content provided' }, { status: 400 });
+    }
+    
+    // Write file
+    fs.writeFileSync(filePath, content, 'utf8');
+    
+    console.log(`Successfully updated post: ${slug}`);
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update post' }, { status: 500 });
+    console.error('Error updating post:', error);
+    return NextResponse.json({ 
+      error: 'Failed to update post', 
+      details: error.message 
+    }, { status: 500 });
   }
 }
 
