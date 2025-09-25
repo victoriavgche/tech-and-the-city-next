@@ -5,7 +5,7 @@ import path from 'path';
 export async function GET(request, { params }) {
   try {
     const { slug } = params;
-    const postsDir = path.join(process.cwd(), 'posts');
+    const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
     if (!fs.existsSync(filePath)) {
@@ -23,7 +23,7 @@ export async function PUT(request, { params }) {
   try {
     const { slug } = params;
     const { content } = await request.json();
-    const postsDir = path.join(process.cwd(), 'posts');
+    const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
     fs.writeFileSync(filePath, content);
@@ -36,7 +36,7 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     const { slug } = params;
-    const postsDir = path.join(process.cwd(), 'posts');
+    const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
     if (fs.existsSync(filePath)) {
