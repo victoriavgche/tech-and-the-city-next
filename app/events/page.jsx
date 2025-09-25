@@ -2,9 +2,20 @@
 
 import { useState } from 'react';
 import { Calendar, MapPin, Clock, Users, ExternalLink } from 'lucide-react';
+import '../../components/analytics.js';
 
 export default function Events() {
   const [selectedFilter, setSelectedFilter] = useState('all');
+
+  const handleEventClick = (eventTitle, action) => {
+    if (typeof window !== 'undefined' && window.analytics) {
+      window.analytics.trackClick('event_link', `/events`, {
+        event: eventTitle,
+        action: action,
+        position: 'events_page'
+      });
+    }
+  };
 
   const events = [
     {
@@ -153,10 +164,16 @@ export default function Events() {
                     </div>
                     
                     <div className="flex gap-3">
-                      <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium">
+                      <button 
+                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium"
+                        onClick={() => handleEventClick(event.title, 'register')}
+                      >
                         Register Now
                       </button>
-                      <button className="border border-gray-600 text-gray-300 px-6 py-2 rounded-lg hover:border-gray-500 hover:text-white transition-colors duration-300 font-medium flex items-center gap-2">
+                      <button 
+                        className="border border-gray-600 text-gray-300 px-6 py-2 rounded-lg hover:border-gray-500 hover:text-white transition-colors duration-300 font-medium flex items-center gap-2"
+                        onClick={() => handleEventClick(event.title, 'learn_more')}
+                      >
                         <ExternalLink className="h-4 w-4" />
                         Learn More
                       </button>

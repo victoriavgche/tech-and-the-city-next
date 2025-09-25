@@ -2,6 +2,7 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import AnalyticsScript from '@/components/AnalyticsScript';
 
 const inter = Inter({ subsets: ['latin'] });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] });
@@ -81,6 +82,7 @@ export default function RootLayout({ children }) {
         <Nav />
         <main>{children}</main>
         <Footer />
+        <AnalyticsScript />
       </body>
     </html>
   );

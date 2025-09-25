@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Calendar, ArrowRight, TrendingUp, Clock } from "lucide-react";
 import ClientWrapper from "./ClientWrapper";
 import ShareDropdown from "./ShareDropdown";
+import './analytics.js';
 
 // Function to get reading time from post
 function getReadingTime(post) {
@@ -15,6 +16,35 @@ function getReadingTime(post) {
 }
 
 export default function HomePageClient({ posts }) {
+  
+  const handleArticleClick = (articleSlug, position = 'homepage') => {
+    if (typeof window !== 'undefined' && window.analytics) {
+      window.analytics.trackClick('article_link', `/articles/${articleSlug}`, {
+        position: position,
+        article: articleSlug,
+        source: 'homepage'
+      });
+    }
+  };
+
+  const handleEventClick = (eventUrl) => {
+    if (typeof window !== 'undefined' && window.analytics) {
+      window.analytics.trackClick('event_link', eventUrl, {
+        position: 'homepage',
+        source: 'homepage'
+      });
+    }
+  };
+
+  const handleShare = (platform, articleSlug) => {
+    if (typeof window !== 'undefined' && window.analytics) {
+      window.analytics.trackEvent('social_share', {
+        platform: platform,
+        article: articleSlug,
+        source: 'homepage'
+      });
+    }
+  };
   
   // Find "AI στο Ηρώδειο: A Ball to Remember" article
   const herodionAIPost = posts.find(post => post.slug === 'ai-a-ball-to-remember');
@@ -45,7 +75,11 @@ export default function HomePageClient({ posts }) {
               {featured && (
                 <article className="group">
                   <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20">
-                    <Link href={`/articles/${featured.slug}`} className="block">
+                    <Link 
+                      href={`/articles/${featured.slug}`} 
+                      className="block"
+                      onClick={() => handleArticleClick(featured.slug, 'featured')}
+                    >
                       <div className="aspect-[16/10] overflow-hidden">
                         {featured.image ? (
                           <img
@@ -70,7 +104,11 @@ export default function HomePageClient({ posts }) {
                         </div>
                       </div>
                       <div className="flex items-start justify-between mb-4">
-                        <Link href={`/articles/${featured.slug}`} className="flex-1">
+                        <Link 
+                          href={`/articles/${featured.slug}`} 
+                          className="flex-1"
+                          onClick={() => handleArticleClick(featured.slug, 'featured_title')}
+                        >
                           <h2 className="text-2xl md:text-3xl font-semibold text-white group-hover:text-blue-400 transition-colors leading-tight">
                             {featured.title}
                           </h2>
@@ -83,7 +121,10 @@ export default function HomePageClient({ posts }) {
                           />
                         </div>
                       </div>
-                      <Link href={`/articles/${featured.slug}`}>
+                      <Link 
+                        href={`/articles/${featured.slug}`}
+                        onClick={() => handleArticleClick(featured.slug, 'featured_excerpt')}
+                      >
                         <p className="text-base text-gray-300 leading-relaxed">
                           {featured.excerpt}
                         </p>
@@ -99,7 +140,11 @@ export default function HomePageClient({ posts }) {
               {popularPosts.slice(0, 2).map((post, index) => (
                 <article key={post.slug} className="group">
                   <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20">
-                    <Link href={`/articles/${post.slug}`} className="block">
+                    <Link 
+                      href={`/articles/${post.slug}`} 
+                      className="block"
+                      onClick={() => handleArticleClick(post.slug, 'popular')}
+                    >
                       <div className="aspect-[16/10] overflow-hidden">
                         {post.image ? (
                           <img
@@ -124,7 +169,11 @@ export default function HomePageClient({ posts }) {
                         </div>
                       </div>
                       <div className="flex items-start justify-between mb-3">
-                        <Link href={`/articles/${post.slug}`} className="flex-1">
+                        <Link 
+                          href={`/articles/${post.slug}`} 
+                          className="flex-1"
+                          onClick={() => handleArticleClick(post.slug, 'popular_title')}
+                        >
                           <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors leading-tight">
                             {post.title}
                           </h3>
@@ -137,7 +186,10 @@ export default function HomePageClient({ posts }) {
                           />
                         </div>
                       </div>
-                      <Link href={`/articles/${post.slug}`}>
+                      <Link 
+                        href={`/articles/${post.slug}`}
+                        onClick={() => handleArticleClick(post.slug, 'popular_excerpt')}
+                      >
                         <p className="text-gray-300 text-sm leading-relaxed">
                           {post.excerpt}
                         </p>
@@ -164,7 +216,11 @@ export default function HomePageClient({ posts }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {olderPosts.map((post, index) => (
               <article key={post.slug} className="group">
-                <Link href={`/articles/${post.slug}`} className="block">
+                <Link 
+                  href={`/articles/${post.slug}`} 
+                  className="block"
+                  onClick={() => handleArticleClick(post.slug, 'latest')}
+                >
                   <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20">
                     <div className="aspect-[16/10] overflow-hidden">
                       {post.image ? (

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import '../components/analytics.js';
 
 export default function Subscribe() {
   const [email, setEmail] = useState('');
@@ -17,6 +18,11 @@ export default function Subscribe() {
       setMessage('Thank you for subscribing! You\'ll receive our latest updates.');
       setEmail('');
       setIsSubmitting(false);
+      
+      // Track newsletter subscription
+      if (typeof window !== 'undefined' && window.analytics) {
+        window.analytics.trackNewsletterSubscription('subscribe_page');
+      }
     }, 1000);
   };
 

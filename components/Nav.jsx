@@ -3,9 +3,18 @@
 import Logo from "./Logo";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import './analytics.js';
 
 export default function Nav(){
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const handleNavClick = (targetUrl, elementType) => {
+    if (typeof window !== 'undefined' && window.analytics) {
+      window.analytics.trackClick(elementType, targetUrl, {
+        position: 'navigation'
+      });
+    }
+  };
   
   return (
     <nav className="sticky top-0 z-40 bg-gray-800 border-b border-gray-700">
@@ -60,11 +69,41 @@ export default function Nav(){
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8 text-base lg:text-lg text-white">
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/">Home</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/about">About</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/articles">Articles</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/events">Events</a>
-          <a className="hover:text-blue-400 transition-colors duration-200 font-medium" href="/contact">Contact</a>
+          <a 
+            className="hover:text-blue-400 transition-colors duration-200 font-medium" 
+            href="/"
+            onClick={() => handleNavClick('/', 'nav_link')}
+          >
+            Home
+          </a>
+          <a 
+            className="hover:text-blue-400 transition-colors duration-200 font-medium" 
+            href="/about"
+            onClick={() => handleNavClick('/about', 'nav_link')}
+          >
+            About
+          </a>
+          <a 
+            className="hover:text-blue-400 transition-colors duration-200 font-medium" 
+            href="/articles"
+            onClick={() => handleNavClick('/articles', 'nav_link')}
+          >
+            Articles
+          </a>
+          <a 
+            className="hover:text-blue-400 transition-colors duration-200 font-medium" 
+            href="/events"
+            onClick={() => handleNavClick('/events', 'nav_link')}
+          >
+            Events
+          </a>
+          <a 
+            className="hover:text-blue-400 transition-colors duration-200 font-medium" 
+            href="/contact"
+            onClick={() => handleNavClick('/contact', 'nav_link')}
+          >
+            Contact
+          </a>
         </div>
         
         <div className="flex items-center gap-2 sm:gap-3">
@@ -85,35 +124,50 @@ export default function Nav(){
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavClick('/', 'nav_link');
+              }}
             >
               Home
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/about"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavClick('/about', 'nav_link');
+              }}
             >
               About
             </a>
             <a 
-              className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
+              className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base"
               href="/articles"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavClick('/articles', 'nav_link');
+              }}
             >
               Articles
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/events"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavClick('/events', 'nav_link');
+              }}
             >
               Events
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
               href="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleNavClick('/contact', 'nav_link');
+              }}
             >
               Contact
             </a>

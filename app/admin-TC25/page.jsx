@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Edit, Trash2, Plus, Eye, Lock, Settings, Save, X, Share2 } from 'lucide-react';
+import { Edit, Trash2, Plus, Eye, Lock, Settings, Save, X, Share2, BarChart3 } from 'lucide-react';
+import AnalyticsDashboard from '@/components/AnalyticsDashboard';
 
 export default function SecretAdminDashboard() {
   const [posts, setPosts] = useState([]);
@@ -17,6 +18,7 @@ export default function SecretAdminDashboard() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [settingsError, setSettingsError] = useState('');
   const [settingsSuccess, setSettingsSuccess] = useState('');
+  const [activeTab, setActiveTab] = useState('posts');
 
   useEffect(() => {
     // Check if already authenticated
@@ -258,13 +260,15 @@ export default function SecretAdminDashboard() {
               <Settings className="h-5 w-5" />
               Settings
             </button>
-            <Link
-              href="/admin/new"
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2"
-            >
-              <Plus className="h-5 w-5" />
-              New Article
-            </Link>
+            {activeTab === 'posts' && (
+              <Link
+                href="/admin/new"
+                className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2"
+              >
+                <Plus className="h-5 w-5" />
+                New Article
+              </Link>
+            )}
             <button
               onClick={handleLogout}
               className="bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors"
@@ -272,6 +276,32 @@ export default function SecretAdminDashboard() {
               Logout
             </button>
           </div>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="flex space-x-1 mb-8 bg-slate-800/50 p-1 rounded-lg">
+          <button
+            onClick={() => setActiveTab('posts')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+              activeTab === 'posts'
+                ? 'bg-slate-700 text-white'
+                : 'text-gray-300 hover:text-white hover:bg-slate-700'
+            }`}
+          >
+            <Edit className="h-4 w-4" />
+            Posts Management
+          </button>
+          <button
+            onClick={() => setActiveTab('analytics')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+              activeTab === 'analytics'
+                ? 'bg-slate-700 text-white'
+                : 'text-gray-300 hover:text-white hover:bg-slate-700'
+            }`}
+          >
+            <BarChart3 className="h-4 w-4" />
+            Analytics
+          </button>
         </div>
 
         {/* Back to Home */}
@@ -284,8 +314,11 @@ export default function SecretAdminDashboard() {
           </Link>
         </div>
 
-        {/* Articles List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Tab Content */}
+        {activeTab === 'posts' && (
+          <>
+            {/* Articles List */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
             <div key={post.slug} className="bg-slate-800 rounded-lg p-6 border border-slate-700">
               {/* Article Image */}
@@ -341,17 +374,23 @@ export default function SecretAdminDashboard() {
           ))}
         </div>
 
-        {posts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">No articles found</p>
-            <Link
-              href="/admin/new"
-              className="mt-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2"
-            >
-              <Plus className="h-5 w-5" />
-              Create First Article
-            </Link>
-          </div>
+            {posts.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-400 text-lg">No articles found</p>
+                <Link
+                  href="/admin/new"
+                  className="mt-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2"
+                >
+                  <Plus className="h-5 w-5" />
+                  Create First Article
+                </Link>
+              </div>
+            )}
+          </>
+        )}
+
+        {activeTab === 'analytics' && (
+          <AnalyticsDashboard />
         )}
 
         {/* Settings Modal */}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Mail, MapPin } from 'lucide-react';
+import '../components/analytics.js';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -32,6 +33,11 @@ export default function Contact() {
       if (response.ok) {
         setMessage('Your message has been sent successfully! We\'ll get back to you soon.');
         setFormData({ name: '', email: '', subject: '', message: '' });
+        
+        // Track successful form submission
+        if (typeof window !== 'undefined' && window.analytics) {
+          window.analytics.trackContactForm('contact_page');
+        }
       } else {
         setMessage(data.error || 'Failed to send message. Please try again.');
       }
