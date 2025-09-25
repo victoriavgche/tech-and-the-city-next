@@ -41,6 +41,9 @@ export default function EditPost() {
     setSuccess('');
 
     try {
+      console.log('Saving post:', params.slug);
+      console.log('Content length:', content.length);
+      
       const response = await fetch(`/api/admin/posts/${params.slug}`, {
         method: 'PUT',
         headers: {
@@ -49,16 +52,21 @@ export default function EditPost() {
         body: JSON.stringify({ content }),
       });
 
+      const responseData = await response.json();
+      console.log('Response:', responseData);
+
       if (response.ok) {
-        setSuccess('Post updated successfully!');
+        setSuccess(`Post updated successfully! (${responseData.size} characters)`);
         setTimeout(() => {
           router.push('/admin-TC25');
-        }, 1500);
+        }, 2000);
       } else {
-        setError('Failed to update post');
+        console.error('Save failed:', responseData);
+        setError(`Failed to update post: ${responseData.error || 'Unknown error'}`);
       }
     } catch (error) {
-      setError('Failed to update post');
+      console.error('Network error:', error);
+      setError(`Network error: ${error.message}`);
     } finally {
       setSaving(false);
     }
