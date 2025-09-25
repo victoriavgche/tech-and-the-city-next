@@ -1,6 +1,6 @@
 # Tech & the City
 
-A modern blog platform showcasing culture and technology across Europe, with Athens energy. Built with Next.js 14, featuring responsive design, clean UI, and a secure admin panel.
+A modern blog platform showcasing culture and technology across Europe, with Athens energy. Built with Next.js 14, featuring responsive design, clean UI, rich text editor, and a secure admin panel.
 
 ## Features
 
