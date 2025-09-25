@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import '../components/analytics.js';
+import '../../components/analytics.js';
 
 export default function Subscribe() {
   const [email, setEmail] = useState('');

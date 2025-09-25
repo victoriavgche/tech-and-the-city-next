@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Mail, MapPin } from 'lucide-react';
-import '../components/analytics.js';
+import '../../components/analytics.js';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
