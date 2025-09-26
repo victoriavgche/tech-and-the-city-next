@@ -26,25 +26,40 @@
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
     ],
+    "/admin-TC25/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin-TC25/page.js"
+    ],
     "/articles/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/articles/[slug]/page.js"
     ],
-    "/admin-TC25/page": [
+    "/articles/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin-TC25/page.js"
+      "static/chunks/app/articles/page.js"
+    ],
+    "/events/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/events/page.js"
+    ],
+    "/contact/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/contact/page.js"
     ],
     "/admin/edit/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/edit/[slug]/page.js"
     ],
-    "/articles/page": [
+    "/about/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/articles/page.js"
+      "static/chunks/app/about/page.js"
     ]
   }
 }
