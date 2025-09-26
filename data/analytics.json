@@ -6119,6 +6119,126 @@
         "width": 1707,
         "height": 772
       }
+    },
+    {
+      "sessionId": "7dc5iyrppv8mg19sh8c",
+      "page": "/articles/endeavor-greece",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917038909,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "7dc5iyrppv8mg19sh8c",
+      "page": "/articles/endeavor-greece",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917038909,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "7dc5iyrppv8mg19sh8c",
+      "page": "/articles/endeavor-greece",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917038910,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "8d02z56qonmg19sh18",
+      "page": "/articles/endeavor-greece",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917038652,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "gen107bmhhmg19szs4",
+      "page": "/",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917062948,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "page": "/",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917063087,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "page": "/",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917063087,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "page": "/",
+      "referrer": "http://localhost:3001/articles/endeavor-greece",
+      "timestamp": 1758917063088,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
     }
   ],
   "events": [
@@ -11466,6 +11586,26 @@
       },
       "timestamp": 1758916177338,
       "page": "/"
+    },
+    {
+      "sessionId": "7dc5iyrppv8mg19sh8c",
+      "eventType": "time_spent",
+      "data": {
+        "time": 22344,
+        "page": "/articles/endeavor-greece"
+      },
+      "timestamp": 1758917061254,
+      "page": "/articles/endeavor-greece"
+    },
+    {
+      "sessionId": "7dc5iyrppv8mg19sh8c",
+      "eventType": "time_spent",
+      "data": {
+        "time": 22345,
+        "page": "/articles/endeavor-greece"
+      },
+      "timestamp": 1758917061255,
+      "page": "/articles/endeavor-greece"
     }
   ],
   "clicks": [
@@ -11736,6 +11876,17 @@
       "data": {
         "position": "articles_page",
         "article": "endeavor-greece"
+      }
+    },
+    {
+      "sessionId": "7dc5iyrppv8mg19sh8c",
+      "elementType": "nav_link",
+      "targetUrl": "/",
+      "sourcePage": "/articles/endeavor-greece",
+      "position": "navigation",
+      "timestamp": 1758917061253,
+      "data": {
+        "position": "navigation"
       }
     }
   ],
@@ -12813,11 +12964,35 @@
       "firstSeen": 1758916164452,
       "lastSeen": 1758916164452,
       "pageViews": 1
+    },
+    "7dc5iyrppv8mg19sh8c": {
+      "id": "7dc5iyrppv8mg19sh8c",
+      "firstSeen": 1758917038909,
+      "lastSeen": 1758917038910,
+      "pageViews": 3
+    },
+    "8d02z56qonmg19sh18": {
+      "id": "8d02z56qonmg19sh18",
+      "firstSeen": 1758917038652,
+      "lastSeen": 1758917038652,
+      "pageViews": 1
+    },
+    "gen107bmhhmg19szs4": {
+      "id": "gen107bmhhmg19szs4",
+      "firstSeen": 1758917062948,
+      "lastSeen": 1758917062948,
+      "pageViews": 1
+    },
+    "hqhkluncab7mg19szvz": {
+      "id": "hqhkluncab7mg19szvz",
+      "firstSeen": 1758917063087,
+      "lastSeen": 1758917063088,
+      "pageViews": 3
     }
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1758916259670,
-    "totalSessions": 179
+    "lastUpdated": 1758917063175,
+    "totalSessions": 183
   }
 }

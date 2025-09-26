@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/page": [
+    "/admin/edit/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/admin/edit/[slug]/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -31,10 +31,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/articles/[slug]/page.js"
     ],
-    "/articles/page": [
+    "/events/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/articles/page.js"
+      "static/chunks/app/events/page.js"
+    ],
+    "/contact/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/contact/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/admin-TC25/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin-TC25/page.js"
     ]
   }
 }

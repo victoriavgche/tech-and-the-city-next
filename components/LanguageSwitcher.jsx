@@ -32,8 +32,8 @@ export default function LanguageSwitcher() {
       className="flex items-center justify-center w-10 h-10 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors duration-200"
       title={`Switch to ${currentLang === 'en' ? 'Greek' : 'English'}`}
     >
-      <span className="text-lg">
-        {currentLang === 'en' ? '🇬🇷' : '🇺🇸'}
+      <span className="text-lg font-bold">
+        {currentLang === 'en' ? 'EL' : 'EN'}
       </span>
     </button>
   );
