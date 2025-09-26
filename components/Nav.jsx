@@ -1,12 +1,30 @@
 'use client';
 
 import Logo from "./Logo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { t, getCurrentLanguage } from "../lib/translations";
 import './analytics.js';
 
 export default function Nav(){
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState('en');
+  
+  useEffect(() => {
+    setCurrentLang(getCurrentLanguage());
+    
+    // Listen for language changes
+    const handleLanguageChange = (event) => {
+      setCurrentLang(event.detail.language);
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
+  }, []);
   
   const handleNavClick = (targetUrl, elementType) => {
     if (typeof window !== 'undefined' && window.analytics) {
@@ -74,46 +92,49 @@ export default function Nav(){
             href="/"
             onClick={() => handleNavClick('/', 'nav_link')}
           >
-            Home
+            {t('nav.home', currentLang)}
           </a>
           <a 
             className="hover:text-blue-400 transition-colors duration-200 font-medium" 
             href="/about"
             onClick={() => handleNavClick('/about', 'nav_link')}
           >
-            About
+            {t('nav.about', currentLang)}
           </a>
           <a 
             className="hover:text-blue-400 transition-colors duration-200 font-medium" 
             href="/articles"
             onClick={() => handleNavClick('/articles', 'nav_link')}
           >
-            Articles
+            {t('nav.articles', currentLang)}
           </a>
           <a 
             className="hover:text-blue-400 transition-colors duration-200 font-medium" 
             href="/events"
             onClick={() => handleNavClick('/events', 'nav_link')}
           >
-            Events
+            {t('nav.events', currentLang)}
           </a>
           <a 
             className="hover:text-blue-400 transition-colors duration-200 font-medium" 
             href="/contact"
             onClick={() => handleNavClick('/contact', 'nav_link')}
           >
-            Contact
+            {t('nav.contact', currentLang)}
           </a>
         </div>
         
         <div className="flex items-center gap-2 sm:gap-3">
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-white hover:text-blue-400 transition-colors"
-        >
-          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+          
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-white hover:text-blue-400 transition-colors"
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
       
@@ -129,7 +150,7 @@ export default function Nav(){
                 handleNavClick('/', 'nav_link');
               }}
             >
-              Home
+              {t('nav.home', currentLang)}
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
@@ -139,7 +160,7 @@ export default function Nav(){
                 handleNavClick('/about', 'nav_link');
               }}
             >
-              About
+              {t('nav.about', currentLang)}
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base"
@@ -149,7 +170,7 @@ export default function Nav(){
                 handleNavClick('/articles', 'nav_link');
               }}
             >
-              Articles
+              {t('nav.articles', currentLang)}
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
@@ -159,7 +180,7 @@ export default function Nav(){
                 handleNavClick('/events', 'nav_link');
               }}
             >
-              Events
+              {t('nav.events', currentLang)}
             </a>
             <a 
               className="block text-white hover:text-blue-400 transition-colors duration-200 font-medium text-base" 
@@ -169,7 +190,7 @@ export default function Nav(){
                 handleNavClick('/contact', 'nav_link');
               }}
             >
-              Contact
+              {t('nav.contact', currentLang)}
             </a>
           </div>
         </div>
