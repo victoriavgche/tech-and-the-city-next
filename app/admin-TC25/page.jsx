@@ -320,7 +320,7 @@ export default function SecretAdminDashboard() {
             {/* Articles List */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <div key={post.slug} className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+            <div key={post.slug} className="bg-slate-800 rounded-lg p-6 border border-slate-700 flex flex-col h-full">
               {/* Article Image */}
               {post.image && (
                 <div className="mb-4">
@@ -333,14 +333,16 @@ export default function SecretAdminDashboard() {
               )}
               
               {/* Article Info */}
-              <h3 className="text-xl font-bold text-cyan-400 mb-2">{post.title}</h3>
-              <p className="text-gray-300 text-sm mb-4 line-clamp-3">{post.excerpt}</p>
-              <div className="text-gray-400 text-xs mb-4">
-                {new Date(post.date).toLocaleDateString()} • {post.read || '5 min'}
+              <div className="flex-grow">
+                <h3 className="text-xl font-bold text-cyan-400 mb-2">{post.title}</h3>
+                <p className="text-gray-300 text-sm mb-4 line-clamp-3">{post.excerpt}</p>
+                <div className="text-gray-400 text-xs mb-4">
+                  {new Date(post.date).toLocaleDateString()} • {post.read || '5 min'}
+                </div>
               </div>
               
               {/* Actions */}
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 flex-wrap mt-auto">
                 <Link
                   href={`/articles/${post.slug}`}
                   className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"

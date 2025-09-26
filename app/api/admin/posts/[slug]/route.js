@@ -13,7 +13,36 @@ export async function GET(request, { params }) {
     }
     
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    return NextResponse.json({ content: fileContent });
+    
+    // Parse front matter
+    const frontMatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (frontMatterMatch) {
+      const frontMatter = frontMatterMatch[1];
+      const content = frontMatterMatch[2];
+      
+      // Parse front matter fields
+      const titleMatch = frontMatter.match(/^title:\s*["']?([^"'\n]+)["']?$/m);
+      const excerptMatch = frontMatter.match(/^excerpt:\s*["']?([^"'\n]*)["']?$/m);
+      const imageMatch = frontMatter.match(/^image:\s*["']?([^"'\n]+)["']?$/m);
+      const dateMatch = frontMatter.match(/^date:\s*["']?([^"'\n]+)["']?$/m);
+      
+      return NextResponse.json({
+        title: titleMatch ? titleMatch[1] : '',
+        excerpt: excerptMatch ? excerptMatch[1] : '',
+        content: content,
+        featuredImage: imageMatch ? imageMatch[1] : '',
+        date: dateMatch ? dateMatch[1] : new Date().toISOString()
+      });
+    } else {
+      // Fallback for files without front matter
+      return NextResponse.json({
+        title: '',
+        excerpt: '',
+        content: fileContent,
+        featuredImage: '',
+        date: new Date().toISOString()
+      });
+    }
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch post' }, { status: 500 });
   }
@@ -23,10 +52,13 @@ export async function PUT(request, { params }) {
   try {
     const { slug } = params;
     const body = await request.json();
-    const { content } = body;
+    const { title, excerpt, content, featuredImage } = body;
     
     console.log(`Attempting to update post: ${slug}`);
+    console.log(`Title: ${title}`);
+    console.log(`Excerpt: ${excerpt}`);
     console.log(`Content length: ${content ? content.length : 'undefined'}`);
+    console.log(`Featured Image: ${featuredImage}`);
     
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
@@ -34,13 +66,12 @@ export async function PUT(request, { params }) {
     console.log(`Posts directory: ${postsDir}`);
     console.log(`File path: ${filePath}`);
     
-    // Validate content
-    if (!content || typeof content !== 'string') {
-      console.error('Invalid content provided:', { content: typeof content, length: content?.length });
+    // Validate required fields
+    if (!title || !content) {
+      console.error('Missing required fields:', { title: !!title, content: !!content });
       return NextResponse.json({ 
-        error: 'Invalid content provided',
-        received: typeof content,
-        length: content?.length
+        error: 'Title and content are required',
+        received: { title: !!title, content: !!content }
       }, { status: 400 });
     }
     
@@ -64,9 +95,19 @@ export async function PUT(request, { params }) {
       }, { status: 500 });
     }
     
+    // Create markdown content with front matter
+    const frontMatter = `---
+title: "${title.replace(/"/g, '\\"')}"
+date: "${new Date().toISOString()}"
+excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"
+${featuredImage ? `image: "${featuredImage}"` : ''}
+---
+
+${content}`;
+    
     // Write file
     console.log(`Writing to file: ${filePath}`);
-    fs.writeFileSync(filePath, content, 'utf8');
+    fs.writeFileSync(filePath, frontMatter, 'utf8');
     
     // Verify file was written
     if (fs.existsSync(filePath)) {

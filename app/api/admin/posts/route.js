@@ -38,15 +38,15 @@ export async function POST(request) {
     
     // Create front matter
     const frontMatter = `---
-title: "${postData.title}"
-excerpt: "${postData.excerpt}"
-date: "${postData.date}"
+title: "${postData.title.replace(/"/g, '\\"')}"
+excerpt: "${postData.excerpt ? postData.excerpt.replace(/"/g, '\\"') : ''}"
+date: "${new Date().toISOString()}"
 tags:
   - AI
   - Technology
   - Athens
-read: "${postData.read || '5 min'}"
-image: "${postData.image || ''}"
+read: "5 min"
+${postData.featuredImage ? `image: "${postData.featuredImage}"` : ''}
 ---
 
 ${postData.content}`;
