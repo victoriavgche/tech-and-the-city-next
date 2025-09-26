@@ -17,6 +17,9 @@ export default function EditPost() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [showMediaModal, setShowMediaModal] = useState(false);
+  const [mediaUrl, setMediaUrl] = useState('');
+  const [mediaType, setMediaType] = useState('image');
 
   useEffect(() => {
     fetchPost();
@@ -107,28 +110,7 @@ export default function EditPost() {
       const result = await response.json();
 
       if (response.ok) {
-        // Insert media into content at cursor position
-        const textarea = document.querySelector('textarea');
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        
-        let mediaMarkdown = '';
-        if (file.type.startsWith('image/')) {
-          mediaMarkdown = `\n\n![${file.name}](${result.url})\n\n`;
-        } else if (file.type.startsWith('video/')) {
-          mediaMarkdown = `\n\n<video controls style="max-width: 100%; height: auto;"><source src="${result.url}" type="${file.type}">Your browser does not support the video tag.</video>\n\n`;
-        }
-        
-        // Insert at cursor position
-        const newContent = content.substring(0, start) + mediaMarkdown + content.substring(end);
-        setContent(newContent);
-        
-        // Set cursor position after the inserted content
-        setTimeout(() => {
-          textarea.focus();
-          textarea.setSelectionRange(start + mediaMarkdown.length, start + mediaMarkdown.length);
-        }, 0);
-        
+        insertMedia(result.url, file.name, file.type);
         setError('');
         setSuccess(`Media uploaded successfully: ${result.fileName}`);
       } else {
@@ -138,6 +120,86 @@ export default function EditPost() {
       setError(`Upload error: ${error.message}`);
     } finally {
       setUploading(false);
+    }
+  };
+
+  const insertMedia = (url, name, type) => {
+    const textarea = document.querySelector('textarea');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    let mediaMarkdown = '';
+    if (type && type.startsWith('image/')) {
+      mediaMarkdown = `\n\n![${name}](${url})\n\n`;
+    } else if (type && type.startsWith('video/')) {
+      mediaMarkdown = `\n\n<video controls style="max-width: 100%; height: auto;"><source src="${url}" type="${type}">Your browser does not support the video tag.</video>\n\n`;
+    } else if (mediaType === 'image') {
+      mediaMarkdown = `\n\n![${name || 'Image'}](${url})\n\n`;
+    } else {
+      mediaMarkdown = `\n\n<video controls style="max-width: 100%; height: auto;"><source src="${url}">Your browser does not support the video tag.</video>\n\n`;
+    }
+    
+    // Insert at cursor position
+    const newContent = content.substring(0, start) + mediaMarkdown + content.substring(end);
+    setContent(newContent);
+    
+    // Set cursor position after the inserted content
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + mediaMarkdown.length, start + mediaMarkdown.length);
+    }, 0);
+  };
+
+  const handleUrlInsert = () => {
+    if (!mediaUrl.trim()) {
+      setError('Please enter a valid URL');
+      return;
+    }
+    
+    insertMedia(mediaUrl, '', '');
+    setShowMediaModal(false);
+    setMediaUrl('');
+    setError('');
+    setSuccess('Media added from URL');
+  };
+
+  const handleDeleteMedia = () => {
+    const textarea = document.querySelector('textarea');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    // Find the nearest media markdown or HTML
+    const text = content;
+    let deleteStart = start;
+    let deleteEnd = end;
+    
+    // Look for image markdown ![alt](url)
+    const imageRegex = /!\[.*?\]\([^)]+\)/g;
+    let match;
+    while ((match = imageRegex.exec(text)) !== null) {
+      if (match.index <= start && match.index + match[0].length >= end) {
+        deleteStart = match.index;
+        deleteEnd = match.index + match[0].length;
+        break;
+      }
+    }
+    
+    // Look for video HTML <video>...</video>
+    const videoRegex = /<video[^>]*>.*?<\/video>/gs;
+    while ((match = videoRegex.exec(text)) !== null) {
+      if (match.index <= start && match.index + match[0].length >= end) {
+        deleteStart = match.index;
+        deleteEnd = match.index + match[0].length;
+        break;
+      }
+    }
+    
+    if (deleteStart !== start || deleteEnd !== end) {
+      const newContent = text.substring(0, deleteStart) + text.substring(deleteEnd);
+      setContent(newContent);
+      setSuccess('Media deleted successfully');
+    } else {
+      setError('No media found at cursor position');
     }
   };
 
@@ -264,24 +326,36 @@ export default function EditPost() {
                 <h2 className="text-lg font-semibold text-white">Article Content</h2>
                 <p className="text-gray-400 text-sm">Write your article content</p>
               </div>
-              <div className="flex gap-2">
-                <input
-                  type="file"
-                  accept="image/*,video/*"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                  id="media-upload"
-                />
-                <label
-                  htmlFor="media-upload"
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer inline-flex items-center gap-2"
-                >
-                  📷 Upload Media
-                </label>
-                {uploading && (
-                  <span className="text-blue-400 text-sm flex items-center">Uploading...</span>
-                )}
-              </div>
+                          <div className="flex gap-2">
+                            <input
+                              type="file"
+                              accept="image/*,video/*"
+                              onChange={handleFileUpload}
+                              className="hidden"
+                              id="media-upload"
+                            />
+                            <label
+                              htmlFor="media-upload"
+                              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer inline-flex items-center gap-2"
+                            >
+                              📷 Upload File
+                            </label>
+                            <button
+                              onClick={() => setShowMediaModal(true)}
+                              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors inline-flex items-center gap-2"
+                            >
+                              🔗 Add URL
+                            </button>
+                            <button
+                              onClick={handleDeleteMedia}
+                              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors inline-flex items-center gap-2"
+                            >
+                              🗑️ Delete Media
+                            </button>
+                            {uploading && (
+                              <span className="text-blue-400 text-sm flex items-center">Uploading...</span>
+                            )}
+                          </div>
             </div>
           </div>
           
@@ -300,6 +374,56 @@ export default function EditPost() {
           </div>
         </div>
       </div>
+
+      {/* Media URL Modal */}
+      {showMediaModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-slate-800 rounded-lg p-6 w-96 max-w-full mx-4">
+            <h3 className="text-lg font-semibold text-white mb-4">Add Media from URL</h3>
+            
+            <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">Media Type</label>
+              <select
+                value={mediaType}
+                onChange={(e) => setMediaType(e.target.value)}
+                className="w-full bg-slate-700 text-white px-3 py-2 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+              >
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+              </select>
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">URL</label>
+              <input
+                type="url"
+                value={mediaUrl}
+                onChange={(e) => setMediaUrl(e.target.value)}
+                className="w-full bg-slate-700 text-white px-3 py-2 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>
+            
+            <div className="flex gap-2 justify-end">
+              <button
+                onClick={() => {
+                  setShowMediaModal(false);
+                  setMediaUrl('');
+                }}
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUrlInsert}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              >
+                Add Media
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
