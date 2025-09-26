@@ -3,9 +3,30 @@
 import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
 import ShareDropdown from "./ShareDropdown";
+import ArticleTranslator from "./ArticleTranslator";
+import { useState, useEffect } from "react";
+import { t, getCurrentLanguage } from "../lib/translations";
 import './analytics.js';
 
 export default function ArticlesPageClient({ posts }) {
+  const [currentLang, setCurrentLang] = useState('en');
+  const [translatedPosts, setTranslatedPosts] = useState({});
+
+  useEffect(() => {
+    setCurrentLang(getCurrentLanguage());
+    
+    // Listen for language changes
+    const handleLanguageChange = (event) => {
+      setCurrentLang(event.detail.language);
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
+  }, []);
+
   const handleArticleClick = (articleSlug) => {
     if (typeof window !== 'undefined' && window.analytics) {
       window.analytics.trackClick('article_link', `/articles/${articleSlug}`, {
@@ -30,12 +51,35 @@ export default function ArticlesPageClient({ posts }) {
     const wordsPerMinute = 200;
     const wordCount = post.body ? post.body.split(/\s+/).length : 0;
     const readingTime = Math.ceil(wordCount / wordsPerMinute);
-    return `${readingTime} min`;
+    return `${readingTime} ${t('article.readTime', currentLang)}`;
   }
+
+  const handleTranslatePost = (postSlug, translation) => {
+    setTranslatedPosts(prev => ({
+      ...prev,
+      [postSlug]: translation
+    }));
+  };
+
+  const getPostDisplayData = (post) => {
+    const translation = translatedPosts[post.slug];
+    if (translation && currentLang !== 'en') {
+      return {
+        title: translation.title || post.title,
+        excerpt: translation.excerpt || post.excerpt
+      };
+    }
+    return {
+      title: post.title,
+      excerpt: post.excerpt
+    };
+  };
 
   return (
     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
-      {posts.map((post) => (
+      {posts.map((post) => {
+        const displayData = getPostDisplayData(post);
+        return (
         <article key={post.slug} className="group">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300">
             <Link 

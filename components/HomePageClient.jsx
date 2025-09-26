@@ -54,17 +54,6 @@ export default function HomePageClient({ posts }) {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
-      {/* Hero Section */}
-      <section className="py-4">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 leading-tight" style={{color: '#2563eb'}}>
-                  Latest from Athens' cultural & tech scene with an atypical lens
-                </h1>
-                <p className="text-sm text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                  Always unfiltered, never cliché, by Whistledown.
-                </p>
-        </div>
-      </section>
 
       {/* Featured Articles Section */}
       <section className="py-12">

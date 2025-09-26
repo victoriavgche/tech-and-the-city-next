@@ -5984,6 +5984,141 @@
         "width": 804,
         "height": 759
       }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/",
+      "referrer": "",
+      "timestamp": 1758916164626,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 804,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/",
+      "referrer": "",
+      "timestamp": 1758916164627,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 804,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/",
+      "referrer": "",
+      "timestamp": 1758916164627,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 804,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "p5igai0ki1mg199qhw",
+      "page": "/",
+      "referrer": "",
+      "timestamp": 1758916164452,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 804,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/articles/ai-a-ball-to-remember",
+      "referrer": "",
+      "timestamp": 1758916211349,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/",
+      "referrer": "",
+      "timestamp": 1758916243830,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/articles/here-is-the-ai",
+      "referrer": "",
+      "timestamp": 1758916245946,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/articles",
+      "referrer": "",
+      "timestamp": 1758916250721,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "page": "/articles/endeavor-greece",
+      "referrer": "",
+      "timestamp": 1758916259629,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
     }
   ],
   "events": [
@@ -11291,6 +11426,46 @@
       },
       "timestamp": 1758912590212,
       "page": "/"
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 25,
+        "page": "/"
+      },
+      "timestamp": 1758916170667,
+      "page": "/"
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 25,
+        "page": "/"
+      },
+      "timestamp": 1758916170668,
+      "page": "/"
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/"
+      },
+      "timestamp": 1758916177337,
+      "page": "/"
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/"
+      },
+      "timestamp": 1758916177338,
+      "page": "/"
     }
   ],
   "clicks": [
@@ -11523,6 +11698,44 @@
       "timestamp": 1758912073940,
       "data": {
         "position": "navigation"
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "elementType": "article_link",
+      "targetUrl": "/articles/ai-a-ball-to-remember",
+      "sourcePage": "/",
+      "position": "featured",
+      "timestamp": 1758916208405,
+      "data": {
+        "position": "featured",
+        "article": "ai-a-ball-to-remember",
+        "source": "homepage"
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "elementType": "article_link",
+      "targetUrl": "/articles/here-is-the-ai",
+      "sourcePage": "/",
+      "position": "popular_title",
+      "timestamp": 1758916245848,
+      "data": {
+        "position": "popular_title",
+        "article": "here-is-the-ai",
+        "source": "homepage"
+      }
+    },
+    {
+      "sessionId": "kxl2292b5o8mg199qmq",
+      "elementType": "article_link",
+      "targetUrl": "/articles/endeavor-greece",
+      "sourcePage": "/articles",
+      "position": "articles_page",
+      "timestamp": 1758916259499,
+      "data": {
+        "position": "articles_page",
+        "article": "endeavor-greece"
       }
     }
   ],
@@ -12588,11 +12801,23 @@
       "firstSeen": 1758912142633,
       "lastSeen": 1758912146446,
       "pageViews": 4
+    },
+    "kxl2292b5o8mg199qmq": {
+      "id": "kxl2292b5o8mg199qmq",
+      "firstSeen": 1758916164626,
+      "lastSeen": 1758916259629,
+      "pageViews": 8
+    },
+    "p5igai0ki1mg199qhw": {
+      "id": "p5igai0ki1mg199qhw",
+      "firstSeen": 1758916164452,
+      "lastSeen": 1758916164452,
+      "pageViews": 1
     }
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1758912590286,
-    "totalSessions": 177
+    "lastUpdated": 1758916259670,
+    "totalSessions": 179
   }
 }
