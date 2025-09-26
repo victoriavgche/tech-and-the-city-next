@@ -1,1 +1,7 @@
-{}
+{
+  "/admin/edit/[slug]/page": "app/admin/edit/[slug]/page.js",
+  "/articles/[slug]/page": "app/articles/[slug]/page.js",
+  "/admin-TC25/page": "app/admin-TC25/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/events/page": "app/events/page.js"
+}

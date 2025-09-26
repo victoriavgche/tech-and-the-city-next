@@ -44,9 +44,9 @@ export default function NewPost() {
         
         let mediaMarkdown = '';
         if (file.type.startsWith('image/')) {
-          mediaMarkdown = `![${file.name}](${result.url})`;
+          mediaMarkdown = `\n\n![${file.name}](${result.url})\n\n`;
         } else if (file.type.startsWith('video/')) {
-          mediaMarkdown = `<video controls><source src="${result.url}" type="${file.type}">Your browser does not support the video tag.</video>`;
+          mediaMarkdown = `\n\n<video controls style="max-width: 100%; height: auto;"><source src="${result.url}" type="${file.type}">Your browser does not support the video tag.</video>\n\n`;
         }
         
         // Insert at cursor position
@@ -60,6 +60,7 @@ export default function NewPost() {
         }, 0);
         
         setError('');
+        setSuccess(`Media uploaded successfully: ${result.fileName}`);
       } else {
         setError(`Upload failed: ${result.error}`);
       }
