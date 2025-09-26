@@ -81,19 +81,8 @@ export async function PUT(request, { params }) {
       fs.mkdirSync(postsDir, { recursive: true });
     }
     
-    // Check if we can write to the directory
-    try {
-      const testFile = path.join(postsDir, '.test');
-      fs.writeFileSync(testFile, 'test');
-      fs.unlinkSync(testFile);
-      console.log('Directory is writable');
-    } catch (writeError) {
-      console.error('Directory is not writable:', writeError);
-      return NextResponse.json({ 
-        error: 'Cannot write to posts directory',
-        details: writeError.message 
-      }, { status: 500 });
-    }
+    // Directory exists, proceed with writing
+    console.log('Directory exists, proceeding with file write');
     
     // Create markdown content with front matter
     const frontMatter = `---
