@@ -1,13 +1,12 @@
 ---
 title: "here is the ai"
+date: "2025-09-26T20:13:13.178Z"
 excerpt: "bdkqbdkqab "
-date: "2025-09-26T18:09:48.013Z"
-tags:
-  - AI
-  - Technology
-  - Athens
-read: "5 min"
 
 ---
 
-xsx z,xczs mxaasdxs
+
+i like it
+
+![552866053_122245506554221024_7638071045603888809_n.jpg](/uploads/552866053_122245506554221024_7638071045603888809_n-1758917588049.jpg)
+

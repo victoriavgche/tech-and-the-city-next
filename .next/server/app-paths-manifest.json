@@ -1,7 +1,11 @@
 {
-  "/admin/edit/[slug]/page": "app/admin/edit/[slug]/page.js",
+  "/page": "app/page.js",
+  "/api/analytics/route": "app/api/analytics/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/articles/[slug]/page": "app/articles/[slug]/page.js",
-  "/events/page": "app/events/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/admin-TC25/page": "app/admin-TC25/page.js"
+  "/admin-TC25/page": "app/admin-TC25/page.js",
+  "/api/posts/route": "app/api/posts/route.js",
+  "/admin/edit/[slug]/page": "app/admin/edit/[slug]/page.js",
+  "/api/admin/posts/[slug]/route": "app/api/admin/posts/[slug]/route.js",
+  "/articles/page": "app/articles/page.js"
 }

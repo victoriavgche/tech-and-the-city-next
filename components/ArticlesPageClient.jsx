@@ -80,7 +80,7 @@ export default function ArticlesPageClient({ posts }) {
       {posts.map((post) => {
         const displayData = getPostDisplayData(post);
         return (
-        <article key={post.slug} className="group">
+          <article key={post.slug} className="group">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300">
             <Link 
               href={`/articles/${post.slug}`} 
@@ -159,8 +159,9 @@ export default function ArticlesPageClient({ posts }) {
               </Link>
             </div>
           </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
     </div>
   );
 }
