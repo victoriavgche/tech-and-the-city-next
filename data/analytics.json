@@ -6239,6 +6239,126 @@
         "width": 1707,
         "height": 772
       }
+    },
+    {
+      "sessionId": "xtm61ds677kmg19tb6v",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917077735,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "fzixbt5senmg19tba6",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917077854,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "fzixbt5senmg19tba6",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917077855,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "fzixbt5senmg19tba6",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917077855,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "9fy0c6ypy2wmg19tprm",
+      "page": "/about",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917096626,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "5xm18riw5mtmg19tpuq",
+      "page": "/about",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917096738,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "5xm18riw5mtmg19tpuq",
+      "page": "/about",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917096738,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
+    },
+    {
+      "sessionId": "5xm18riw5mtmg19tpuq",
+      "page": "/about",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917096739,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
     }
   ],
   "events": [
@@ -11606,6 +11726,66 @@
       },
       "timestamp": 1758917061255,
       "page": "/articles/endeavor-greece"
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/"
+      },
+      "timestamp": 1758917073829,
+      "page": "/"
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/"
+      },
+      "timestamp": 1758917073829,
+      "page": "/"
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "eventType": "time_spent",
+      "data": {
+        "time": 13460,
+        "page": "/"
+      },
+      "timestamp": 1758917076548,
+      "page": "/"
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "eventType": "time_spent",
+      "data": {
+        "time": 13460,
+        "page": "/"
+      },
+      "timestamp": 1758917076548,
+      "page": "/"
+    },
+    {
+      "sessionId": "fzixbt5senmg19tba6",
+      "eventType": "time_spent",
+      "data": {
+        "time": 18149,
+        "page": "/about"
+      },
+      "timestamp": 1758917096004,
+      "page": "/about"
+    },
+    {
+      "sessionId": "fzixbt5senmg19tba6",
+      "eventType": "time_spent",
+      "data": {
+        "time": 18150,
+        "page": "/about"
+      },
+      "timestamp": 1758917096005,
+      "page": "/about"
     }
   ],
   "clicks": [
@@ -11885,6 +12065,17 @@
       "sourcePage": "/articles/endeavor-greece",
       "position": "navigation",
       "timestamp": 1758917061253,
+      "data": {
+        "position": "navigation"
+      }
+    },
+    {
+      "sessionId": "hqhkluncab7mg19szvz",
+      "elementType": "nav_link",
+      "targetUrl": "/about",
+      "sourcePage": "/",
+      "position": "navigation",
+      "timestamp": 1758917076547,
       "data": {
         "position": "navigation"
       }
@@ -12988,11 +13179,35 @@
       "firstSeen": 1758917063087,
       "lastSeen": 1758917063088,
       "pageViews": 3
+    },
+    "xtm61ds677kmg19tb6v": {
+      "id": "xtm61ds677kmg19tb6v",
+      "firstSeen": 1758917077735,
+      "lastSeen": 1758917077735,
+      "pageViews": 1
+    },
+    "fzixbt5senmg19tba6": {
+      "id": "fzixbt5senmg19tba6",
+      "firstSeen": 1758917077854,
+      "lastSeen": 1758917077855,
+      "pageViews": 3
+    },
+    "9fy0c6ypy2wmg19tprm": {
+      "id": "9fy0c6ypy2wmg19tprm",
+      "firstSeen": 1758917096626,
+      "lastSeen": 1758917096626,
+      "pageViews": 1
+    },
+    "5xm18riw5mtmg19tpuq": {
+      "id": "5xm18riw5mtmg19tpuq",
+      "firstSeen": 1758917096738,
+      "lastSeen": 1758917096739,
+      "pageViews": 3
     }
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1758917063175,
-    "totalSessions": 183
+    "lastUpdated": 1758917096878,
+    "totalSessions": 187
   }
 }
