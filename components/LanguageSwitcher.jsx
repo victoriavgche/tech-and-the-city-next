@@ -29,14 +29,11 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center gap-2 px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
+      className="flex items-center justify-center w-10 h-10 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors duration-200"
       title={`Switch to ${currentLang === 'en' ? 'Greek' : 'English'}`}
     >
       <span className="text-lg">
         {currentLang === 'en' ? '🇬🇷' : '🇺🇸'}
-      </span>
-      <span className="hidden sm:inline">
-        {currentLang === 'en' ? 'Ελληνικά' : 'English'}
       </span>
     </button>
   );
