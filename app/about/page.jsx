@@ -6,20 +6,20 @@ export default function About() {
           <div className="max-w-none">
             <h1 className="text-4xl font-bold text-white mb-8 text-center">About</h1>
             
-            <div className="text-gray-300 text-lg leading-relaxed space-y-6">
+            <div className="text-gray-300 text-lg leading-relaxed space-y-6 text-justify">
               <p>
                 Dear gentle readers,
               </p>
               
               <p>
-                Welcome to my platform, dedicated to Athens' vibrant tech and art scene, with stories that also reach across Europe. Here, tech, art, and science meet not with filters, but with sharp edge… sometimes even triggering, yet always unapologetic. My aim is not merely to just recount events, but to provoke thought, to spark curiosity, to push you into seeing beyond the obvious.
+                Welcome to my platform, dedicated to Athens' vibrant tech and art scene, with stories that also extend across Europe. Here, tech, art, and science meet not with filters, but with sharp edges, sometimes even triggering, yet always unapologetic. My aim is not only to inform about events, but to provoke thought and to push you into seeing beyond the obvious.
               </p>
               
               <p>
-                Inspired by Bridgerton's Lady Whistledown from the famous Netflix series, I decided to start this page. This voice is a mixture of her sass and my own curiosity. If you seek polite summaries, you may exit now. But if you crave unfiltered reflection, often thought-provoking, yet always true, then stay, and let us dare to think together.
+                Inspired by Bridgerton's Whistledown from the famous Netflix series, I decided to start this page. This voice is a shift, or I may dare say a mix of her sass and my own personality. If you seek only polite stories, you may exit now. But if you crave unfiltered reflection… sometimes uncomfortable, but always true, then stay… and enjoy!
               </p>
               
-              <p className="text-right text-cyan-400 font-medium">
+              <p className="text-left text-cyan-400 font-medium">
                 Yours,<br />
                 Whistledown
               </p>

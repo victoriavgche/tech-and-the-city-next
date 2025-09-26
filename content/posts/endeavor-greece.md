@@ -5,8 +5,6 @@ excerpt: "Exploring the future of artificial intelligence and its impact on soci
 image: "/uploads/693-800x400-1758909627988.jpg"
 ---
 
-# Welcome to the AI Era
-
 This is a test article to demonstrate the content management system.
 
 ## Key Features

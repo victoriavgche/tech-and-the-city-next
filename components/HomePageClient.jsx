@@ -46,14 +46,28 @@ export default function HomePageClient({ posts }) {
     }
   };
   
-  // Find "AI στο Ηρώδειο: A Ball to Remember" article
-  const herodionAIPost = posts.find(post => post.slug === 'ai-a-ball-to-remember');
-  const featured = herodionAIPost || posts[0]; // Herodion AI article or most recent
+  // Find "Endeavor's Elite Meet-Up: A Preview of Innovation" article
+  const endeavorPost = posts.find(post => post.slug === 'endeavor-meetup-preview');
+  const featured = endeavorPost || posts[0]; // Endeavor article or most recent
   const popularPosts = posts.filter(post => post.slug !== featured.slug).slice(0, 2); // Show only 2 for featured section
   const olderPosts = posts.filter(post => post.slug !== featured.slug).slice(2, 5); // Show older articles for Latest section
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
+      
+      {/* Hero Section */}
+      <section className="pt-8 pb-8">
+        <div className="max-w-7xl mx-auto px-8 text-center">
+          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-4">
+            Latest from Athens' cultural & tech scene with an atypical lens
+          </h1>
+          <p className="text-sm text-gray-400">
+            Always unfiltered, never cliché, by Whistledown.
+          </p>
+        </div>
+      </section>
+
+      {/* Featured Articles Section */}
 
       {/* Featured Articles Section */}
       <section className="py-12">
@@ -95,10 +109,10 @@ export default function HomePageClient({ posts }) {
                       <div className="flex items-start justify-between mb-4">
                         <Link 
                           href={`/articles/${featured.slug}`} 
-                          className="flex-1"
+                          className="flex-1 text-center"
                           onClick={() => handleArticleClick(featured.slug, 'featured_title')}
                         >
-                          <h2 className="text-2xl md:text-3xl font-semibold text-white group-hover:text-blue-400 transition-colors leading-tight">
+                          <h2 className="text-2xl md:text-3xl font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight">
                             {featured.title}
                           </h2>
                         </Link>
@@ -160,10 +174,10 @@ export default function HomePageClient({ posts }) {
                       <div className="flex items-start justify-between mb-3">
                         <Link 
                           href={`/articles/${post.slug}`} 
-                          className="flex-1"
+                          className="flex-1 text-center"
                           onClick={() => handleArticleClick(post.slug, 'popular_title')}
                         >
-                          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors leading-tight">
+                          <h3 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight">
                             {post.title}
                           </h3>
                         </Link>
@@ -196,7 +210,7 @@ export default function HomePageClient({ posts }) {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-8">
           <div className="flex items-center justify-between mb-12">
-            <h2 className="text-4xl font-bold text-white">Latest Articles</h2>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Latest Articles</h2>
             <Link href="/articles" className="text-gray-300 hover:text-white transition-colors flex items-center gap-2">
               View All
             </Link>
@@ -234,7 +248,7 @@ export default function HomePageClient({ posts }) {
                         </div>
                       </div>
                       <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors leading-tight flex-1">
+                        <h3 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight flex-1 text-center">
                           {post.title}
                         </h3>
                         <div className="ml-2 flex-shrink-0">

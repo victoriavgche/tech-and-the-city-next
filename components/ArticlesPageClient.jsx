@@ -76,19 +76,19 @@ export default function ArticlesPageClient({ posts }) {
   };
 
   return (
-    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
+    <div className="grid gap-4 sm:gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
       {posts.map((post) => {
         const displayData = getPostDisplayData(post);
         return (
           <article key={post.slug} className="group">
-          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300 mx-3 sm:mx-4 md:mx-6">
             <Link 
               href={`/articles/${post.slug}`} 
               className="block"
               onClick={() => handleArticleClick(post.slug)}
             >
               {/* Article Image */}
-              <div className="aspect-[16/10] overflow-hidden">
+              <div className="aspect-[4/3] sm:aspect-[16/10] overflow-hidden">
                 {post.image ? (
                   <img
                     src={post.image}
@@ -104,9 +104,9 @@ export default function ArticlesPageClient({ posts }) {
             </Link>
             
             {/* Article Content */}
-            <div className="p-6">
+            <div className="p-3 sm:p-4 md:p-6">
               {/* Date and Reading Time */}
-              <div className="text-gray-400 text-sm mb-4 flex items-center gap-4">
+              <div className="text-gray-400 text-sm mb-3 sm:mb-4 flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   {new Date(post.date).toLocaleDateString()}
@@ -124,7 +124,7 @@ export default function ArticlesPageClient({ posts }) {
                   className="flex-1"
                   onClick={() => handleArticleClick(post.slug)}
                 >
-                  <h2 className="text-xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors leading-tight">
+                  <h2 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight">
                     {displayData.title}
                   </h2>
                 </Link>

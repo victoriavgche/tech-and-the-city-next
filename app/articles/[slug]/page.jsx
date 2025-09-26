@@ -34,13 +34,13 @@ export default async function ArticlePage({ params }) {
 
         {/* Article header */}
         <header className="mb-8 bg-slate-800 rounded-lg p-8 shadow-lg border border-slate-700">
-          <h1 className="text-xl md:text-2xl font-semibold text-cyan-400 mb-4 leading-tight">
+          <h1 className="text-xl md:text-2xl font-semibold text-cyan-400 mb-4 leading-tight text-center">
             {post.title}
           </h1>
-          <p className="text-gray-300 text-lg mb-4">
+          <p className="text-gray-300 text-lg mb-4 text-justify">
             <ClientWrapper content={post.excerpt} />
           </p>
-          <div className="text-sm text-gray-400">
+          <div className="text-sm text-gray-400 text-right">
             {new Date(post.date).toLocaleDateString()}
           </div>
         </header>
@@ -66,7 +66,7 @@ export default async function ArticlePage({ params }) {
         />
 
         {/* Article content */}
-        <article className="bg-slate-800 rounded-lg p-8 shadow-lg border border-slate-700">
+        <article className="bg-slate-800 rounded-lg p-8 shadow-lg border border-slate-700 text-justify">
           <div className="prose prose-lg max-w-none prose-invert">
             <ClientWrapper content={post.content} />
           </div>

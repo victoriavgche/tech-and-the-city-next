@@ -3,7 +3,6 @@
 import Logo from "./Logo";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import LanguageSwitcher from "./LanguageSwitcher";
 import { t, getCurrentLanguage } from "../lib/translations";
 import './analytics.js';
 
@@ -86,7 +85,7 @@ export default function Nav(){
         </div>
         
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8 text-base lg:text-lg text-white">
+        <div className="hidden md:flex items-center gap-8 lg:gap-12 text-base lg:text-lg text-white">
           <a 
             className="hover:text-blue-400 transition-colors duration-200 font-medium" 
             href="/"
@@ -125,9 +124,6 @@ export default function Nav(){
         </div>
         
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Language Switcher */}
-          <LanguageSwitcher />
-          
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
