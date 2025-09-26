@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Save, ArrowLeft, Eye, AlertCircle, Bold, Italic, List, ListOrdered, Quote, Code, Link as LinkIcon, Heading1, Heading2, Heading3, Type } from 'lucide-react';
+import { Save, ArrowLeft, Eye, AlertCircle, Bold, Italic, List, ListOrdered, Quote, Code, Link as LinkIcon, Heading1, Heading2, Heading3, Type, Image, Video, Upload, X, Underline, Strikethrough, Palette, Highlighter, AlignLeft, AlignCenter, AlignRight, AlignJustify, Minus, Plus } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EditPost() {
@@ -14,6 +14,15 @@ export default function EditPost() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [cursorPosition, setCursorPosition] = useState(0);
+  const [showMediaModal, setShowMediaModal] = useState(false);
+  const [mediaUrl, setMediaUrl] = useState('');
+  const [mediaType, setMediaType] = useState('image');
+  const [mediaAlt, setMediaAlt] = useState('');
+  const [showLinkModal, setShowLinkModal] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkText, setLinkText] = useState('');
+  const [textColor, setTextColor] = useState('#ffffff');
+  const [highlightColor, setHighlightColor] = useState('#ffff00');
 
   useEffect(() => {
     fetchPost();
@@ -94,19 +103,125 @@ export default function EditPost() {
   const formatText = {
     bold: () => insertText('**', '**', 'bold text'),
     italic: () => insertText('*', '*', 'italic text'),
+    underline: () => insertText('<u>', '</u>', 'underlined text'),
+    strikethrough: () => insertText('~~', '~~', 'strikethrough text'),
     heading1: () => insertText('\n# ', '\n', 'Heading 1'),
     heading2: () => insertText('\n## ', '\n', 'Heading 2'),
     heading3: () => insertText('\n### ', '\n', 'Heading 3'),
     quote: () => insertText('\n> ', '\n', 'Quote text'),
     code: () => insertText('`', '`', 'code'),
-    link: () => insertText('[', '](url)', 'link text'),
+    codeBlock: () => insertText('\n```\n', '\n```\n', 'code block'),
+    link: () => {
+      setShowLinkModal(true);
+    },
+    superLink: () => {
+      setShowLinkModal(true);
+    },
     list: () => insertText('\n- ', '\n', 'List item'),
-    orderedList: () => insertText('\n1. ', '\n', 'Numbered item')
+    orderedList: () => insertText('\n1. ', '\n', 'Numbered item'),
+    horizontalRule: () => insertText('\n---\n', '', ''),
+    textColor: (color) => insertText(`<span style="color: ${color}">`, '</span>', 'colored text'),
+    highlight: (color) => insertText(`<mark style="background-color: ${color}">`, '</mark>', 'highlighted text'),
+    alignLeft: () => insertText('\n<div style="text-align: left;">\n', '\n</div>\n', 'left-aligned text'),
+    alignCenter: () => insertText('\n<div style="text-align: center;">\n', '\n</div>\n', 'center-aligned text'),
+    alignRight: () => insertText('\n<div style="text-align: right;">\n', '\n</div>\n', 'right-aligned text'),
+    alignJustify: () => insertText('\n<div style="text-align: justify;">\n', '\n</div>\n', 'justified text'),
+    image: () => {
+      setMediaType('image');
+      setShowMediaModal(true);
+    },
+    video: () => {
+      setMediaType('video');
+      setShowMediaModal(true);
+    }
   };
 
   const handleTextareaChange = (e) => {
     setContent(e.target.value);
     setCursorPosition(e.target.selectionStart);
+  };
+
+  const handleMediaInsert = () => {
+    if (!mediaUrl.trim()) {
+      setError('Please enter a media URL');
+      return;
+    }
+
+    let mediaMarkdown = '';
+    if (mediaType === 'image') {
+      mediaMarkdown = `![${mediaAlt || 'Image'}](${mediaUrl})`;
+    } else if (mediaType === 'video') {
+      mediaMarkdown = `<video controls>\n  <source src="${mediaUrl}" type="video/mp4">\n  Your browser does not support the video tag.\n</video>`;
+    }
+
+    const textarea = document.getElementById('markdown-editor');
+    const start = textarea.selectionStart;
+    const newContent = content.substring(0, start) + '\n' + mediaMarkdown + '\n' + content.substring(start);
+    setContent(newContent);
+
+    // Close modal and reset
+    setShowMediaModal(false);
+    setMediaUrl('');
+    setMediaAlt('');
+    setError('');
+
+    // Focus back to textarea
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + mediaMarkdown.length + 2, start + mediaMarkdown.length + 2);
+    }, 0);
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setMediaUrl(result.url);
+        setMediaAlt(file.name);
+        setError('');
+      } else {
+        setError(`Upload failed: ${result.error}`);
+      }
+    } catch (error) {
+      setError(`Upload error: ${error.message}`);
+    }
+  };
+
+  const handleLinkInsert = () => {
+    if (!linkUrl.trim() || !linkText.trim()) {
+      setError('Please enter both link text and URL');
+      return;
+    }
+
+    const linkMarkdown = `[${linkText}](${linkUrl})`;
+    const textarea = document.getElementById('markdown-editor');
+    const start = textarea.selectionStart;
+    const newContent = content.substring(0, start) + linkMarkdown + content.substring(start);
+    setContent(newContent);
+
+    // Close modal and reset
+    setShowLinkModal(false);
+    setLinkUrl('');
+    setLinkText('');
+    setError('');
+
+    // Focus back to textarea
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + linkMarkdown.length, start + linkMarkdown.length);
+    }, 0);
   };
 
   if (loading) {
@@ -196,6 +311,56 @@ export default function EditPost() {
               >
                 <Italic className="h-4 w-4" />
               </button>
+              <button
+                onClick={formatText.underline}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Underline (Ctrl+U)"
+              >
+                <Underline className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.strikethrough}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Strikethrough"
+              >
+                <Strikethrough className="h-4 w-4" />
+              </button>
+              
+              <div className="w-px h-8 bg-slate-600 mx-1"></div>
+              
+              {/* Text Colors */}
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => formatText.textColor(textColor)}
+                  className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                  title="Text Color"
+                >
+                  <Palette className="h-4 w-4" />
+                </button>
+                <input
+                  type="color"
+                  value={textColor}
+                  onChange={(e) => setTextColor(e.target.value)}
+                  className="w-8 h-8 rounded border border-slate-600 cursor-pointer"
+                  title="Choose text color"
+                />
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => formatText.highlight(highlightColor)}
+                  className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                  title="Highlight"
+                >
+                  <Highlighter className="h-4 w-4" />
+                </button>
+                <input
+                  type="color"
+                  value={highlightColor}
+                  onChange={(e) => setHighlightColor(e.target.value)}
+                  className="w-8 h-8 rounded border border-slate-600 cursor-pointer"
+                  title="Choose highlight color"
+                />
+              </div>
               
               <div className="w-px h-8 bg-slate-600 mx-1"></div>
               
@@ -220,6 +385,38 @@ export default function EditPost() {
                 title="Heading 3"
               >
                 <Heading3 className="h-4 w-4" />
+              </button>
+              
+              <div className="w-px h-8 bg-slate-600 mx-1"></div>
+              
+              {/* Alignment */}
+              <button
+                onClick={formatText.alignLeft}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Align Left"
+              >
+                <AlignLeft className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.alignCenter}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Align Center"
+              >
+                <AlignCenter className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.alignRight}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Align Right"
+              >
+                <AlignRight className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.alignJustify}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Justify"
+              >
+                <AlignJustify className="h-4 w-4" />
               </button>
               
               <div className="w-px h-8 bg-slate-600 mx-1"></div>
@@ -253,16 +450,59 @@ export default function EditPost() {
               <button
                 onClick={formatText.code}
                 className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
-                title="Code"
+                title="Inline Code"
               >
                 <Code className="h-4 w-4" />
               </button>
               <button
+                onClick={formatText.codeBlock}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Code Block"
+              >
+                <Type className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.horizontalRule}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Horizontal Rule"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              
+              <div className="w-px h-8 bg-slate-600 mx-1"></div>
+              
+              {/* Links */}
+              <button
                 onClick={formatText.link}
                 className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
-                title="Link"
+                title="Insert Link"
               >
                 <LinkIcon className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.superLink}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Super Link"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+              
+              <div className="w-px h-8 bg-slate-600 mx-1"></div>
+              
+              {/* Media */}
+              <button
+                onClick={formatText.image}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Insert Image"
+              >
+                <Image className="h-4 w-4" />
+              </button>
+              <button
+                onClick={formatText.video}
+                className="p-2 bg-slate-600 hover:bg-slate-500 text-white rounded transition-colors"
+                title="Insert Video"
+              >
+                <Video className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -277,6 +517,188 @@ export default function EditPost() {
             />
           </div>
         </div>
+
+        {/* Media Insert Modal */}
+        {showMediaModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-slate-800 p-8 rounded-lg border border-slate-700 max-w-md w-full mx-4">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">
+                  Insert {mediaType === 'image' ? 'Image' : 'Video'}
+                </h2>
+                <button
+                  onClick={() => setShowMediaModal(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                {/* Media Type Toggle */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setMediaType('image')}
+                    className={`flex-1 p-3 rounded-lg transition-colors ${
+                      mediaType === 'image'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                    }`}
+                  >
+                    <Image className="h-5 w-5 mx-auto mb-1" />
+                    Image
+                  </button>
+                  <button
+                    onClick={() => setMediaType('video')}
+                    className={`flex-1 p-3 rounded-lg transition-colors ${
+                      mediaType === 'video'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                    }`}
+                  >
+                    <Video className="h-5 w-5 mx-auto mb-1" />
+                    Video
+                  </button>
+                </div>
+
+                {/* URL Input */}
+                <div>
+                  <label className="block text-gray-300 text-sm mb-2">
+                    {mediaType === 'image' ? 'Image' : 'Video'} URL
+                  </label>
+                  <input
+                    type="url"
+                    value={mediaUrl}
+                    onChange={(e) => setMediaUrl(e.target.value)}
+                    placeholder={`Enter ${mediaType} URL...`}
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+
+                {/* Alt Text for Images */}
+                {mediaType === 'image' && (
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">
+                      Alt Text (optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={mediaAlt}
+                      onChange={(e) => setMediaAlt(e.target.value)}
+                      placeholder="Describe the image..."
+                      className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+                    />
+                  </div>
+                )}
+
+                {/* File Upload Option */}
+                <div className="border-t border-slate-600 pt-4">
+                  <label className="block text-gray-300 text-sm mb-2">
+                    Or upload a file:
+                  </label>
+                  <input
+                    type="file"
+                    accept={mediaType === 'image' ? 'image/*' : 'video/*'}
+                    onChange={handleFileUpload}
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                  />
+                  <p className="text-gray-400 text-xs mt-2">
+                    Note: File uploads will be saved to /uploads/ directory
+                  </p>
+                </div>
+
+                {/* Error Message */}
+                {error && (
+                  <div className="p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                    <p className="text-red-400 text-sm">{error}</p>
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-4">
+                  <button
+                    onClick={handleMediaInsert}
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-2"
+                  >
+                    <Upload className="h-4 w-4" />
+                    Insert {mediaType === 'image' ? 'Image' : 'Video'}
+                  </button>
+                  <button
+                    onClick={() => setShowMediaModal(false)}
+                    className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Link Insert Modal */}
+        {showLinkModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-slate-800 p-8 rounded-lg border border-slate-700 max-w-md w-full mx-4">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Insert Link</h2>
+                <button
+                  onClick={() => setShowLinkModal(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-gray-300 text-sm mb-2">Link Text</label>
+                  <input
+                    type="text"
+                    value={linkText}
+                    onChange={(e) => setLinkText(e.target.value)}
+                    placeholder="Enter link text..."
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-300 text-sm mb-2">URL</label>
+                  <input
+                    type="url"
+                    value={linkUrl}
+                    onChange={(e) => setLinkUrl(e.target.value)}
+                    placeholder="https://example.com"
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+                  />
+                </div>
+
+                {/* Error Message */}
+                {error && (
+                  <div className="p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                    <p className="text-red-400 text-sm">{error}</p>
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-4">
+                  <button
+                    onClick={handleLinkInsert}
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-2"
+                  >
+                    <LinkIcon className="h-4 w-4" />
+                    Insert Link
+                  </button>
+                  <button
+                    onClick={() => setShowLinkModal(false)}
+                    className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>

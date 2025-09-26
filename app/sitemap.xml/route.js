@@ -40,8 +40,8 @@ export async function GET() {
   // Dynamic pages (posts)
   const posts = await getAllPostsMeta();
   const postPages = posts.map((post) => ({
-    url: `${baseUrl}/posts/${post.slug}`,
-    lastModified: new Date(post.date),
+    url: `${baseUrl}/articles/${post.slug}`,
+    lastModified: post.date ? new Date(post.date) : new Date(),
     changeFrequency: 'monthly',
     priority: 0.8,
   }));
