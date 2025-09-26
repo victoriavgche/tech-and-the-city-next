@@ -1,8 +1,27 @@
 'use client';
 
 import { Linkedin } from "lucide-react";
+import { useState, useEffect } from "react";
+import { t, getCurrentLanguage } from "../lib/translations";
 
 export default function Footer(){
+  const [currentLang, setCurrentLang] = useState('en');
+
+  useEffect(() => {
+    setCurrentLang(getCurrentLanguage());
+    
+    // Listen for language changes
+    const handleLanguageChange = (event) => {
+      setCurrentLang(event.detail.language);
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
+  }, []);
+
   return (
   <footer className="border-t border-gray-700 bg-gray-800 mt-16">
     <div className="max-w-7xl mx-auto px-8 py-4">
@@ -35,13 +54,13 @@ export default function Footer(){
             {/* Sections Column - Center */}
             <div className="flex-1 text-center">
               <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                SECTIONS
+                {t('footer.sections', currentLang)}
               </div>
               <ul className="space-y-2">
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">About</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">Articles</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">Events</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">Contact</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">{t('nav.about', currentLang)}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">{t('nav.articles', currentLang)}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">{t('nav.events', currentLang)}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">{t('nav.contact', currentLang)}</a></li>
               </ul>
             </div>
 
@@ -49,7 +68,7 @@ export default function Footer(){
             <div className="flex items-start">
               <div className="text-center">
                 <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                  FOLLOW US
+                  {t('footer.followUs', currentLang)}
                 </div>
                 <div className="flex items-center justify-center">
                   <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -89,13 +108,13 @@ export default function Footer(){
             {/* Sections Column - Center */}
             <div className="flex-1 text-center">
               <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                SECTIONS
+                {t('footer.sections', currentLang)}
               </div>
               <ul className="space-y-2">
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">About</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">Articles</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">Events</a></li>
-                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">Contact</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">{t('nav.about', currentLang)}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/articles">{t('nav.articles', currentLang)}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/events">{t('nav.events', currentLang)}</a></li>
+                <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/contact">{t('nav.contact', currentLang)}</a></li>
               </ul>
             </div>
 
@@ -103,7 +122,7 @@ export default function Footer(){
             <div className="flex items-start">
               <div className="text-center">
                 <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                  FOLLOW US
+                  {t('footer.followUs', currentLang)}
                 </div>
                 <div className="flex items-center justify-center">
                   <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -123,11 +142,11 @@ export default function Footer(){
         <div className="max-w-6xl mx-auto px-6 py-2">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="text-gray-400 text-xs">
-              © {new Date().getFullYear()} Tech & the City • Made with attitude • All rights reserved.
+              © {new Date().getFullYear()} Tech & the City • {t('footer.madeWith', currentLang)} • {t('footer.allRights', currentLang)}.
             </div>
             <div className="flex flex-wrap gap-4 text-xs text-gray-400">
-              <a className="hover:text-gray-300 transition-colors" href="/privacy">Privacy Policy</a>
-              <a className="hover:text-gray-300 transition-colors" href="/terms">Terms of Service</a>
+              <a className="hover:text-gray-300 transition-colors" href="/privacy">{t('footer.privacyPolicy', currentLang)}</a>
+              <a className="hover:text-gray-300 transition-colors" href="/terms">{t('footer.termsOfService', currentLang)}</a>
             </div>
           </div>
         </div>

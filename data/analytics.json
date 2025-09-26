@@ -6359,6 +6359,201 @@
         "width": 750,
         "height": 760
       }
+    },
+    {
+      "sessionId": "a8j57tj50xmg19ws2q",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917239586,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "h9528xq4a3kmg19ws7h",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917239758,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "h9528xq4a3kmg19ws7h",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917239758,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "h9528xq4a3kmg19ws7h",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917239757,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "ygvvn8f4uv8mg19wtm3",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917241579,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917241713,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917241713,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "page": "/about",
+      "referrer": "http://localhost:3001/",
+      "timestamp": 1758917241714,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "nh7rf5fn7gamg19wxio",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917246640,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917246764,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917246764,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "page": "/",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917246764,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      }
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "page": "/articles/here-is-the-ai",
+      "referrer": "http://localhost:3001/about",
+      "timestamp": 1758917275845,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 750,
+        "height": 760
+      }
     }
   ],
   "events": [
@@ -11786,6 +11981,116 @@
       },
       "timestamp": 1758917096005,
       "page": "/about"
+    },
+    {
+      "sessionId": "5xm18riw5mtmg19tpuq",
+      "eventType": "time_spent",
+      "data": {
+        "time": 141241,
+        "page": "/about"
+      },
+      "timestamp": 1758917237980,
+      "page": "/about"
+    },
+    {
+      "sessionId": "5xm18riw5mtmg19tpuq",
+      "eventType": "time_spent",
+      "data": {
+        "time": 141241,
+        "page": "/about"
+      },
+      "timestamp": 1758917237980,
+      "page": "/about"
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/about"
+      },
+      "timestamp": 1758917244176,
+      "page": "/about"
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/about"
+      },
+      "timestamp": 1758917244176,
+      "page": "/about"
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "eventType": "time_spent",
+      "data": {
+        "time": 4002,
+        "page": "/about"
+      },
+      "timestamp": 1758917245716,
+      "page": "/about"
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "eventType": "time_spent",
+      "data": {
+        "time": 4002,
+        "page": "/about"
+      },
+      "timestamp": 1758917245716,
+      "page": "/about"
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 50,
+        "page": "/"
+      },
+      "timestamp": 1758917247227,
+      "page": "/"
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 50,
+        "page": "/"
+      },
+      "timestamp": 1758917247228,
+      "page": "/"
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/articles/here-is-the-ai"
+      },
+      "timestamp": 1758917276021,
+      "page": "/articles/here-is-the-ai"
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/articles/here-is-the-ai"
+      },
+      "timestamp": 1758917276022,
+      "page": "/articles/here-is-the-ai"
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "eventType": "scroll_depth",
+      "data": {
+        "depth": 100,
+        "page": "/articles/here-is-the-ai"
+      },
+      "timestamp": 1758917276022,
+      "page": "/articles/here-is-the-ai"
     }
   ],
   "clicks": [
@@ -12078,6 +12383,52 @@
       "timestamp": 1758917076547,
       "data": {
         "position": "navigation"
+      }
+    },
+    {
+      "sessionId": "5xm18riw5mtmg19tpuq",
+      "elementType": "nav_link",
+      "targetUrl": "/",
+      "sourcePage": "/about",
+      "position": "navigation",
+      "timestamp": 1758917237978,
+      "data": {
+        "position": "navigation"
+      }
+    },
+    {
+      "sessionId": "h9528xq4a3kmg19ws7h",
+      "elementType": "nav_link",
+      "targetUrl": "/about",
+      "sourcePage": "/",
+      "position": "navigation",
+      "timestamp": 1758917240722,
+      "data": {
+        "position": "navigation"
+      }
+    },
+    {
+      "sessionId": "qajvznvmw7amg19wtpt",
+      "elementType": "nav_link",
+      "targetUrl": "/",
+      "sourcePage": "/about",
+      "position": "navigation",
+      "timestamp": 1758917245714,
+      "data": {
+        "position": "navigation"
+      }
+    },
+    {
+      "sessionId": "v5ecnutk9ckmg19wxm4",
+      "elementType": "article_link",
+      "targetUrl": "/articles/here-is-the-ai",
+      "sourcePage": "/",
+      "position": "popular",
+      "timestamp": 1758917275026,
+      "data": {
+        "position": "popular",
+        "article": "here-is-the-ai",
+        "source": "homepage"
       }
     }
   ],
@@ -13203,11 +13554,47 @@
       "firstSeen": 1758917096738,
       "lastSeen": 1758917096739,
       "pageViews": 3
+    },
+    "a8j57tj50xmg19ws2q": {
+      "id": "a8j57tj50xmg19ws2q",
+      "firstSeen": 1758917239586,
+      "lastSeen": 1758917239586,
+      "pageViews": 1
+    },
+    "h9528xq4a3kmg19ws7h": {
+      "id": "h9528xq4a3kmg19ws7h",
+      "firstSeen": 1758917239758,
+      "lastSeen": 1758917239757,
+      "pageViews": 3
+    },
+    "ygvvn8f4uv8mg19wtm3": {
+      "id": "ygvvn8f4uv8mg19wtm3",
+      "firstSeen": 1758917241579,
+      "lastSeen": 1758917241579,
+      "pageViews": 1
+    },
+    "qajvznvmw7amg19wtpt": {
+      "id": "qajvznvmw7amg19wtpt",
+      "firstSeen": 1758917241713,
+      "lastSeen": 1758917241714,
+      "pageViews": 3
+    },
+    "nh7rf5fn7gamg19wxio": {
+      "id": "nh7rf5fn7gamg19wxio",
+      "firstSeen": 1758917246640,
+      "lastSeen": 1758917246640,
+      "pageViews": 1
+    },
+    "v5ecnutk9ckmg19wxm4": {
+      "id": "v5ecnutk9ckmg19wxm4",
+      "firstSeen": 1758917246764,
+      "lastSeen": 1758917275845,
+      "pageViews": 4
     }
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1758917096878,
-    "totalSessions": 187
+    "lastUpdated": 1758917276117,
+    "totalSessions": 193
   }
 }

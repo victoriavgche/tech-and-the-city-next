@@ -125,7 +125,7 @@ export default function ArticlesPageClient({ posts }) {
                   onClick={() => handleArticleClick(post.slug)}
                 >
                   <h2 className="text-xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors leading-tight">
-                    {post.title}
+                    {displayData.title}
                   </h2>
                 </Link>
                 <ShareDropdown 
@@ -141,7 +141,7 @@ export default function ArticlesPageClient({ posts }) {
                 onClick={() => handleArticleClick(post.slug)}
               >
                 <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                  {post.excerpt}
+                  {displayData.excerpt}
                 </p>
               </Link>
               
