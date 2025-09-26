@@ -11157,6 +11157,140 @@
       },
       "timestamp": 1758912144721,
       "page": "/admin-TC25"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1758912569869,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1758912569868,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1758912577536,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1758912577536,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1758912580576,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1758912580576,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "rdmtvgby73smg15hqez",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1758912580586,
+      "page": "/"
+    },
+    {
+      "sessionId": "rdmtvgby73smg15hqez",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1758912580594,
+      "page": "/"
+    },
+    {
+      "sessionId": "rdmtvgby73smg15hqez",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1758912585054,
+      "page": "/"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1758912585058,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "rdmtvgby73smg15hqez",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1758912585055,
+      "page": "/"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1758912585058,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "time_spent",
+      "data": {
+        "time": 444292,
+        "page": "/admin/edit/endeavor-greece"
+      },
+      "timestamp": 1758912586925,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "time_spent",
+      "data": {
+        "time": 444293,
+        "page": "/admin/edit/endeavor-greece"
+      },
+      "timestamp": 1758912586926,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "ez5hkvwcb49mg16vj8o",
+      "eventType": "time_spent",
+      "data": {
+        "time": 440479,
+        "page": "/admin/edit/endeavor-greece"
+      },
+      "timestamp": 1758912586926,
+      "page": "/admin/edit/endeavor-greece"
+    },
+    {
+      "sessionId": "rdmtvgby73smg15hqez",
+      "eventType": "time_spent",
+      "data": {
+        "time": 2771079,
+        "page": "/"
+      },
+      "timestamp": 1758912590212,
+      "page": "/"
+    },
+    {
+      "sessionId": "rdmtvgby73smg15hqez",
+      "eventType": "time_spent",
+      "data": {
+        "time": 2771078,
+        "page": "/"
+      },
+      "timestamp": 1758912590212,
+      "page": "/"
     }
   ],
   "clicks": [
@@ -12458,7 +12592,7 @@
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1758912147537,
+    "lastUpdated": 1758912590286,
     "totalSessions": 177
   }
 }
