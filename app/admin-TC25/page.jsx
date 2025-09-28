@@ -465,6 +465,14 @@ export default function SecretAdminDashboard() {
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center p-4">
+        {/* No-JS Fallback */}
+        <noscript>
+          <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 mb-4 max-w-md w-full mx-2">
+            <h2 className="text-red-400 font-bold mb-2">JavaScript Required</h2>
+            <p className="text-red-300 text-sm">This admin panel requires JavaScript to function. Please enable JavaScript in your browser.</p>
+          </div>
+        </noscript>
+        
         <div className="bg-slate-800 p-4 sm:p-6 md:p-8 rounded-lg border border-slate-700 max-w-md w-full mx-2 sm:mx-4">
           <div className="text-center mb-6">
             <Lock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
@@ -540,12 +548,20 @@ export default function SecretAdminDashboard() {
               Default: admin@techandthecity.com<br/>
               Password: TechAndTheCity2024!
             </div>
-            <Link
-              href="/admin-TC25"
-              className="text-gray-400 hover:text-gray-300 transition-colors text-sm"
-            >
-              ← Back to Admin Panel
-            </Link>
+            <div className="space-y-2">
+              <Link
+                href="/admin-test"
+                className="block text-blue-400 hover:text-blue-300 transition-colors text-sm"
+              >
+                🔧 Test Page (Debug)
+              </Link>
+              <Link
+                href="/admin-TC25"
+                className="block text-gray-400 hover:text-gray-300 transition-colors text-sm"
+              >
+                ← Back to Admin Panel
+              </Link>
+            </div>
           </div>
         </div>
       </div>
