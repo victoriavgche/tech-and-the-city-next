@@ -1,9 +1,7 @@
 {
+  "/events/page": "app/events/page.js",
+  "/backup-viewer/page": "app/backup-viewer/page.js",
   "/about/page": "app/about/page.js",
   "/page": "app/page.js",
-  "/api/analytics/route": "app/api/analytics/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/events/page": "app/events/page.js",
-  "/admin-TC25/page": "app/admin-TC25/page.js",
-  "/backup-viewer/page": "app/backup-viewer/page.js"
+  "/admin-TC25/page": "app/admin-TC25/page.js"
 }

@@ -16,7 +16,8 @@ import {
   UserPlus,
   Mail,
   MessageSquare,
-  Heart
+  Heart,
+  UserCheck
 } from 'lucide-react';
 import AnalyticsExport from './AnalyticsExport';
 
@@ -52,6 +53,17 @@ export default function AnalyticsDashboard() {
       console.error('Error fetching analytics:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchEnhancedAnalytics = async () => {
+    try {
+      const response = await fetch('/api/analytics/enhanced');
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching enhanced analytics:', error);
+      return null;
     }
   };
 
@@ -143,6 +155,7 @@ export default function AnalyticsDashboard() {
             <div className="flex flex-wrap gap-2">
               {[
                 { id: 'overview', label: 'Overview', icon: BarChart3 },
+                { id: 'unique_users', label: 'Unique Users', icon: UserCheck },
                 { id: 'sources', label: 'Traffic Sources', icon: TrendingUp },
                 { id: 'popular_articles', label: 'Popular Articles', icon: Eye },
                 { id: 'click_through_rates', label: 'Click-Through Rates', icon: ArrowUpRight },
@@ -222,6 +235,55 @@ export default function AnalyticsDashboard() {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {activeTab === 'unique_users' && (
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-6">Unique Users Analytics</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-sm rounded-lg p-6 border border-blue-500/30">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-blue-500/20 rounded-lg">
+                      <UserCheck className="h-6 w-6 text-blue-400" />
+                    </div>
+                    <span className="text-2xl font-bold text-blue-400">0</span>
+                  </div>
+                  <h3 className="text-white font-semibold mb-2">Total Unique Users</h3>
+                  <p className="text-gray-400 text-sm">Individual users tracked</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-green-600/20 to-green-800/20 backdrop-blur-sm rounded-lg p-6 border border-green-500/30">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-green-500/20 rounded-lg">
+                      <Eye className="h-6 w-6 text-green-400" />
+                    </div>
+                    <span className="text-2xl font-bold text-green-400">0</span>
+                  </div>
+                  <h3 className="text-white font-semibold mb-2">Total Views by Users</h3>
+                  <p className="text-gray-400 text-sm">All views from unique users</p>
+                </div>
+                
+                <div className="bg-gradient-to-br from-purple-600/20 to-purple-800/20 backdrop-blur-sm rounded-lg p-6 border border-purple-500/30">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-purple-500/20 rounded-lg">
+                      <TrendingUp className="h-6 w-6 text-purple-400" />
+                    </div>
+                    <span className="text-2xl font-bold text-purple-400">0</span>
+                  </div>
+                  <h3 className="text-white font-semibold mb-2">Avg Views per User</h3>
+                  <p className="text-gray-400 text-sm">Average engagement per user</p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                <h3 className="text-xl font-semibold text-white mb-4">User Activity Breakdown</h3>
+                <div className="text-center text-gray-400 py-8">
+                  <UserCheck className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p>Unique user tracking is now active!</p>
+                  <p className="text-sm mt-2">Data will appear as users visit your site.</p>
+                </div>
+              </div>
             </div>
           )}
 

@@ -67176,6 +67176,13 @@
       },
       "timestamp": 1759094133185,
       "page": "/"
+    },
+    {
+      "sessionId": "7qzgbsdp0i5mg4785uu",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1759094166854,
+      "page": "/"
     }
   ],
   "clicks": [
@@ -78007,7 +78014,7 @@
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1759094133248,
+    "lastUpdated": 1759094166927,
     "totalSessions": 1222
   }
 }

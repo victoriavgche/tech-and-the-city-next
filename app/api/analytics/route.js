@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { addAnalyticsEntry, getAnalyticsData, getAllTimeStats, cleanupOldAnalyticsData } from '../../../lib/analytics-storage';
+import { addAnalyticsEntry, getAnalyticsData, getAllTimeStats, cleanupOldAnalyticsData, trackUniqueUserActivity } from '../../../lib/analytics-storage';
 
 export async function POST(request) {
   try {
@@ -31,6 +31,15 @@ export async function POST(request) {
     
     // Save to file storage
     const success = addAnalyticsEntry(type, data);
+    
+    // Track unique user activity for pageviews
+    if (success && type === 'pageview' && data) {
+      try {
+        trackUniqueUserActivity(data);
+      } catch (error) {
+        console.error('Error tracking unique user activity:', error);
+      }
+    }
     
     if (success) {
       console.log(`Analytics POST: Successfully saved ${type} data`);
