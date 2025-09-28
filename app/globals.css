@@ -198,3 +198,27 @@ h1 {
   95% { opacity: 0.93; }
   100% { opacity: 0.9; }
 }
+
+/* ReactQuill Fixed Font Size - 18px (Vercel standard) */
+.ql-editor {
+  font-size: 18px !important;
+}
+
+/* ReactQuill Alignment Styles */
+.ql-editor .ql-align-center,
+.prose .ql-align-center,
+div .ql-align-center {
+  text-align: center !important;
+}
+
+.ql-editor .ql-align-right,
+.prose .ql-align-right,
+div .ql-align-right {
+  text-align: right !important;
+}
+
+.ql-editor .ql-align-justify,
+.prose .ql-align-justify,
+div .ql-align-justify {
+  text-align: justify !important;
+}

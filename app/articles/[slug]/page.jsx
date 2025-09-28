@@ -20,7 +20,7 @@ export default async function ArticlePage({ params }) {
   }
 
   return (
-    <main className="min-h-screen bg-slate-900 py-8">
+    <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 py-8">
       <div className="container max-w-4xl mx-auto px-4">
         {/* Back button */}
         <div className="flex justify-start items-center mb-8">

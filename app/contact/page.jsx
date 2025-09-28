@@ -42,6 +42,7 @@ export default function Contact() {
         setMessage(data.error || 'Failed to send message. Please try again.');
       }
     } catch (error) {
+      console.error('Form submission error:', error);
       setMessage('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -68,7 +69,7 @@ export default function Contact() {
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Contact Form */}
         <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-          <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">Send us a Message</h2>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
@@ -156,7 +157,7 @@ export default function Contact() {
         <div className="space-y-6">
           {/* Contact Information */}
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-            <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">Get in Touch</h2>
             
             <div className="space-y-4">
               <div className="flex items-center gap-4">
@@ -164,7 +165,7 @@ export default function Contact() {
                   <Mail className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">Email</h3>
+                  <h3 className="font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Email</h3>
                   <p className="text-gray-300">techandthecity101@gmail.com</p>
                 </div>
               </div>
@@ -174,7 +175,7 @@ export default function Contact() {
                   <MapPin className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">Location</h3>
+                  <h3 className="font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Location</h3>
                   <p className="text-gray-300">Athens, Greece</p>
                 </div>
               </div>
