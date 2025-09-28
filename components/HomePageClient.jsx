@@ -62,7 +62,7 @@ export default function HomePageClient({ posts }) {
             Latest from Athens' cultural & tech scene with an atypical lens
           </h1>
           <p className="text-sm text-gray-400">
-            Always unfiltered, never cliché, by Whistledown.
+            Always unfiltered, never cliché, by the Silicon Whisperer.
           </p>
         </div>
       </section>

@@ -29,7 +29,7 @@ export default function About() {
               
               <p className="text-left text-cyan-400 font-medium">
                 <em>Yours,</em><br />
-                <em>Whistledown</em>
+                <em>the Silicon Whisperer</em>
               </p>
             </div>
           </div>
