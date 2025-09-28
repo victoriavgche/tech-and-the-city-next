@@ -20,25 +20,29 @@ export async function GET(request, { params }) {
       const frontMatter = frontMatterMatch[1];
       const content = frontMatterMatch[2];
       
-      // Parse front matter fields
-      const titleMatch = frontMatter.match(/^title:\s*["']?([^"'\n]+)["']?$/m);
-      const excerptMatch = frontMatter.match(/^excerpt:\s*["']?([^"'\n]*)["']?$/m);
-      const imageMatch = frontMatter.match(/^image:\s*["']?([^"'\n]+)["']?$/m);
-      const dateMatch = frontMatter.match(/^date:\s*["']?([^"'\n]+)["']?$/m);
+      // Parse front matter fields with better regex
+      const titleMatch = frontMatter.match(/^title:\s*(.+)$/m);
+      const excerptMatch = frontMatter.match(/^excerpt:\s*(.+)$/m);
+      const imageMatch = frontMatter.match(/^image:\s*(.+)$/m);
+      const dateMatch = frontMatter.match(/^date:\s*(.+)$/m);
       
       return NextResponse.json({
-        title: titleMatch ? titleMatch[1] : '',
-        excerpt: excerptMatch ? excerptMatch[1] : '',
+        title: titleMatch ? titleMatch[1].replace(/^["']|["']$/g, '') : '',
+        excerpt: excerptMatch ? excerptMatch[1].replace(/^["']|["']$/g, '') : '',
+        body: content,
         content: content,
-        featuredImage: imageMatch ? imageMatch[1] : '',
-        date: dateMatch ? dateMatch[1] : new Date().toISOString()
+        image: imageMatch ? imageMatch[1].replace(/^["']|["']$/g, '') : '',
+        featuredImage: imageMatch ? imageMatch[1].replace(/^["']|["']$/g, '') : '',
+        date: dateMatch ? dateMatch[1].replace(/^["']|["']$/g, '') : new Date().toISOString()
       });
     } else {
       // Fallback for files without front matter
       return NextResponse.json({
         title: '',
         excerpt: '',
+        body: fileContent,
         content: fileContent,
+        image: '',
         featuredImage: '',
         date: new Date().toISOString()
       });
@@ -52,7 +56,7 @@ export async function PUT(request, { params }) {
   try {
     const { slug } = params;
     const body = await request.json();
-    const { title, excerpt, content, featuredImage } = body;
+    const { title, excerpt, content, featuredImage, date } = body;
     
     console.log(`Attempting to update post: ${slug}`);
     console.log(`Title: ${title}`);
@@ -87,9 +91,9 @@ export async function PUT(request, { params }) {
     // Create markdown content with front matter
     const frontMatter = `---
 title: "${title.replace(/"/g, '\\"')}"
-date: "${new Date().toISOString()}"
-excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"
-${featuredImage ? `image: "${featuredImage}"` : ''}
+date: "${date || new Date().toISOString()}"
+excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"${featuredImage ? `
+image: "${featuredImage}"` : ''}
 ---
 
 ${content}`;

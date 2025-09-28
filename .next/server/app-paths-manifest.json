@@ -1,14 +1,5 @@
 {
-  "/page": "app/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/analytics/route": "app/api/analytics/route.js",
-  "/admin-TC25/page": "app/admin-TC25/page.js",
-  "/api/posts/route": "app/api/posts/route.js",
-  "/admin/edit/[slug]/page": "app/admin/edit/[slug]/page.js",
-  "/api/admin/posts/[slug]/route": "app/api/admin/posts/[slug]/route.js",
-  "/articles/page": "app/articles/page.js",
-  "/articles/[slug]/page": "app/articles/[slug]/page.js",
-  "/about/page": "app/about/page.js",
-  "/events/page": "app/events/page.js",
-  "/contact/page": "app/contact/page.js"
+  "/contact/page": "app/contact/page.js",
+  "/api/analytics/route": "app/api/analytics/route.js"
 }

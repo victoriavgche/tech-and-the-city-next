@@ -1,24 +1,8 @@
 ---
 title: "AI Era"
-date: "2025-01-26T18:03:30.358Z"
+date: "2025-09-12"
 excerpt: "Exploring the future of artificial intelligence and its impact on society"
-image: "/uploads/693-800x400-1758909627988.jpg"
+image: "/uploads/545975555-122237752778221024-8618930976774838696-n-1759010588328.jpg"
 ---
 
-This is a test article to demonstrate the content management system.
-
-## Key Features
-
-- **Rich Content**: Support for images, videos, and formatted text
-- **Easy Editing**: Simple textarea editor for content creation
-- **Media Upload**: Direct upload of images and videos
-- **Analytics**: Track visitor engagement and content performance
-
-## Getting Started
-
-1. Create new articles through the admin panel
-2. Upload media files directly
-3. Save and publish your content
-4. Monitor analytics and engagement
-
-The future of content creation is here!
+<p><br></p><h2>This is a test article to demonstrate the content management system.Key Features</h2><ul><li><strong>Rich Content</strong>: Support for images, videos, and formatted text</li><li><br></li><li><strong>Easy Editing</strong>: Simple textarea editor for content creation</li><li><br></li><li><strong>Media Upload</strong>: Direct upload of images and videos</li><li><br></li><li><strong>Analytics</strong>: Track visitor engagement and content performance</li></ul><h2>Getting Started</h2><ul><li>Create new articles through the admin panel</li><li><br></li><li>Upload media files directly</li><li><br></li><li>Save and publish your content</li><li><br></li><li>Monitor analytics and engagement</li></ul><p>The future of content creation is here!</p>
