@@ -1,6 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+
+// Mobile detection utility
+const isMobile = () => {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
 import Link from 'next/link';
 import { Edit, Trash2, Plus, Eye, EyeOff, Lock, Settings, Save, X, Share2, BarChart3, Mail, Calendar, HardDrive } from 'lucide-react';
 import AnalyticsDashboard from '@/components/AnalyticsDashboard';
@@ -20,6 +26,7 @@ export default function SecretAdminDashboard() {
   const [authenticated, setAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
   // Helper function to convert 24-hour to 12-hour format for display
   const convertTo12Hour = (time24) => {
@@ -46,6 +53,9 @@ export default function SecretAdminDashboard() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
+    // Detect mobile device
+    setIsMobileDevice(isMobile());
+    
     // Check if already authenticated
     let isAuth = false;
     try {
@@ -122,6 +132,9 @@ export default function SecretAdminDashboard() {
   const handleLogin = (e) => {
     e.preventDefault();
     
+    // Clear any previous errors
+    setError('');
+    
     // Default credentials that always work
     const defaultEmail = 'admin@techandthecity.com';
     const defaultPassword = 'TechAndTheCity2024!';
@@ -142,21 +155,29 @@ export default function SecretAdminDashboard() {
       adminPassword = defaultPassword;
     }
     
+    // Debug logging for mobile
+    console.log('Login attempt:', { email, hasPassword: !!password });
+    console.log('Expected credentials:', { defaultEmail, adminEmail });
+    
     // Check against both default and custom credentials
     if ((email === defaultEmail && password === defaultPassword) || 
         (email === adminEmail && password === adminPassword)) {
+      console.log('Login successful');
       setAuthenticated(true);
       try {
         if (typeof window !== 'undefined' && window.localStorage) {
           localStorage.setItem('admin_auth', 'true');
+          console.log('Authentication saved to localStorage');
         }
       } catch (error) {
+        console.log('localStorage error:', error);
         // If localStorage fails, continue anyway
         // localStorage not available, continuing without persistence
       }
       fetchPosts();
     } else {
-      setError('Invalid email or password');
+      console.log('Login failed - invalid credentials');
+      setError('Invalid email or password. Try: admin@techandthecity.com / TechAndTheCity2024!');
     }
   };
 
@@ -444,11 +465,11 @@ export default function SecretAdminDashboard() {
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center p-4">
-        <div className="bg-slate-800 p-6 sm:p-8 rounded-lg border border-slate-700 max-w-md w-full mx-2 sm:mx-4">
+        <div className="bg-slate-800 p-4 sm:p-6 md:p-8 rounded-lg border border-slate-700 max-w-md w-full mx-2 sm:mx-4">
           <div className="text-center mb-6">
             <Lock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-white mb-2">Admin Access</h1>
-            <p className="text-gray-400">Enter your credentials to continue</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">Admin Access</h1>
+            <p className="text-gray-400 text-sm sm:text-base">Enter your credentials to continue</p>
           </div>
           
           <form onSubmit={handleLogin}>
@@ -477,23 +498,53 @@ export default function SecretAdminDashboard() {
             </div>
             
             {error && (
-              <div className="text-red-400 text-sm mb-4 text-center">{error}</div>
+              <div className="text-red-400 text-sm mb-4 text-center bg-red-900/20 p-3 rounded border border-red-500/30">{error}</div>
             )}
+            
+            {/* Debug Info for Mobile */}
+            <div className="text-xs text-gray-500 mb-4 p-2 bg-gray-900/50 rounded border border-gray-600/30">
+              <div><strong>Debug Info:</strong></div>
+              <div>Device: {isMobileDevice ? 'Mobile' : 'Desktop'}</div>
+              <div>Screen: {typeof window !== 'undefined' ? `${window.innerWidth}x${window.innerHeight}` : 'Unknown'}</div>
+              <div>localStorage: {typeof window !== 'undefined' && window.localStorage ? 'Available' : 'Not Available'}</div>
+              {isMobileDevice && (
+                <div className="text-yellow-400 mt-1">
+                  📱 Mobile detected - using mobile-optimized interface
+                </div>
+              )}
+            </div>
             
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg"
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg mb-3"
             >
               Access Admin
             </button>
+            
+            {/* Quick Login Button for Testing */}
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('admin@techandthecity.com');
+                setPassword('TechAndTheCity2024!');
+                setError('');
+              }}
+              className="w-full bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-all duration-300 text-sm"
+            >
+              Fill Default Credentials
+            </button>
           </form>
           
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center space-y-2">
+            <div className="text-xs text-gray-500">
+              Default: admin@techandthecity.com<br/>
+              Password: TechAndTheCity2024!
+            </div>
             <Link
               href="/admin-TC25"
-              className="text-gray-400 hover:text-gray-300 transition-colors"
+              className="text-gray-400 hover:text-gray-300 transition-colors text-sm"
             >
-              ← Admin Panel
+              ← Back to Admin Panel
             </Link>
           </div>
         </div>
