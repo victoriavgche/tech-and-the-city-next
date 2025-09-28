@@ -99,7 +99,7 @@ export default function Footer(){
                   {/* Bottom-left corner is completely missing */}
                 </div>
                 {/* T&C Text */}
-                <div className="text-white font-bold text-2xl tracking-wide relative z-10 flex items-center justify-center h-full">
+                <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
                   T&C
                 </div>
               </div>

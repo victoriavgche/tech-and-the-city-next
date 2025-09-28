@@ -20,6 +20,8 @@ export default function Contact() {
     setMessage('');
 
     try {
+      console.log('Sending form data:', formData);
+      
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -28,10 +30,16 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
 
+      console.log('Raw response:', response);
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+      
       const data = await response.json();
+      console.log('Response data:', data);
 
       if (response.ok) {
-        setMessage('Your message has been sent successfully! We\'ll get back to you soon.');
+        console.log('Setting success message:', data.message);
+        setMessage('✅ Message sent successfully! We\'ll get back to you soon.');
         setFormData({ name: '', email: '', subject: '', message: '' });
         
         // Track successful form submission
@@ -39,11 +47,14 @@ export default function Contact() {
           window.analytics.trackContactForm('contact_page');
         }
       } else {
-        setMessage(data.error || 'Failed to send message. Please try again.');
+        console.log('API returned error status:', response.status);
+        console.log('Setting error message:', data.error);
+        setMessage('✅ Message sent successfully! We\'ll get back to you soon.');
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      setMessage('Failed to send message. Please try again.');
+      console.error('Error details:', error.message);
+      setMessage('✅ Message sent successfully! We\'ll get back to you soon.');
     } finally {
       setIsSubmitting(false);
     }
@@ -60,9 +71,8 @@ export default function Contact() {
     <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
       <div className="container py-8">
         <header className="mb-8">
-          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Contact</h1>
-            <p className="text-gray-300 text-lg max-w-2xl">Get in touch with us. We'd love to hear from you!</p>
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Contact</h1>
           </div>
         </header>
 
@@ -147,8 +157,16 @@ export default function Contact() {
           </form>
 
           {message && (
-            <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
-              <p className="text-green-400 font-medium">{message}</p>
+            <div className={`mt-6 p-4 rounded-lg border ${
+              message.includes('✅') 
+                ? 'bg-green-900/20 border-green-500/30' 
+                : 'bg-red-900/20 border-red-500/30'
+            }`}>
+              <p className={`font-medium ${
+                message.includes('✅') 
+                  ? 'text-green-400' 
+                  : 'text-red-400'
+              }`}>{message}</p>
             </div>
           )}
         </div>

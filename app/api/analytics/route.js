@@ -1,9 +1,28 @@
 import { NextResponse } from 'next/server';
-import { addAnalyticsEntry, getAnalyticsData, getAllTimeStats } from '../../../lib/analytics-storage';
+import { addAnalyticsEntry, getAnalyticsData, getAllTimeStats, cleanupOldAnalyticsData } from '../../../lib/analytics-storage';
 
 export async function POST(request) {
   try {
-    const { type, data } = await request.json();
+    // Check if request has body
+    const contentLength = request.headers.get('content-length');
+    if (!contentLength || contentLength === '0') {
+      console.log('Analytics POST: Empty request body');
+      return NextResponse.json({ success: true, message: 'Empty request ignored' });
+    }
+
+    const body = await request.text();
+    if (!body || body.trim() === '') {
+      console.log('Analytics POST: Empty body text');
+      return NextResponse.json({ success: true, message: 'Empty body ignored' });
+    }
+
+    const { type, data } = JSON.parse(body);
+    
+    // Validate required fields
+    if (!type) {
+      console.log('Analytics POST: Missing type field');
+      return NextResponse.json({ success: true, message: 'Missing type ignored' });
+    }
     
     // Add timestamp if not present
     if (!data.timestamp) {
@@ -14,6 +33,10 @@ export async function POST(request) {
     const success = addAnalyticsEntry(type, data);
     
     if (success) {
+      console.log(`Analytics POST: Successfully saved ${type} data`);
+      
+      // Keep all historical data - no automatic cleanup
+      
       return NextResponse.json({ success: true });
     } else {
       return NextResponse.json({ error: 'Failed to save analytics data' }, { status: 500 });
@@ -25,6 +48,8 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
+  const startTime = Date.now();
+  
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type');
@@ -37,8 +62,12 @@ export async function GET(request) {
       return NextResponse.json(data, { status: 400 });
     }
     
+    const processingTime = Date.now() - startTime;
+    console.log(`Analytics GET: ${type} (${period}) processed in ${processingTime}ms`);
+    
     return NextResponse.json(data);
   } catch (error) {
+    console.error('Analytics GET error:', error);
     return NextResponse.json({ error: 'Failed to fetch analytics' }, { status: 500 });
   }
 }

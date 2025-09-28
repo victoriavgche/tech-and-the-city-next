@@ -46,9 +46,9 @@ export default function HomePageClient({ posts }) {
     }
   };
   
-  // Find "Endeavor's Elite Meet-Up: A Preview of Innovation" article
-  const endeavorPost = posts.find(post => post.slug === 'endeavor-meetup-preview');
-  const featured = endeavorPost || posts[0]; // Endeavor article or most recent
+  // Sort posts by date to ensure most recent is first
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const featured = sortedPosts[0]; // Always most recent article
   const popularPosts = posts.filter(post => post.slug !== featured.slug).slice(0, 2); // Show only 2 for featured section
   const olderPosts = posts.filter(post => post.slug !== featured.slug).slice(2, 5); // Show older articles for Latest section
 

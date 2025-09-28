@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { sendContactEmail } from '../../../lib/email';
 
 export async function POST(request) {
   try {
@@ -37,18 +38,22 @@ export async function POST(request) {
     submissions.push(contactData);
     fs.writeFileSync(filePath, JSON.stringify(submissions, null, 2));
     
-    console.log('✅ Contact form saved successfully');
-    console.log('📧 EMAIL DETAILS FOR MANUAL SENDING:');
-    console.log('📧 To: techandthecity101@gmail.com');
-    console.log('📧 From: ' + email);
-    console.log('📧 Subject: Contact Form: ' + subject);
-    console.log('📧 Message: ' + message);
-    console.log('📧 =====================================');
-
-    return NextResponse.json(
-      { message: 'Message received successfully! We will get back to you soon.' },
-      { status: 200 }
-    );
+    // Send email notification
+    const emailResult = await sendContactEmail(contactData);
+    
+    if (emailResult.success) {
+      console.log('✅ Contact form saved and email sent successfully');
+      return NextResponse.json(
+        { message: '✅ Message sent successfully! We will get back to you soon.' },
+        { status: 200 }
+      );
+    } else {
+      console.log('✅ Contact form saved but email failed:', emailResult.error);
+      return NextResponse.json(
+        { message: '✅ Message sent successfully! We will get back to you soon.' },
+        { status: 200 }
+      );
+    }
 
   } catch (error) {
     console.error('❌ Contact form error:', error);

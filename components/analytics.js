@@ -134,6 +134,35 @@ class Analytics {
     });
   }
 
+  // Track event filter usage
+  trackEventFilter(filter, eventCount) {
+    this.trackEvent('event_filter_used', {
+      filter: filter, // 'all', 'upcoming', 'past', 'art', 'tech', 'science'
+      eventCount: eventCount,
+      page: window.location.pathname
+    });
+  }
+
+  // Track event modal interactions
+  trackEventModal(eventTitle, action) {
+    this.trackEvent('event_modal', {
+      event: eventTitle,
+      action: action, // 'open', 'close', 'view_details'
+      page: window.location.pathname
+    });
+  }
+
+
+
+  // Track event sharing
+  trackEventShare(eventTitle, platform) {
+    this.trackEvent('event_share', {
+      event: eventTitle,
+      platform: platform, // 'linkedin', 'twitter', 'facebook', etc.
+      page: window.location.pathname
+    });
+  }
+
   // Track newsletter engagement (open rate, CTR)
   trackNewsletterEngagement(action, data = {}) {
     this.trackEvent('newsletter_engagement', {
@@ -172,63 +201,5 @@ class Analytics {
   }
 }
 
-// Initialize analytics
-if (typeof window !== 'undefined') {
-  window.analytics = new Analytics();
-  
-  // Track initial page view
-  window.analytics.trackPageView(window.location.pathname, document.referrer);
-  
-  // Track page visibility changes
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      window.analytics.trackEvent('page_visible');
-    } else {
-      window.analytics.trackEvent('page_hidden');
-    }
-  });
-
-  // Track bounce rate and engagement metrics
-  let startTime = Date.now();
-  let pagesInSession = 1;
-  let hasScrolled = false;
-  let hasClicked = false;
-  let maxScrollDepth = 0;
-
-  // Track scroll depth for bounce rate calculation
-  window.addEventListener('scroll', () => {
-    hasScrolled = true;
-    const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-    maxScrollDepth = Math.max(maxScrollDepth, scrollDepth);
-  });
-
-  // Track clicks for engagement
-  document.addEventListener('click', () => {
-    hasClicked = true;
-  });
-
-  // Track pages per session (for SPA navigation)
-  const originalPushState = history.pushState;
-  history.pushState = function(...args) {
-    pagesInSession++;
-    originalPushState.apply(history, args);
-  };
-
-  window.addEventListener('popstate', () => {
-    pagesInSession++;
-  });
-
-  // Track bounce rate on page unload
-  window.addEventListener('beforeunload', () => {
-    const timeSpent = Date.now() - startTime;
-    window.analytics.trackBounceRate({
-      hasScrolled: hasScrolled,
-      hasClicked: hasClicked,
-      maxScrollDepth: maxScrollDepth,
-      pagesInSession: pagesInSession,
-      timeSpent: timeSpent
-    });
-  });
-}
 
 export default Analytics;

@@ -25,10 +25,21 @@ export default function AnalyticsDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [period, setPeriod] = useState('7d');
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [isRealTime, setIsRealTime] = useState(true);
 
   useEffect(() => {
     fetchAnalytics();
-  }, [period]);
+    
+    // Set up real-time updates every 30 seconds
+    const interval = setInterval(() => {
+      if (isRealTime) {
+        fetchAnalytics();
+      }
+    }, 30000);
+    
+    return () => clearInterval(interval);
+  }, [period, isRealTime]);
 
   const fetchAnalytics = async () => {
     try {
@@ -36,6 +47,7 @@ export default function AnalyticsDashboard() {
       const response = await fetch(`/api/analytics?type=all&period=${period}`);
       const data = await response.json();
       setAnalytics(data);
+      setLastUpdated(new Date());
     } catch (error) {
       console.error('Error fetching analytics:', error);
     } finally {
@@ -64,8 +76,38 @@ export default function AnalyticsDashboard() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">Analytics Dashboard</h1>
-          <p className="text-gray-300 text-lg">Track your website performance and visitor engagement</p>
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">Analytics Dashboard</h1>
+              <p className="text-gray-300 text-lg">Track your website performance and visitor engagement</p>
+              {lastUpdated && (
+                <p className="text-gray-400 text-sm mt-2">
+                  Last updated: {lastUpdated.toLocaleTimeString()}
+                  {isRealTime && <span className="ml-2 text-green-400">• Real-time</span>}
+                </p>
+              )}
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setIsRealTime(!isRealTime)}
+                className={`px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2 ${
+                  isRealTime 
+                    ? 'bg-green-600 hover:bg-green-700 text-white' 
+                    : 'bg-gray-600 hover:bg-gray-700 text-white'
+                }`}
+              >
+                <div className={`w-2 h-2 rounded-full ${isRealTime ? 'bg-green-400' : 'bg-gray-400'}`}></div>
+                {isRealTime ? 'Real-time ON' : 'Real-time OFF'}
+              </button>
+              <button
+                onClick={fetchAnalytics}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"
+              >
+                <TrendingUp className="h-4 w-4" />
+                Refresh
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Period Selector */}

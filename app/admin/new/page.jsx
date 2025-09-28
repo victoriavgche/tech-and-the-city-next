@@ -2,28 +2,46 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Save, ArrowLeft } from 'lucide-react';
+import { Save, ArrowLeft, Eye, Upload, FileText, Image, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+// Dynamic import για ReactQuill
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import 'react-quill/dist/quill.snow.css';
 
 export default function NewPost() {
   const router = useRouter();
+  
   const [title, setTitle] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
-  const [featuredImage, setFeaturedImage] = useState('');
+  const [image, setImage] = useState('');
+  const [articleDate, setArticleDate] = useState(new Date().toISOString().split('T')[0]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [showMediaModal, setShowMediaModal] = useState(false);
-  const [mediaUrl, setMediaUrl] = useState('');
-  const [mediaType, setMediaType] = useState('image');
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
+  // ReactQuill modules για rich text editing - NO SIZE OPTION
+  const quillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'align': [] }],
+      ['link']
+    ],
   };
 
-  const handleFileUpload = async (e) => {
+  const quillFormats = [
+    'bold', 'italic', 'underline',
+    'color', 'background', 'list', 'bullet', 'align',
+    'link'
+  ];
+
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -40,9 +58,10 @@ export default function NewPost() {
       const result = await response.json();
 
       if (response.ok) {
-        insertMedia(result.url, file.name, file.type);
+        setImage(result.url);
         setError('');
-        setSuccess(`Media uploaded successfully: ${result.fileName}`);
+        setSuccess('Image uploaded successfully!');
+        e.target.value = ''; // Reset file input
       } else {
         setError(`Upload failed: ${result.error}`);
       }
@@ -53,83 +72,40 @@ export default function NewPost() {
     }
   };
 
-  const insertMedia = (url, name, type) => {
-    const textarea = document.querySelector('textarea');
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    
-    let mediaMarkdown = '';
-    if (type && type.startsWith('image/')) {
-      mediaMarkdown = `\n\n![${name}](${url})\n\n`;
-    } else if (type && type.startsWith('video/')) {
-      mediaMarkdown = `\n\n<video controls style="max-width: 100%; height: auto;"><source src="${url}" type="${type}">Your browser does not support the video tag.</video>\n\n`;
-    } else if (mediaType === 'image') {
-      mediaMarkdown = `\n\n![${name || 'Image'}](${url})\n\n`;
-    } else {
-      mediaMarkdown = `\n\n<video controls style="max-width: 100%; height: auto;"><source src="${url}">Your browser does not support the video tag.</video>\n\n`;
-    }
-    
-    // Insert at cursor position
-    const newContent = content.substring(0, start) + mediaMarkdown + content.substring(end);
-    setContent(newContent);
-    
-    // Set cursor position after the inserted content
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start + mediaMarkdown.length, start + mediaMarkdown.length);
-    }, 0);
-  };
-
-  const handleUrlInsert = () => {
-    if (!mediaUrl.trim()) {
-      setError('Please enter a valid URL');
-      return;
-    }
-    
-    insertMedia(mediaUrl, '', '');
-    setShowMediaModal(false);
-    setMediaUrl('');
+  const handleSaveDraft = async () => {
+    setSaving(true);
     setError('');
-    setSuccess('Media added from URL');
-  };
+    setSuccess('');
 
-  const handleDeleteMedia = () => {
-    const textarea = document.querySelector('textarea');
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    
-    // Find the nearest media markdown or HTML
-    const text = content;
-    let deleteStart = start;
-    let deleteEnd = end;
-    
-    // Look for image markdown ![alt](url)
-    const imageRegex = /!\[.*?\]\([^)]+\)/g;
-    let match;
-    while ((match = imageRegex.exec(text)) !== null) {
-      if (match.index <= start && match.index + match[0].length >= end) {
-        deleteStart = match.index;
-        deleteEnd = match.index + match[0].length;
-        break;
+    try {
+      const response = await fetch('/api/admin/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: title || 'Draft',
+          excerpt: excerpt || 'Draft article',
+          content: content || 'This is a draft...',
+          image,
+          date: articleDate,
+          status: 'draft'
+        }),
+      });
+
+      if (response.ok) {
+        setSuccess('Draft saved successfully!');
+        setTimeout(() => {
+          router.push('/admin-TC25');
+        }, 2000);
+      } else {
+        const errorData = await response.json();
+        setError(`Failed to save draft: ${errorData.error || 'Unknown error'}`);
       }
-    }
-    
-    // Look for video HTML <video>...</video>
-    const videoRegex = /<video[^>]*>.*?<\/video>/gs;
-    while ((match = videoRegex.exec(text)) !== null) {
-      if (match.index <= start && match.index + match[0].length >= end) {
-        deleteStart = match.index;
-        deleteEnd = match.index + match[0].length;
-        break;
-      }
-    }
-    
-    if (deleteStart !== start || deleteEnd !== end) {
-      const newContent = text.substring(0, deleteStart) + text.substring(deleteEnd);
-      setContent(newContent);
-      setSuccess('Media deleted successfully');
-    } else {
-      setError('No media found at cursor position');
+    } catch (error) {
+      setError(`Network error: ${error.message}`);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -144,11 +120,6 @@ export default function NewPost() {
     setSuccess('');
 
     try {
-      // Get the current content
-      const currentContent = content;
-      
-      console.log('Saving content:', currentContent);
-      
       const response = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: {
@@ -157,8 +128,9 @@ export default function NewPost() {
         body: JSON.stringify({
           title,
           excerpt,
-          content: currentContent,
-          featuredImage,
+          content,
+          image,
+          date: articleDate,
         }),
       });
 
@@ -179,35 +151,41 @@ export default function NewPost() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 py-8">
+    <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 py-8">
       <div className="container max-w-4xl mx-auto px-4">
-        {/* Header */}
+        {/* Back button and Action buttons */}
         <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-white">Create New Post</h1>
-            <p className="text-gray-400 mt-2">Write a new article</p>
-          </div>
-          <div className="flex gap-4">
+          <Link 
+            href="/admin-TC25" 
+            className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+          >
+            ← Back to Admin
+          </Link>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setShowPreview(!showPreview)}
+              className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-teal-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2"
+            >
+              <Eye className="h-5 w-5" />
+              {showPreview ? 'Edit Mode' : 'Preview Mode'}
+            </button>
+            <button
+              onClick={handleSaveDraft}
+              disabled={saving}
+              className="bg-gradient-to-r from-orange-600 to-red-600 text-white px-6 py-3 rounded-lg hover:from-orange-700 hover:to-red-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <FileText className="h-5 w-5" />
+              {saving ? 'Saving...' : 'Save Draft'}
+            </button>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2 disabled:opacity-50"
+              className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Save className="h-5 w-5" />
-              {saving ? 'Saving...' : 'Create Post'}
+              {saving ? 'Creating...' : 'Create Post'}
             </button>
           </div>
-        </div>
-
-        {/* Back to Admin */}
-        <div className="mb-6">
-          <Link
-            href="/admin-TC25"
-            className="text-cyan-400 hover:text-cyan-300 transition-colors inline-flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Admin Dashboard
-          </Link>
         </div>
 
         {/* Messages */}
@@ -224,165 +202,172 @@ export default function NewPost() {
         )}
 
         {/* Post Details */}
-        <div className="bg-slate-800 rounded-lg border border-slate-700 mb-6">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Post Details</h2>
-            
-            <div className="space-y-4">
-              {/* Title */}
-              <div>
-                <label className="block text-gray-300 text-sm mb-2">Title</label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
-                  placeholder="Enter post title..."
-                />
-              </div>
-
-              {/* Excerpt */}
-              <div>
-                <label className="block text-gray-300 text-sm mb-2">Excerpt</label>
-                <textarea
-                  value={excerpt}
-                  onChange={(e) => setExcerpt(e.target.value)}
-                  className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none resize-none"
-                  rows="3"
-                  placeholder="Enter post excerpt..."
-                />
-              </div>
-
-              {/* Featured Image */}
-              <div>
-                <label className="block text-gray-300 text-sm mb-2">Featured Image URL</label>
-                <input
-                  type="url"
-                  value={featuredImage}
-                  onChange={(e) => setFeaturedImage(e.target.value)}
-                  className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
-                  placeholder="Enter image URL..."
-                />
-                {featuredImage && (
-                  <div className="mt-2">
-                    <img 
-                      src={featuredImage} 
-                      alt="Featured" 
-                      className="w-20 h-20 object-cover rounded-lg"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Content Editor */}
-        <div className="bg-slate-800 rounded-lg border border-slate-700">
-          <div className="p-4 border-b border-slate-700">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-lg font-semibold text-white">Article Content</h2>
-                <p className="text-gray-400 text-sm">Write your article content</p>
-              </div>
-                          <div className="flex gap-2">
-                            <input
-                              type="file"
-                              accept="image/*,video/*"
-                              onChange={handleFileUpload}
-                              className="hidden"
-                              id="media-upload"
-                            />
-                            <label
-                              htmlFor="media-upload"
-                              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer inline-flex items-center gap-2"
-                            >
-                              📷 Upload File
-                            </label>
-                            <button
-                              onClick={() => setShowMediaModal(true)}
-                              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors inline-flex items-center gap-2"
-                            >
-                              🔗 Add URL
-                            </button>
-                            <button
-                              onClick={handleDeleteMedia}
-                              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors inline-flex items-center gap-2"
-                            >
-                              🗑️ Delete Media
-                            </button>
-                            {uploading && (
-                              <span className="text-blue-400 text-sm flex items-center">Uploading...</span>
-                            )}
-                          </div>
-            </div>
-          </div>
+        <div className="bg-slate-800 rounded-lg p-6 shadow-lg border border-slate-700 mb-6">
+          <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            Post Details
+          </h2>
           
-          <div className="p-4">
-            <textarea
-              value={content}
-              onChange={handleContentChange}
-              className="w-full h-96 bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none resize-none"
-              style={{ 
-                minHeight: '400px',
-                fontSize: '16px',
-                fontFamily: 'Arial, sans-serif'
-              }}
-              placeholder="Write your article content here..."
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Media URL Modal */}
-      {showMediaModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-slate-800 rounded-lg p-6 w-96 max-w-full mx-4">
-            <h3 className="text-lg font-semibold text-white mb-4">Add Media from URL</h3>
-            
-            <div className="mb-4">
-              <label className="block text-gray-300 text-sm mb-2">Media Type</label>
-              <select
-                value={mediaType}
-                onChange={(e) => setMediaType(e.target.value)}
-                className="w-full bg-slate-700 text-white px-3 py-2 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
-              >
-                <option value="image">Image</option>
-                <option value="video">Video</option>
-              </select>
-            </div>
-            
-            <div className="mb-4">
-              <label className="block text-gray-300 text-sm mb-2">URL</label>
+          <div className="space-y-6">
+            {/* Title */}
+            <div>
+              <label className="block text-gray-300 text-sm font-medium mb-2">Title</label>
               <input
-                type="url"
-                value={mediaUrl}
-                onChange={(e) => setMediaUrl(e.target.value)}
-                className="w-full bg-slate-700 text-white px-3 py-2 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
-                placeholder="https://example.com/image.jpg"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+                placeholder="Enter post title..."
               />
             </div>
-            
-            <div className="flex gap-2 justify-end">
-              <button
-                onClick={() => {
-                  setShowMediaModal(false);
-                  setMediaUrl('');
-                }}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUrlInsert}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-              >
-                Add Media
-              </button>
+
+            {/* Excerpt */}
+            <div>
+              <label className="block text-gray-300 text-sm font-medium mb-2">Excerpt</label>
+              <textarea
+                value={excerpt}
+                onChange={(e) => setExcerpt(e.target.value)}
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none resize-none"
+                rows="3"
+                placeholder="Enter post excerpt..."
+              />
+            </div>
+
+            {/* Article Date */}
+            <div>
+              <label className="block text-gray-300 text-sm font-medium mb-2 flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Article Date
+              </label>
+              <input
+                type="date"
+                value={articleDate}
+                onChange={(e) => setArticleDate(e.target.value)}
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
+              />
+            </div>
+
+            {/* Featured Image */}
+            <div>
+              <label className="block text-gray-300 text-sm font-medium mb-2 flex items-center gap-2">
+                <Image className="h-4 w-4" />
+                Featured Image
+              </label>
+              
+              {image ? (
+                <div className="space-y-4">
+                  <div className="relative inline-block">
+                    <img 
+                      src={image} 
+                      alt="Featured" 
+                      className="w-32 h-32 object-cover rounded-lg border border-slate-600"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer inline-flex items-center gap-2"
+                    >
+                      <Upload className="h-4 w-4" />
+                      Upload
+                    </label>
+                    <button
+                      onClick={() => setImage('')}
+                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors inline-flex items-center gap-2"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    id="image-upload"
+                  />
+                  <label
+                    htmlFor="image-upload"
+                    className="px-6 py-4 bg-slate-700 hover:bg-slate-600 text-gray-300 rounded-lg border-2 border-dashed border-slate-600 hover:border-blue-400 transition-colors cursor-pointer inline-flex items-center gap-2"
+                  >
+                    <Upload className="h-5 w-5" />
+                    {uploading ? 'Uploading...' : 'Upload Featured Image'}
+                  </label>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      )}
-    </div>
+
+        {/* Article Content */}
+        <article className="bg-slate-800 rounded-lg p-6 shadow-lg border border-slate-700">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Article Content
+            </h2>
+            <button
+              onClick={() => setShowPreview(!showPreview)}
+              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors inline-flex items-center gap-2"
+            >
+              <Eye className="h-4 w-4" />
+              {showPreview ? 'Edit Mode' : 'Preview Mode'}
+            </button>
+          </div>
+
+          {showPreview ? (
+            <div className="prose prose-lg max-w-none prose-invert prose-headings:text-cyan-400 prose-a:text-cyan-400 prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 bg-slate-700 p-4 rounded-lg">
+              <style jsx>{`
+                .prose span[style*="font-size"] { 
+                  color: #22d3ee !important;
+                  font-weight: 500;
+                }
+              `}</style>
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg">
+              <style jsx>{`
+                .ql-editor {
+                  font-size: 18px !important;
+                }
+                .ql-editor .ql-align-center {
+                  text-align: center !important;
+                }
+                .ql-editor .ql-align-right {
+                  text-align: right !important;
+                }
+                .ql-editor .ql-align-justify {
+                  text-align: justify !important;
+                }
+              `}</style>
+              {typeof window !== 'undefined' && (
+                <ReactQuill
+                  theme="snow"
+                  value={content}
+                  onChange={setContent}
+                  modules={quillModules}
+                  formats={quillFormats}
+                  placeholder="Ξεκίνα να γράφεις το άρθρο σου εδώ..."
+                  style={{ 
+                    minHeight: '400px',
+                    backgroundColor: 'white'
+                  }}
+                />
+              )}
+            </div>
+          )}
+        </article>
+      </div>
+    </main>
   );
 }

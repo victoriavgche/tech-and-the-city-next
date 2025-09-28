@@ -1,4 +1,4 @@
-import { getAllPostsMeta, getPostBySlug } from "../../../lib/posts";
+import { getPublishedPostsMeta, getPostBySlug } from "../../../lib/posts";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import ClientWrapper from "../../../components/ClientWrapper";
 import SocialShare from "../../../components/SocialShare";
 
 export async function generateStaticParams() {
-  const posts = await getAllPostsMeta();
+  const posts = await getPublishedPostsMeta();
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -67,7 +67,7 @@ export default async function ArticlePage({ params }) {
 
         {/* Article content */}
         <article className="bg-slate-800 rounded-lg p-8 shadow-lg border border-slate-700 text-justify">
-          <div className="prose prose-lg max-w-none prose-invert">
+          <div className="prose prose-2xl max-w-none prose-invert text-xl">
             <ClientWrapper content={post.content} />
           </div>
         </article>

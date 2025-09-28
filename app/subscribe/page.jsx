@@ -31,7 +31,7 @@ export default function Subscribe() {
       <div className="container py-8">
         <header className="mb-8">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Subscribe</h1>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-4">Subscribe</h1>
             <p className="text-gray-300 text-lg max-w-2xl">Stay updated with our latest essays, interviews, and field notes.</p>
           </div>
         </header>

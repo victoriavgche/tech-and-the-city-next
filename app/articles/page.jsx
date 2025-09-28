@@ -1,4 +1,4 @@
-import { getAllPostsMeta } from "../../lib/posts";
+import { getPublishedPosts } from "../../lib/posts";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import ArticlesPageClient from "../../components/ArticlesPageClient";
@@ -13,7 +13,7 @@ function getReadingTime(post) {
 }
 
 export default async function ArticlesPage() {
-  const posts = await getAllPostsMeta();
+  const posts = await getPublishedPosts();
   
   // Sort posts by date (most recent first)
   const sortedPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -32,6 +32,13 @@ export default async function ArticlesPage() {
             Back to Home
           </Link>
         </div>
+
+        {/* Header */}
+        <header className="mb-8">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Articles</h1>
+          </div>
+        </header>
         
         {/* Articles Grid */}
         <ArticlesPageClient posts={sortedPosts} />

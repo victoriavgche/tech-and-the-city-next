@@ -1,73 +1,65 @@
 import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { join } from 'path';
+import { existsSync } from 'fs';
 
 export async function POST(request) {
   try {
-    console.log('Upload API called');
-    
     const data = await request.formData();
     const file = data.get('file');
     
-    console.log('File received:', file ? file.name : 'No file');
-    
     if (!file) {
-      console.log('No file in request');
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    console.log('File details:', {
-      name: file.name,
-      size: file.size,
-      type: file.type
-    });
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/webm', 'video/ogg'];
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json({ 
+        error: 'Invalid file type. Allowed: JPEG, PNG, GIF, WebP, MP4, WebM, OGG' 
+      }, { status: 400 });
+    }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // Validate file size (10MB max)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      return NextResponse.json({ 
+        error: 'File too large. Maximum size: 10MB' 
+      }, { status: 400 });
+    }
 
     // Create uploads directory if it doesn't exist
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    console.log('Uploads directory:', uploadsDir);
-    
-    try {
+    const uploadsDir = join(process.cwd(), 'public', 'uploads');
+    if (!existsSync(uploadsDir)) {
       await mkdir(uploadsDir, { recursive: true });
-      console.log('Directory created/verified');
-    } catch (error) {
-      console.log('Directory error:', error.message);
     }
 
     // Generate unique filename
     const timestamp = Date.now();
-    const originalName = file.name;
-    const extension = path.extname(originalName);
-    const baseName = path.basename(originalName, extension).replace(/[^a-zA-Z0-9]/g, '-');
-    const fileName = `${baseName}-${timestamp}${extension}`;
-    
-    const filePath = path.join(uploadsDir, fileName);
-    console.log('File path:', filePath);
-    
-    // Write file
+    const fileExtension = file.name.split('.').pop();
+    const fileName = `${timestamp}-${Math.random().toString(36).substring(2)}.${fileExtension}`;
+    const filePath = join(uploadsDir, fileName);
+
+    // Save file
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
     await writeFile(filePath, buffer);
-    console.log('File written successfully');
-    
-    // Return the public URL
-    const publicUrl = `/uploads/${fileName}`;
-    
-    console.log(`File uploaded successfully: ${fileName}`);
+
+    // Return file URL
+    const fileUrl = `/uploads/${fileName}`;
     
     return NextResponse.json({ 
       success: true, 
-      url: publicUrl,
+      url: fileUrl,
       fileName: fileName,
-      size: buffer.length
+      fileType: file.type,
+      fileSize: file.size
     });
-    
+
   } catch (error) {
-    console.error('Upload error:', error);
+    console.error('File upload error:', error);
     return NextResponse.json({ 
-      error: 'Failed to upload file',
-      details: error.message,
-      stack: error.stack
+      error: 'Failed to upload file' 
     }, { status: 500 });
   }
 }

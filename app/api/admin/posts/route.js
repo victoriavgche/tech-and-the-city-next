@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { autoBackup } from '../../../../lib/backup-system';
 
 export async function POST(request) {
   try {
@@ -40,19 +41,27 @@ export async function POST(request) {
     const frontMatter = `---
 title: "${postData.title.replace(/"/g, '\\"')}"
 excerpt: "${postData.excerpt ? postData.excerpt.replace(/"/g, '\\"') : ''}"
-date: "${new Date().toISOString()}"
+date: "${postData.date || new Date().toISOString()}"
 tags:
   - AI
   - Technology
   - Athens
 read: "5 min"
 ${postData.featuredImage ? `image: "${postData.featuredImage}"` : ''}
+${postData.status ? `status: "${postData.status}"` : ''}
 ---
 
 ${postData.content}`;
 
     // Write the file
     await fs.writeFile(filePath, frontMatter, 'utf8');
+    
+    // Auto backup after post creation
+    try {
+      await autoBackup('Post creation');
+    } catch (backupError) {
+      console.error('Auto backup failed:', backupError);
+    }
     
     return Response.json({ success: true, slug });
   } catch (error) {
