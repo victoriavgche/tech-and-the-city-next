@@ -49,7 +49,10 @@ export default function SecretAdminDashboard() {
     // Check if already authenticated
     let isAuth = false;
     try {
-      isAuth = localStorage.getItem('admin_auth') === 'true';
+      // Check if we're in a browser environment and localStorage is available
+      if (typeof window !== 'undefined' && window.localStorage) {
+        isAuth = localStorage.getItem('admin_auth') === 'true';
+      }
     } catch (error) {
       // If localStorage fails, start fresh
       isAuth = false;
@@ -57,15 +60,17 @@ export default function SecretAdminDashboard() {
     
     setAuthenticated(isAuth);
     
-    // Check URL parameters for tab and filter
-    const urlParams = new URLSearchParams(window.location.search);
-    const tab = urlParams.get('tab');
-    const filter = urlParams.get('filter');
+    // Check URL parameters for tab and filter (only in browser)
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tab = urlParams.get('tab');
+      const filter = urlParams.get('filter');
     
-    if (tab === 'events' && filter === 'draft') {
-      setActiveTab('draftEvents');
-    } else if (tab === 'events') {
-      setActiveTab('publishedEvents');
+      if (tab === 'events' && filter === 'draft') {
+        setActiveTab('draftEvents');
+      } else if (tab === 'events') {
+        setActiveTab('publishedEvents');
+      }
     }
     
     if (isAuth) {
@@ -124,8 +129,13 @@ export default function SecretAdminDashboard() {
     // Get custom credentials from localStorage (if they exist)
     let adminEmail, adminPassword;
     try {
-      adminEmail = localStorage.getItem('admin_email') || defaultEmail;
-      adminPassword = localStorage.getItem('admin_password') || defaultPassword;
+      if (typeof window !== 'undefined' && window.localStorage) {
+        adminEmail = localStorage.getItem('admin_email') || defaultEmail;
+        adminPassword = localStorage.getItem('admin_password') || defaultPassword;
+      } else {
+        adminEmail = defaultEmail;
+        adminPassword = defaultPassword;
+      }
     } catch (error) {
       // If localStorage fails, use defaults
       adminEmail = defaultEmail;
@@ -137,7 +147,9 @@ export default function SecretAdminDashboard() {
         (email === adminEmail && password === adminPassword)) {
       setAuthenticated(true);
       try {
-        localStorage.setItem('admin_auth', 'true');
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('admin_auth', 'true');
+        }
       } catch (error) {
         // If localStorage fails, continue anyway
         // localStorage not available, continuing without persistence
@@ -151,7 +163,9 @@ export default function SecretAdminDashboard() {
   const handleLogout = () => {
     setAuthenticated(false);
     try {
-      localStorage.removeItem('admin_auth');
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.removeItem('admin_auth');
+      }
     } catch (error) {
       // If localStorage fails, continue anyway
       // localStorage not available during logout
@@ -183,8 +197,13 @@ export default function SecretAdminDashboard() {
 
     // Save new credentials to localStorage
     try {
-      localStorage.setItem('admin_email', newEmail);
-      localStorage.setItem('admin_password', newPassword);
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('admin_email', newEmail);
+        localStorage.setItem('admin_password', newPassword);
+      } else {
+        setSettingsError('Could not save credentials (localStorage not available)');
+        return;
+      }
     } catch (error) {
       setSettingsError('Could not save credentials (localStorage not available)');
       return;
@@ -199,8 +218,17 @@ export default function SecretAdminDashboard() {
 
   const handleOpenSettings = () => {
     // Load current credentials
-    const currentEmail = localStorage.getItem('admin_email') || 'admin@techandthecity.com';
-    const currentPassword = localStorage.getItem('admin_password') || 'TechAndTheCity2024!';
+    let currentEmail = 'admin@techandthecity.com';
+    let currentPassword = 'TechAndTheCity2024!';
+    
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        currentEmail = localStorage.getItem('admin_email') || currentEmail;
+        currentPassword = localStorage.getItem('admin_password') || currentPassword;
+      }
+    } catch (error) {
+      // Use defaults if localStorage fails
+    }
     
     setNewEmail(currentEmail);
     setNewPassword(currentPassword);
@@ -213,11 +241,17 @@ export default function SecretAdminDashboard() {
   };
 
   const handleLinkedInShare = (post) => {
+    if (typeof window === 'undefined') return;
+    
     const articleUrl = `${window.location.origin}/articles/${post.slug}`;
     const shareText = `Check out this article from Tech & the City: "${post.title}"`;
     const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}&title=${encodeURIComponent(post.title)}&summary=${encodeURIComponent(post.excerpt)}`;
     
-    window.open(linkedinUrl, '_blank', 'width=600,height=400');
+    // Use different window options for mobile vs desktop
+    const isMobile = window.innerWidth <= 768;
+    const windowOptions = isMobile ? '_blank' : '_blank,width=600,height=400';
+    
+    window.open(linkedinUrl, windowOptions);
   };
 
   const handleDelete = async (slug) => {
@@ -379,8 +413,15 @@ export default function SecretAdminDashboard() {
   };
 
   const handleShareLinkedIn = (event) => {
+    if (typeof window === 'undefined') return;
+    
     const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin + '/events')}&title=${encodeURIComponent(event.title)}&summary=${encodeURIComponent(event.description)}`;
-    window.open(linkedInUrl, '_blank');
+    
+    // Use different window options for mobile vs desktop
+    const isMobile = window.innerWidth <= 768;
+    const windowOptions = isMobile ? '_blank' : '_blank,width=600,height=400';
+    
+    window.open(linkedInUrl, windowOptions);
   };
 
   const getFilteredEvents = () => {
@@ -402,8 +443,8 @@ export default function SecretAdminDashboard() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center">
-        <div className="bg-slate-800 p-8 rounded-lg border border-slate-700 max-w-md w-full mx-4">
+      <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center p-4">
+        <div className="bg-slate-800 p-6 sm:p-8 rounded-lg border border-slate-700 max-w-md w-full mx-2 sm:mx-4">
           <div className="text-center mb-6">
             <Lock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-white mb-2">Admin Access</h1>
@@ -418,7 +459,7 @@ export default function SecretAdminDashboard() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@techandthecity.com"
-                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none text-base"
                 required
               />
             </div>
@@ -430,7 +471,7 @@ export default function SecretAdminDashboard() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none text-base"
                 required
               />
             </div>
@@ -473,12 +514,12 @@ export default function SecretAdminDashboard() {
       <div className="container max-w-6xl mx-auto px-4 pt-8 pb-8">
         
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-4xl font-bold text-white">Admin Panel</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white">Admin Panel</h1>
             <p className="text-gray-400 mt-2">Secret Admin Panel</p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-2 sm:gap-4">
             <button
               onClick={handleOpenSettings}
               className="bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors inline-flex items-center gap-2"
@@ -514,84 +555,91 @@ export default function SecretAdminDashboard() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex space-x-1 mb-8 bg-slate-800/50 p-1 rounded-lg">
+        <div className="flex flex-wrap gap-1 mb-8 bg-slate-800/50 p-1 rounded-lg">
           <button
             onClick={() => setActiveTab('published')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'published'
                 ? 'bg-slate-700 text-white'
                 : 'text-gray-300 hover:text-white hover:bg-slate-700'
             }`}
           >
             <Edit className="h-4 w-4" />
-            Published Posts ({publishedPosts.length})
+            <span className="hidden sm:inline">Published Posts</span>
+            <span className="sm:hidden">Published</span> ({publishedPosts.length})
           </button>
           <button
             onClick={() => setActiveTab('drafts')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'drafts'
                 ? 'bg-slate-700 text-white'
                 : 'text-gray-300 hover:text-white hover:bg-slate-700'
             }`}
           >
             <Edit className="h-4 w-4" />
-            Drafts ({draftPosts.length})
+            <span className="hidden sm:inline">Drafts</span>
+            <span className="sm:hidden">Drafts</span> ({draftPosts.length})
           </button>
           <button
             onClick={() => setActiveTab('messages')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'messages'
                 ? 'bg-slate-700 text-white'
                 : 'text-gray-300 hover:text-white hover:bg-slate-700'
             }`}
           >
             <Mail className="h-4 w-4" />
-            Messages
+            <span className="hidden sm:inline">Messages</span>
+            <span className="sm:hidden">Msg</span>
           </button>
           <button
             onClick={() => setActiveTab('publishedEvents')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'publishedEvents'
                 ? 'bg-slate-700 text-white'
                 : 'text-gray-300 hover:text-white hover:bg-slate-700'
             }`}
           >
             <Calendar className="h-4 w-4" />
-            Published Events ({events.filter(e => e.status !== 'draft' && !e.isDraft).length})
+            <span className="hidden sm:inline">Published Events</span>
+            <span className="sm:hidden">Events</span> ({events.filter(e => e.status !== 'draft' && !e.isDraft).length})
           </button>
           <button
             onClick={() => setActiveTab('draftEvents')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'draftEvents'
                 ? 'bg-slate-700 text-white'
                 : 'text-gray-300 hover:text-white hover:bg-slate-700'
             }`}
           >
             <Calendar className="h-4 w-4" />
-            Draft Events ({draftEvents.length})
+            <span className="hidden sm:inline">Draft Events</span>
+            <span className="sm:hidden">Drafts</span> ({draftEvents.length})
           </button>
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'analytics'
                 ? 'bg-slate-700 text-white'
                 : 'text-gray-300 hover:text-white hover:bg-slate-700'
             }`}
           >
             <BarChart3 className="h-4 w-4" />
-            Analytics
+            <span className="hidden sm:inline">Analytics</span>
+            <span className="sm:hidden">Stats</span>
           </button>
           
           <button
             onClick={() => setActiveTab('backup')}
-            className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'backup'
                 ? 'bg-slate-700 text-white'
                 : 'text-gray-300 hover:text-white hover:bg-slate-700'
             }`}
           >
             <HardDrive className="h-4 w-4" />
-            Backup
+            <span className="hidden sm:inline">Backup</span>
+            <span className="sm:hidden">Backup</span>
           </button>
         </div>
 
@@ -1063,8 +1111,8 @@ export default function SecretAdminDashboard() {
 
         {/* Settings Modal */}
         {showSettings && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-slate-800 p-8 rounded-lg border border-slate-700 max-w-md w-full mx-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-slate-800 p-6 sm:p-8 rounded-lg border border-slate-700 max-w-md w-full mx-2 sm:mx-4">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-white">Update Credentials</h2>
                 <button
@@ -1082,7 +1130,7 @@ export default function SecretAdminDashboard() {
                     type="email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
-                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none text-base"
                     required
                   />
                 </div>
