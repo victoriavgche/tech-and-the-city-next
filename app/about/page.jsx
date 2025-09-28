@@ -24,7 +24,7 @@ export default function About() {
               </p>
               
               <p>
-                Inspired by Bridgerton's character Whistledown and blended with my own voice, the Silicon Whisperer was born. If you seek vanilla writing, you may exit now. But if you crave unfiltered words…then stay.
+                Inspired by Bridgerton's character Whistledown and blended with my own voice, the Silicon Whisperer was born. If you seek vanilla writing, you may exit now. But if you crave unfiltered words…then enjoy.
               </p>
               
               <p className="text-left text-cyan-400 font-medium">
