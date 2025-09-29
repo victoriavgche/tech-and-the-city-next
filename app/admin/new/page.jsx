@@ -120,6 +120,14 @@ export default function NewPost() {
     setSuccess('');
 
     try {
+      console.log('Creating post with data:', {
+        title,
+        excerpt,
+        contentLength: content.length,
+        image,
+        date: articleDate
+      });
+
       const response = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: {
@@ -134,16 +142,22 @@ export default function NewPost() {
         }),
       });
 
+      console.log('Create response status:', response.status);
+
       if (response.ok) {
+        const result = await response.json();
+        console.log('Create successful:', result);
         setSuccess('Post created successfully!');
         setTimeout(() => {
           router.push('/admin-TC25');
         }, 2000);
       } else {
         const errorData = await response.json();
+        console.error('Create failed:', errorData);
         setError(`Failed to create post: ${errorData.error || 'Unknown error'}`);
       }
     } catch (error) {
+      console.error('Network error during create:', error);
       setError(`Network error: ${error.message}`);
     } finally {
       setSaving(false);
@@ -325,20 +339,45 @@ export default function NewPost() {
           </div>
 
           {showPreview ? (
-            <div className="prose prose-lg max-w-none prose-invert prose-headings:text-cyan-400 prose-a:text-cyan-400 prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 bg-slate-700 p-4 rounded-lg">
+            <div className="prose prose-lg max-w-none prose-invert prose-headings:text-cyan-400 prose-a:text-cyan-400 prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 bg-slate-700 p-4 rounded-lg min-h-[400px]">
               <style jsx>{`
                 .prose span[style*="font-size"] { 
                   color: #22d3ee !important;
                   font-weight: 500;
                 }
+                .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+                  margin-top: 1.5em;
+                  margin-bottom: 0.5em;
+                }
+                .prose p {
+                  margin-bottom: 1em;
+                  line-height: 1.7;
+                }
+                .prose ul, .prose ol {
+                  margin-bottom: 1em;
+                }
+                .prose li {
+                  margin-bottom: 0.5em;
+                }
+                .prose a {
+                  text-decoration: underline;
+                }
+                .prose a:hover {
+                  color: #67e8f9;
+                }
               `}</style>
-              <div dangerouslySetInnerHTML={{ __html: content }} />
+              {content ? (
+                <div dangerouslySetInnerHTML={{ __html: content }} />
+              ) : (
+                <div className="text-gray-400 italic">No content to preview. Start writing to see your preview here.</div>
+              )}
             </div>
           ) : (
             <div className="bg-white rounded-lg">
               <style jsx>{`
                 .ql-editor {
                   font-size: 18px !important;
+                  line-height: 1.6 !important;
                 }
                 .ql-editor .ql-align-center {
                   text-align: center !important;
@@ -349,15 +388,26 @@ export default function NewPost() {
                 .ql-editor .ql-align-justify {
                   text-align: justify !important;
                 }
+                .ql-toolbar {
+                  border-top-left-radius: 8px;
+                  border-top-right-radius: 8px;
+                }
+                .ql-container {
+                  border-bottom-left-radius: 8px;
+                  border-bottom-right-radius: 8px;
+                }
               `}</style>
               {typeof window !== 'undefined' && (
                 <ReactQuill
                   theme="snow"
                   value={content}
-                  onChange={setContent}
+                  onChange={(value) => {
+                    console.log('Content changed, length:', value.length);
+                    setContent(value);
+                  }}
                   modules={quillModules}
                   formats={quillFormats}
-                  placeholder="Ξεκίνα να γράφεις το άρθρο σου εδώ..."
+                  placeholder="Start writing your article here..."
                   style={{ 
                     minHeight: '400px',
                     backgroundColor: 'white'

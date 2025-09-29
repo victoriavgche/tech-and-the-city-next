@@ -341,90 +341,89 @@ export default function MobileAdmin() {
     <div style={{ 
       minHeight: '100vh', 
       background: 'linear-gradient(to bottom, #1f2937, #374151)',
-      padding: '10px'
+      padding: '8px'
     }}>
-      <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+      <div style={{ maxWidth: '100%', margin: '0 auto', padding: '0 4px' }}>
         {/* Header */}
         <div style={{
           background: '#1e293b',
-          padding: '15px',
-          borderRadius: '10px',
+          padding: '12px',
+          borderRadius: '12px',
           border: '1px solid #334155',
-          marginBottom: '15px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '10px'
+          marginBottom: '12px',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
         }}>
-          <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
             <h1 style={{ 
               color: 'white', 
-              fontSize: '20px', 
+              fontSize: '18px', 
               fontWeight: 'bold',
               margin: '0'
             }}>
               📱 Mobile Admin
             </h1>
-            <p style={{ color: '#9ca3af', fontSize: '12px', margin: '5px 0 0 0' }}>
-              Tech & the City Admin Panel
-            </p>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <button
+                onClick={() => setShowSettings(true)}
+                style={{
+                  background: '#4b5563',
+                  color: 'white',
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  fontSize: '11px',
+                  cursor: 'pointer'
+                }}
+              >
+                ⚙️
+              </button>
+              <button
+                onClick={handleLogout}
+                style={{
+                  background: '#dc2626',
+                  color: 'white',
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  fontSize: '11px',
+                  cursor: 'pointer'
+                }}
+              >
+                Logout
+              </button>
+            </div>
           </div>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <button
-              onClick={() => setShowSettings(true)}
-              style={{
-                background: '#4b5563',
-                color: 'white',
-                padding: '8px 12px',
-                borderRadius: '6px',
-                border: 'none',
-                fontSize: '12px',
-                cursor: 'pointer'
-              }}
-            >
-              ⚙️ Settings
-            </button>
-            <button
-              onClick={handleLogout}
-              style={{
-                background: '#dc2626',
-                color: 'white',
-                padding: '8px 12px',
-                borderRadius: '6px',
-                border: 'none',
-                fontSize: '12px',
-                cursor: 'pointer'
-              }}
-            >
-              Logout
-            </button>
-          </div>
+          <p style={{ color: '#9ca3af', fontSize: '11px', margin: '0' }}>
+            Tech & the City Admin Panel
+          </p>
         </div>
 
         {/* Navigation Tabs */}
         <div style={{
           background: '#1e293b',
-          padding: '8px',
-          borderRadius: '10px',
+          padding: '6px',
+          borderRadius: '12px',
           border: '1px solid #334155',
-          marginBottom: '15px',
+          marginBottom: '12px',
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '4px',
-          overflowX: 'auto'
+          gap: '3px',
+          overflowX: 'auto',
+          boxShadow: '0 2px 4px -1px rgba(0, 0, 0, 0.1)'
         }}>
           <button
             onClick={() => setActiveTab('published')}
             style={{
-              background: activeTab === 'published' ? '#475569' : 'transparent',
+              background: activeTab === 'published' ? '#7c3aed' : 'transparent',
               color: 'white',
-              padding: '8px 12px',
-              borderRadius: '6px',
+              padding: '6px 10px',
+              borderRadius: '8px',
               border: 'none',
-              fontSize: '12px',
+              fontSize: '11px',
               cursor: 'pointer',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontWeight: activeTab === 'published' ? 'bold' : 'normal',
+              transition: 'all 0.2s ease'
             }}
           >
             📰 Published ({publishedPosts.length})
@@ -432,14 +431,16 @@ export default function MobileAdmin() {
           <button
             onClick={() => setActiveTab('drafts')}
             style={{
-              background: activeTab === 'drafts' ? '#475569' : 'transparent',
+              background: activeTab === 'drafts' ? '#7c3aed' : 'transparent',
               color: 'white',
-              padding: '8px 12px',
-              borderRadius: '6px',
+              padding: '6px 10px',
+              borderRadius: '8px',
               border: 'none',
-              fontSize: '12px',
+              fontSize: '11px',
               cursor: 'pointer',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontWeight: activeTab === 'drafts' ? 'bold' : 'normal',
+              transition: 'all 0.2s ease'
             }}
           >
             📝 Drafts ({draftPosts.length})
@@ -447,14 +448,16 @@ export default function MobileAdmin() {
           <button
             onClick={() => setActiveTab('publishedEvents')}
             style={{
-              background: activeTab === 'publishedEvents' ? '#475569' : 'transparent',
+              background: activeTab === 'publishedEvents' ? '#7c3aed' : 'transparent',
               color: 'white',
-              padding: '8px 12px',
-              borderRadius: '6px',
+              padding: '6px 10px',
+              borderRadius: '8px',
               border: 'none',
-              fontSize: '12px',
+              fontSize: '11px',
               cursor: 'pointer',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontWeight: activeTab === 'publishedEvents' ? 'bold' : 'normal',
+              transition: 'all 0.2s ease'
             }}
           >
             🎉 Events ({publishedEvents.length})
@@ -462,14 +465,16 @@ export default function MobileAdmin() {
           <button
             onClick={() => setActiveTab('draftEvents')}
             style={{
-              background: activeTab === 'draftEvents' ? '#475569' : 'transparent',
+              background: activeTab === 'draftEvents' ? '#7c3aed' : 'transparent',
               color: 'white',
-              padding: '8px 12px',
-              borderRadius: '6px',
+              padding: '6px 10px',
+              borderRadius: '8px',
               border: 'none',
-              fontSize: '12px',
+              fontSize: '11px',
               cursor: 'pointer',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontWeight: activeTab === 'draftEvents' ? 'bold' : 'normal',
+              transition: 'all 0.2s ease'
             }}
           >
             📅 Draft Events ({draftEvents.length})
@@ -479,23 +484,26 @@ export default function MobileAdmin() {
         {/* New Article Button */}
         <div style={{
           background: '#1e293b',
-          padding: '15px',
-          borderRadius: '10px',
+          padding: '12px',
+          borderRadius: '12px',
           border: '1px solid #334155',
-          marginBottom: '15px',
-          textAlign: 'center'
+          marginBottom: '12px',
+          textAlign: 'center',
+          boxShadow: '0 2px 4px -1px rgba(0, 0, 0, 0.1)'
         }}>
           <Link
             href="/admin/new"
             style={{
               display: 'inline-block',
-              background: '#7c3aed',
+              background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
               color: 'white',
-              padding: '12px 24px',
+              padding: '10px 20px',
               borderRadius: '8px',
               textDecoration: 'none',
-              fontSize: '14px',
-              fontWeight: 'bold'
+              fontSize: '13px',
+              fontWeight: 'bold',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              transition: 'all 0.2s ease'
             }}
           >
             ✏️ New Article
@@ -505,10 +513,11 @@ export default function MobileAdmin() {
         {/* Content Area */}
         <div style={{
           background: '#1e293b',
-          padding: '15px',
-          borderRadius: '10px',
+          padding: '12px',
+          borderRadius: '12px',
           border: '1px solid #334155',
-          minHeight: '400px'
+          minHeight: '400px',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
         }}>
           {/* Published Posts */}
           {activeTab === 'published' && (
@@ -522,28 +531,31 @@ export default function MobileAdmin() {
                     <div key={post.slug} style={{
                       background: '#374151',
                       padding: '12px',
-                      borderRadius: '8px',
-                      border: '1px solid #475569'
+                      borderRadius: '10px',
+                      border: '1px solid #475569',
+                      marginBottom: '8px',
+                      boxShadow: '0 2px 4px -1px rgba(0, 0, 0, 0.1)'
                     }}>
-                      <h3 style={{ color: '#60a5fa', fontSize: '14px', margin: '0 0 8px 0', fontWeight: 'bold' }}>
+                      <h3 style={{ color: '#60a5fa', fontSize: '14px', margin: '0 0 6px 0', fontWeight: 'bold', lineHeight: '1.3' }}>
                         {post.title}
                       </h3>
-                      <p style={{ color: '#d1d5db', fontSize: '12px', margin: '0 0 8px 0' }}>
+                      <p style={{ color: '#d1d5db', fontSize: '11px', margin: '0 0 6px 0', lineHeight: '1.4' }}>
                         {post.excerpt}
                       </p>
-                      <div style={{ color: '#9ca3af', fontSize: '10px', marginBottom: '10px' }}>
+                      <div style={{ color: '#9ca3af', fontSize: '9px', marginBottom: '8px' }}>
                         {new Date(post.date).toLocaleDateString()} • {post.read || '5 min'}
                       </div>
-                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                         <Link
                           href={`/articles/${post.slug}`}
                           style={{
                             background: '#2563eb',
                             color: 'white',
-                            padding: '6px 10px',
+                            padding: '4px 8px',
                             borderRadius: '4px',
                             textDecoration: 'none',
-                            fontSize: '11px'
+                            fontSize: '10px',
+                            fontWeight: '500'
                           }}
                         >
                           👁️ View
@@ -553,10 +565,11 @@ export default function MobileAdmin() {
                           style={{
                             background: '#059669',
                             color: 'white',
-                            padding: '6px 10px',
+                            padding: '4px 8px',
                             borderRadius: '4px',
                             textDecoration: 'none',
-                            fontSize: '11px'
+                            fontSize: '10px',
+                            fontWeight: '500'
                           }}
                         >
                           ✏️ Edit
@@ -566,11 +579,12 @@ export default function MobileAdmin() {
                           style={{
                             background: '#d97706',
                             color: 'white',
-                            padding: '6px 10px',
+                            padding: '4px 8px',
                             borderRadius: '4px',
                             border: 'none',
-                            fontSize: '11px',
-                            cursor: 'pointer'
+                            fontSize: '10px',
+                            cursor: 'pointer',
+                            fontWeight: '500'
                           }}
                         >
                           📤 Unpublish
@@ -580,11 +594,12 @@ export default function MobileAdmin() {
                           style={{
                             background: '#dc2626',
                             color: 'white',
-                            padding: '6px 10px',
+                            padding: '4px 8px',
                             borderRadius: '4px',
                             border: 'none',
-                            fontSize: '11px',
-                            cursor: 'pointer'
+                            fontSize: '10px',
+                            cursor: 'pointer',
+                            fontWeight: '500'
                           }}
                         >
                           🗑️ Delete

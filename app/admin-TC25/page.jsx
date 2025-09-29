@@ -557,12 +557,6 @@ export default function SecretAdminDashboard() {
                 📱 Mobile Admin (Simple)
               </Link>
               <Link
-                href="/admin-test"
-                className="block text-blue-400 hover:text-blue-300 transition-colors text-sm"
-              >
-                🔧 Test Page (Debug)
-              </Link>
-              <Link
                 href="/admin-TC25"
                 className="block text-gray-400 hover:text-gray-300 transition-colors text-sm"
               >
