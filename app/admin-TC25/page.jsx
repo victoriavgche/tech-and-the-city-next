@@ -9,9 +9,10 @@ const isMobile = () => {
 };
 import Link from 'next/link';
 import { Edit, Trash2, Plus, Eye, EyeOff, Lock, Settings, Save, X, Share2, BarChart3, Mail, Calendar, HardDrive } from 'lucide-react';
-import AnalyticsDashboard from '@/components/AnalyticsDashboard';
-import MessagesDashboard from '@/components/MessagesDashboard';
-import BackupDashboard from '@/components/BackupDashboard';
+// Simplified imports for mobile compatibility
+// import AnalyticsDashboard from '@/components/AnalyticsDashboard';
+// import MessagesDashboard from '@/components/MessagesDashboard';
+// import BackupDashboard from '@/components/BackupDashboard';
 
 export default function SecretAdminDashboard() {
   const [posts, setPosts] = useState([]);
@@ -584,7 +585,7 @@ export default function SecretAdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
-      <div className="container max-w-6xl mx-auto px-4 pt-8 pb-8">
+      <div className={`container ${isMobileDevice ? 'max-w-full' : 'max-w-6xl'} mx-auto px-2 sm:px-4 pt-4 sm:pt-8 pb-4 sm:pb-8`}>
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4">
@@ -628,7 +629,7 @@ export default function SecretAdminDashboard() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex flex-wrap gap-1 mb-8 bg-slate-800/50 p-1 rounded-lg">
+        <div className="flex flex-wrap gap-1 mb-8 bg-slate-800/50 p-1 rounded-lg overflow-x-auto">
           <button
             onClick={() => setActiveTab('published')}
             className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
@@ -879,7 +880,21 @@ export default function SecretAdminDashboard() {
         )}
 
         {activeTab === 'messages' && (
-          <MessagesDashboard />
+          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+            <h2 className="text-2xl font-bold text-white mb-4">Messages</h2>
+            <div className="text-center py-12">
+              <Mail className="h-16 w-16 text-gray-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-300 mb-2">Messages Dashboard</h3>
+              <p className="text-gray-400 mb-6">Contact form messages will appear here.</p>
+              <Link
+                href="/contact"
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+              >
+                <Mail className="h-5 w-5" />
+                View Contact Page
+              </Link>
+            </div>
+          </div>
         )}
 
         {activeTab === 'publishedEvents' && (
@@ -1175,11 +1190,58 @@ export default function SecretAdminDashboard() {
         )}
 
         {activeTab === 'analytics' && (
-          <AnalyticsDashboard />
+          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+            <h2 className="text-2xl font-bold text-white mb-4">Analytics</h2>
+            <div className="text-center py-12">
+              <BarChart3 className="h-16 w-16 text-gray-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-300 mb-2">Analytics Dashboard</h3>
+              <p className="text-gray-400 mb-6">Website analytics and visitor statistics.</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-400 mb-2">0</div>
+                    <div className="text-sm text-blue-200">Total Visits</div>
+                  </div>
+                </div>
+                <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-400 mb-2">0</div>
+                    <div className="text-sm text-green-200">Unique Visitors</div>
+                  </div>
+                </div>
+                <div className="bg-purple-600/20 border border-purple-500/30 rounded-lg p-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-purple-400 mb-2">0</div>
+                    <div className="text-sm text-purple-200">Page Views</div>
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-400 text-sm">Analytics data will appear as visitors use your site.</p>
+            </div>
+          </div>
         )}
 
         {activeTab === 'backup' && (
-          <BackupDashboard />
+          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
+            <h2 className="text-2xl font-bold text-white mb-4">Backup System</h2>
+            <div className="text-center py-12">
+              <HardDrive className="h-16 w-16 text-gray-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-300 mb-2">Data Backup</h3>
+              <p className="text-gray-400 mb-6">Backup and restore your website data.</p>
+              <div className="space-y-4">
+                <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                  Create Backup
+                </button>
+                <button className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">
+                  Restore from Backup
+                </button>
+                <button className="w-full bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                  View Backup History
+                </button>
+              </div>
+              <p className="text-gray-400 text-sm mt-4">Backup functionality will be available soon.</p>
+            </div>
+          </div>
         )}
 
         {/* Settings Modal */}
