@@ -40694,6 +40694,51 @@
         "width": 1165,
         "height": 855
       }
+    },
+    {
+      "sessionId": "64zkrq4pcd3mg5czans",
+      "page": "/admin-TC25",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": 1759164260546,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 869
+      }
+    },
+    {
+      "sessionId": "64zkrq4pcd3mg5czans",
+      "page": "/admin-TC25",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": 1759164260547,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 869
+      }
+    },
+    {
+      "sessionId": "64zkrq4pcd3mg5czans",
+      "page": "/admin-TC25",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": 1759164260536,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 869
+      }
     }
   ],
   "events": [
@@ -67707,6 +67752,23 @@
       },
       "timestamp": 1759099316542,
       "page": "/admin-TC25"
+    },
+    {
+      "sessionId": "6rwatebjetmmg4abf47",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1759164253291,
+      "page": "/admin-TC25"
+    },
+    {
+      "sessionId": "6rwatebjetmmg4abf47",
+      "eventType": "time_spent",
+      "data": {
+        "time": 64935162,
+        "page": "/admin-TC25"
+      },
+      "timestamp": 1759164256295,
+      "page": "/admin-TC25"
     }
   ],
   "clicks": [
@@ -78609,11 +78671,17 @@
       "firstSeen": 1759099321160,
       "lastSeen": 1759099321159,
       "pageViews": 3
+    },
+    "64zkrq4pcd3mg5czans": {
+      "id": "64zkrq4pcd3mg5czans",
+      "firstSeen": 1759164260546,
+      "lastSeen": 1759164260536,
+      "pageViews": 3
     }
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1759099322966,
-    "totalSessions": 1229
+    "lastUpdated": 1759164262431,
+    "totalSessions": 1230
   }
 }
