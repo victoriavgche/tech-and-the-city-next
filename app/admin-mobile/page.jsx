@@ -1018,7 +1018,7 @@ export default function MobileAdmin() {
           fontSize: '10px',
           color: '#6b7280'
         }}>
-          <p>Mobile Admin Panel - Full functionality optimized for mobile</p>
+          <p>Mobile Admin Panel - Optimized for mobile devices</p>
         </div>
       </div>
     </div>
