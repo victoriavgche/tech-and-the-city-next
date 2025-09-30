@@ -8,11 +8,7 @@ const isMobile = () => {
   return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
 import Link from 'next/link';
-import { Edit, Trash2, Plus, Eye, EyeOff, Lock, Settings, Save, X, Share2, BarChart3, Mail, Calendar, HardDrive } from 'lucide-react';
-// Simplified imports for mobile compatibility
-// import AnalyticsDashboard from '@/components/AnalyticsDashboard';
-// import MessagesDashboard from '@/components/MessagesDashboard';
-// import BackupDashboard from '@/components/BackupDashboard';
+import { Edit, Trash2, Plus, Eye, EyeOff, Lock, Settings, Save, X, Share2, Calendar } from 'lucide-react';
 
 export default function SecretAdminDashboard() {
   const [posts, setPosts] = useState([]);
@@ -85,8 +81,13 @@ export default function SecretAdminDashboard() {
     }
     
     if (isAuth) {
-      fetchPosts();
-      fetchEvents();
+      try {
+        fetchPosts();
+        fetchEvents();
+      } catch (error) {
+        console.error('Error loading admin data:', error);
+        setLoading(false);
+      }
     } else {
       setLoading(false);
     }
@@ -549,20 +550,6 @@ export default function SecretAdminDashboard() {
               Default: admin@techandthecity.com<br/>
               Password: TechAndTheCity2024!
             </div>
-            <div className="space-y-2">
-              <Link
-                href="/admin-mobile"
-                className="block text-green-400 hover:text-green-300 transition-colors text-sm font-bold"
-              >
-                📱 Mobile Admin (Simple)
-              </Link>
-              <Link
-                href="/admin-TC25"
-                className="block text-gray-400 hover:text-gray-300 transition-colors text-sm"
-              >
-                ← Back to Admin Panel
-              </Link>
-            </div>
           </div>
         </div>
       </div>
@@ -579,7 +566,7 @@ export default function SecretAdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
-      <div className={`container ${isMobileDevice ? 'max-w-full' : 'max-w-6xl'} mx-auto px-2 sm:px-4 pt-4 sm:pt-8 pb-4 sm:pb-8`}>
+      <div className={`container ${isMobileDevice ? 'max-w-full px-1' : 'max-w-6xl px-4'} mx-auto pt-4 sm:pt-8 pb-4 sm:pb-8`}>
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4">
@@ -649,18 +636,6 @@ export default function SecretAdminDashboard() {
             <span className="sm:hidden">Drafts</span> ({draftPosts.length})
           </button>
           <button
-            onClick={() => setActiveTab('messages')}
-            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              activeTab === 'messages'
-                ? 'bg-slate-700 text-white'
-                : 'text-gray-300 hover:text-white hover:bg-slate-700'
-            }`}
-          >
-            <Mail className="h-4 w-4" />
-            <span className="hidden sm:inline">Messages</span>
-            <span className="sm:hidden">Msg</span>
-          </button>
-          <button
             onClick={() => setActiveTab('publishedEvents')}
             className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'publishedEvents'
@@ -684,31 +659,6 @@ export default function SecretAdminDashboard() {
             <span className="hidden sm:inline">Draft Events</span>
             <span className="sm:hidden">Drafts</span> ({draftEvents.length})
           </button>
-          <button
-            onClick={() => setActiveTab('analytics')}
-            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              activeTab === 'analytics'
-                ? 'bg-slate-700 text-white'
-                : 'text-gray-300 hover:text-white hover:bg-slate-700'
-            }`}
-          >
-            <BarChart3 className="h-4 w-4" />
-            <span className="hidden sm:inline">Analytics</span>
-            <span className="sm:hidden">Stats</span>
-          </button>
-          
-          <button
-            onClick={() => setActiveTab('backup')}
-            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-              activeTab === 'backup'
-                ? 'bg-slate-700 text-white'
-                : 'text-gray-300 hover:text-white hover:bg-slate-700'
-            }`}
-          >
-            <HardDrive className="h-4 w-4" />
-            <span className="hidden sm:inline">Backup</span>
-            <span className="sm:hidden">Backup</span>
-          </button>
         </div>
 
 
@@ -716,7 +666,7 @@ export default function SecretAdminDashboard() {
         {activeTab === 'published' && (
           <>
             {/* Published Articles List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={`grid ${isMobileDevice ? 'grid-cols-1 gap-4' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'}`}>
           {publishedPosts && publishedPosts.length > 0 ? publishedPosts.map((post) => (
             <div key={post.slug} className="bg-slate-800 rounded-lg p-6 border border-slate-700 flex flex-col h-full">
               {/* Article Image */}
@@ -740,7 +690,7 @@ export default function SecretAdminDashboard() {
               </div>
               
               {/* Actions */}
-              <div className="flex gap-2 flex-wrap mt-auto">
+              <div className={`flex ${isMobileDevice ? 'flex-col gap-2' : 'gap-2 flex-wrap'} mt-auto`}>
                 <Link
                   href={`/articles/${post.slug}`}
                   className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
@@ -803,7 +753,7 @@ export default function SecretAdminDashboard() {
         {activeTab === 'drafts' && (
           <>
             {/* Draft Articles List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={`grid ${isMobileDevice ? 'grid-cols-1 gap-4' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'}`}>
           {draftPosts && draftPosts.length > 0 ? draftPosts.map((post) => (
             <div key={post.slug} className="bg-slate-800 rounded-lg p-6 border border-slate-700 flex flex-col h-full">
               {/* Article Image */}
@@ -827,7 +777,7 @@ export default function SecretAdminDashboard() {
               </div>
               
               {/* Actions */}
-              <div className="flex gap-2 flex-wrap mt-auto">
+              <div className={`flex ${isMobileDevice ? 'flex-col gap-2' : 'gap-2 flex-wrap'} mt-auto`}>
                 <Link
                   href={`/admin/edit/${post.slug}`}
                   className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
@@ -873,23 +823,6 @@ export default function SecretAdminDashboard() {
           </>
         )}
 
-        {activeTab === 'messages' && (
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <h2 className="text-2xl font-bold text-white mb-4">Messages</h2>
-            <div className="text-center py-12">
-              <Mail className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-300 mb-2">Messages Dashboard</h3>
-              <p className="text-gray-400 mb-6">Contact form messages will appear here.</p>
-              <Link
-                href="/contact"
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
-              >
-                <Mail className="h-5 w-5" />
-                View Contact Page
-              </Link>
-            </div>
-          </div>
-        )}
 
         {activeTab === 'publishedEvents' && (
           <>
@@ -962,7 +895,7 @@ export default function SecretAdminDashboard() {
             </div>
 
             {/* Events List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={`grid ${isMobileDevice ? 'grid-cols-1 gap-4' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'}`}>
               {getFilteredEvents() && getFilteredEvents().length > 0 ? getFilteredEvents().map((event) => (
                 <div key={event.id} className="bg-slate-800 rounded-lg p-6 border border-slate-700 flex flex-col h-full">
                   {/* Event Visual */}
@@ -1019,7 +952,7 @@ export default function SecretAdminDashboard() {
                   </div>
                   
                   {/* Actions */}
-                  <div className="flex gap-2 flex-wrap mt-auto">
+                  <div className={`flex ${isMobileDevice ? 'flex-col gap-2' : 'gap-2 flex-wrap'} mt-auto`}>
                     <Link
                       href={`/events`}
                       className="bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-1"
@@ -1183,60 +1116,6 @@ export default function SecretAdminDashboard() {
           </>
         )}
 
-        {activeTab === 'analytics' && (
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <h2 className="text-2xl font-bold text-white mb-4">Analytics</h2>
-            <div className="text-center py-12">
-              <BarChart3 className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-300 mb-2">Analytics Dashboard</h3>
-              <p className="text-gray-400 mb-6">Website analytics and visitor statistics.</p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-400 mb-2">0</div>
-                    <div className="text-sm text-blue-200">Total Visits</div>
-                  </div>
-                </div>
-                <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-green-400 mb-2">0</div>
-                    <div className="text-sm text-green-200">Unique Visitors</div>
-                  </div>
-                </div>
-                <div className="bg-purple-600/20 border border-purple-500/30 rounded-lg p-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-400 mb-2">0</div>
-                    <div className="text-sm text-purple-200">Page Views</div>
-                  </div>
-                </div>
-              </div>
-              <p className="text-gray-400 text-sm">Analytics data will appear as visitors use your site.</p>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'backup' && (
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <h2 className="text-2xl font-bold text-white mb-4">Backup System</h2>
-            <div className="text-center py-12">
-              <HardDrive className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-300 mb-2">Data Backup</h3>
-              <p className="text-gray-400 mb-6">Backup and restore your website data.</p>
-              <div className="space-y-4">
-                <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-                  Create Backup
-                </button>
-                <button className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">
-                  Restore from Backup
-                </button>
-                <button className="w-full bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
-                  View Backup History
-                </button>
-              </div>
-              <p className="text-gray-400 text-sm mt-4">Backup functionality will be available soon.</p>
-            </div>
-          </div>
-        )}
 
         {/* Settings Modal */}
         {showSettings && (

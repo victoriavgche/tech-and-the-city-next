@@ -67769,6 +67769,20 @@
       },
       "timestamp": 1759164256295,
       "page": "/admin-TC25"
+    },
+    {
+      "sessionId": "64zkrq4pcd3mg5czans",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1759168679252,
+      "page": "/admin-TC25"
+    },
+    {
+      "sessionId": "64zkrq4pcd3mg5czans",
+      "eventType": "page_visible",
+      "data": {},
+      "timestamp": 1759168676931,
+      "page": "/admin-TC25"
     }
   ],
   "clicks": [
@@ -78681,7 +78695,7 @@
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1759164262431,
+    "lastUpdated": 1759168679834,
     "totalSessions": 1230
   }
 }
