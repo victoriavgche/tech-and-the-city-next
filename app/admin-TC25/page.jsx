@@ -320,8 +320,14 @@ export default function SecretAdminDashboard() {
   };
 
   const handleToggleStatus = async (slug, currentStatus) => {
-    const newStatus = currentStatus === 'draft' ? 'published' : 'draft';
+    console.log('Toggle status called:', { slug, currentStatus });
+    
+    // Default to 'published' if currentStatus is undefined
+    const safeCurrentStatus = currentStatus || 'published';
+    const newStatus = safeCurrentStatus === 'draft' ? 'published' : 'draft';
     const action = newStatus === 'published' ? 'publish' : 'unpublish';
+    
+    console.log('Status change:', { safeCurrentStatus, newStatus, action });
     
     if (confirm(`Are you sure you want to ${action} this article?`)) {
       try {
@@ -334,14 +340,17 @@ export default function SecretAdminDashboard() {
         });
         
         if (response.ok) {
+          console.log('Status update successful');
           // Refresh posts
           fetchPosts();
         } else {
-          alert(`Error ${action}ing article`);
+          const errorData = await response.json();
+          console.error('Status update failed:', errorData);
+          alert(`Error ${action}ing article: ${errorData.error || 'Unknown error'}`);
         }
       } catch (error) {
         console.error(`Error ${action}ing post:`, error);
-        alert(`Error ${action}ing article`);
+        alert(`Error ${action}ing article: ${error.message}`);
       }
     }
   };

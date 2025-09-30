@@ -40739,6 +40739,51 @@
         "width": 1920,
         "height": 869
       }
+    },
+    {
+      "sessionId": "eugfwvqbzkmg72qiba",
+      "page": "/admin-TC25",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": 1759267986743,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 869
+      }
+    },
+    {
+      "sessionId": "eugfwvqbzkmg72qiba",
+      "page": "/admin-TC25",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": 1759267986742,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 869
+      }
+    },
+    {
+      "sessionId": "eugfwvqbzkmg72qiba",
+      "page": "/admin-TC25",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": 1759267986746,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "viewport": {
+        "width": 1920,
+        "height": 869
+      }
     }
   ],
   "events": [
@@ -67783,6 +67828,13 @@
       "data": {},
       "timestamp": 1759168676931,
       "page": "/admin-TC25"
+    },
+    {
+      "sessionId": "eugfwvqbzkmg72qiba",
+      "eventType": "page_hidden",
+      "data": {},
+      "timestamp": 1759268015685,
+      "page": "/admin-TC25"
     }
   ],
   "clicks": [
@@ -78691,11 +78743,17 @@
       "firstSeen": 1759164260546,
       "lastSeen": 1759164260536,
       "pageViews": 3
+    },
+    "eugfwvqbzkmg72qiba": {
+      "id": "eugfwvqbzkmg72qiba",
+      "firstSeen": 1759267986743,
+      "lastSeen": 1759267986746,
+      "pageViews": 3
     }
   },
   "metadata": {
     "firstDay": 1758815803841,
-    "lastUpdated": 1759168679834,
-    "totalSessions": 1230
+    "lastUpdated": 1759268015812,
+    "totalSessions": 1231
   }
 }
