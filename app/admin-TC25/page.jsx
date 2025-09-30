@@ -94,19 +94,27 @@ export default function SecretAdminDashboard() {
 
   const fetchPosts = async () => {
     try {
+      console.log('Fetching posts...');
       const response = await fetch('/api/posts');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
+      console.log('Posts fetched:', data);
       
       // Ensure data is an array
       const postsArray = Array.isArray(data) ? data : [];
+      console.log('Posts array:', postsArray.map(p => ({ slug: p.slug, status: p.status, title: p.title })));
+      
       setPosts(postsArray);
       
       // Separate published and draft posts
-      const published = postsArray.filter(post => post.status !== 'draft');
+      // If no status field exists, consider it published (backward compatibility)
+      const published = postsArray.filter(post => !post.status || post.status !== 'draft');
       const drafts = postsArray.filter(post => post.status === 'draft');
+      
+      console.log('Published posts:', published.length);
+      console.log('Draft posts:', drafts.length);
       
       setPublishedPosts(published);
       setDraftPosts(drafts);
@@ -301,20 +309,29 @@ export default function SecretAdminDashboard() {
   const handleDelete = async (slug) => {
     if (confirm('Are you sure you want to delete this article?')) {
       try {
+        console.log('Deleting article:', slug);
         const response = await fetch(`/api/admin/posts/${slug}`, {
           method: 'DELETE',
         });
         
         if (response.ok) {
+          const result = await response.json();
+          console.log('Delete successful:', result);
+          
+          // Update all post lists
           setPosts(posts.filter(post => post.slug !== slug));
           setPublishedPosts(publishedPosts.filter(post => post.slug !== slug));
           setDraftPosts(draftPosts.filter(post => post.slug !== slug));
+          
+          alert('Article deleted successfully!');
         } else {
-          alert('Error deleting article');
+          const errorData = await response.json();
+          console.error('Delete failed:', errorData);
+          alert(`Error deleting article: ${errorData.error || 'Unknown error'}`);
         }
       } catch (error) {
         console.error('Error deleting post:', error);
-        alert('Error deleting article');
+        alert(`Error deleting article: ${error.message}`);
       }
     }
   };

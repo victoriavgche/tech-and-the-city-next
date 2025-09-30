@@ -94,6 +94,7 @@ title: "${title.replace(/"/g, '\\"')}"
 date: "${date || new Date().toISOString()}"
 excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"${featuredImage ? `
 image: "${featuredImage}"` : ''}
+status: "published"
 ---
 
 ${content}`;
@@ -132,15 +133,39 @@ ${content}`;
 export async function DELETE(request, { params }) {
   try {
     const { slug } = params;
+    console.log('Delete request for slug:', slug);
+    
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
+    console.log('Attempting to delete file:', filePath);
+    
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
+      console.log('File deleted successfully:', filePath);
+      
+      // Auto backup after deletion (optional)
+      try {
+        // Dynamic import to avoid build issues
+        const { autoBackup } = require('../../../../lib/backup-system');
+        await autoBackup('Post deletion');
+        console.log('Auto backup completed after deletion');
+      } catch (backupError) {
+        console.error('Auto backup failed after deletion (optional):', backupError);
+        // Continue without backup - not critical
+      }
+      
+      return NextResponse.json({ success: true, message: 'Post deleted successfully' });
+    } else {
+      console.error('File not found for deletion:', filePath);
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
     
-    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 });
+    console.error('Error deleting post:', error);
+    return NextResponse.json({ 
+      error: 'Failed to delete post', 
+      details: error.message 
+    }, { status: 500 });
   }
 }
