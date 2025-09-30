@@ -81,13 +81,8 @@ export default function SecretAdminDashboard() {
     }
     
     if (isAuth) {
-      try {
-        fetchPosts();
-        fetchEvents();
-      } catch (error) {
-        console.error('Error loading admin data:', error);
-        setLoading(false);
-      }
+      fetchPosts();
+      fetchEvents();
     } else {
       setLoading(false);
     }
@@ -96,36 +91,57 @@ export default function SecretAdminDashboard() {
   const fetchPosts = async () => {
     try {
       const response = await fetch('/api/posts');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
-      setPosts(data);
+      
+      // Ensure data is an array
+      const postsArray = Array.isArray(data) ? data : [];
+      setPosts(postsArray);
       
       // Separate published and draft posts
-      const published = data.filter(post => post.status !== 'draft');
-      const drafts = data.filter(post => post.status === 'draft');
+      const published = postsArray.filter(post => post.status !== 'draft');
+      const drafts = postsArray.filter(post => post.status === 'draft');
       
       setPublishedPosts(published);
       setDraftPosts(drafts);
     } catch (error) {
       console.error('Error fetching posts:', error);
+      // Set empty arrays on error
+      setPosts([]);
+      setPublishedPosts([]);
+      setDraftPosts([]);
     }
   };
 
   const fetchEvents = async () => {
     try {
       const response = await fetch('/api/admin/events');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
-      setEvents(data);
+      
+      // Ensure data is an array
+      const eventsArray = Array.isArray(data) ? data : [];
+      setEvents(eventsArray);
       
       // Separate upcoming, past, and draft events
-      const upcoming = data.filter(event => event.status === 'upcoming');
-      const past = data.filter(event => event.status === 'past');
-      const drafts = data.filter(event => event.status === 'draft' || event.isDraft);
+      const upcoming = eventsArray.filter(event => event.status === 'upcoming' && !event.isDraft);
+      const past = eventsArray.filter(event => event.status === 'past' && !event.isDraft);
+      const drafts = eventsArray.filter(event => event.status === 'draft' || event.isDraft);
       
       setUpcomingEvents(upcoming);
       setPastEvents(past);
       setDraftEvents(drafts);
     } catch (error) {
       console.error('Error fetching events:', error);
+      // Set empty arrays on error
+      setEvents([]);
+      setUpcomingEvents([]);
+      setPastEvents([]);
+      setDraftEvents([]);
     } finally {
       setLoading(false);
     }
@@ -177,6 +193,7 @@ export default function SecretAdminDashboard() {
         // localStorage not available, continuing without persistence
       }
       fetchPosts();
+      fetchEvents();
     } else {
       console.log('Login failed - invalid credentials');
       setError('Invalid email or password. Try: admin@techandthecity.com / TechAndTheCity2024!');
