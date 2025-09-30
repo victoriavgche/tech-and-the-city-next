@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAllEvents, getEventById, createEvent, updateEvent, deleteEvent } from '../../../../lib/events';
+import { autoBackup } from '../../../../lib/backup-system';
 
 export async function GET(request) {
   try {
@@ -35,6 +36,13 @@ export async function POST(request) {
     const newEvent = createEvent(eventData);
     
     if (newEvent) {
+      // Auto backup after event creation
+      try {
+        await autoBackup('Event creation');
+      } catch (backupError) {
+        console.error('Auto backup failed:', backupError);
+      }
+      
       return NextResponse.json(newEvent, { status: 201 });
     } else {
       return NextResponse.json({ error: 'Failed to create event' }, { status: 500 });
@@ -58,6 +66,13 @@ export async function PUT(request) {
     const updatedEvent = updateEvent(id, eventData);
     
     if (updatedEvent) {
+      // Auto backup after event update
+      try {
+        await autoBackup('Event update');
+      } catch (backupError) {
+        console.error('Auto backup failed:', backupError);
+      }
+      
       return NextResponse.json(updatedEvent);
     } else {
       return NextResponse.json({ error: 'Event not found or failed to update' }, { status: 404 });
