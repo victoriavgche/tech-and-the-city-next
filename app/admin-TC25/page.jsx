@@ -357,13 +357,16 @@ export default function SecretAdminDashboard() {
         });
         
         if (response.ok) {
-          console.log('Status update successful');
-          // Refresh posts
-          fetchPosts();
+          const result = await response.json();
+          console.log('Status update successful:', result);
+          // Refresh posts immediately
+          await fetchPosts();
+          alert(`Article ${action}ed successfully!`);
         } else {
           const errorData = await response.json();
           console.error('Status update failed:', errorData);
-          alert(`Error ${action}ing article: ${errorData.error || 'Unknown error'}`);
+          console.error('Error details:', errorData.details);
+          alert(`Error ${action}ing article: ${errorData.error || 'Unknown error'}\nDetails: ${errorData.details || 'No details'}`);
         }
       } catch (error) {
         console.error(`Error ${action}ing post:`, error);

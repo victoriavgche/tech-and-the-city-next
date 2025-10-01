@@ -37,12 +37,18 @@ export async function PUT(request, { params }) {
     data.status = status;
     
     // Rebuild front matter with better handling
+    let tagsSection = '';
+    if (data.tags && Array.isArray(data.tags)) {
+      tagsSection = `tags:\n${data.tags.map(tag => `  - ${tag}`).join('\n')}`;
+    } else {
+      tagsSection = `tags:\n  - AI\n  - Technology\n  - Athens`;
+    }
+    
     const frontMatter = `---
 title: "${(data.title || '').replace(/"/g, '\\"')}"
 excerpt: "${(data.excerpt || '').replace(/"/g, '\\"')}"
 date: "${data.date || new Date().toISOString()}"
-tags:
-${data.tags && Array.isArray(data.tags) ? data.tags.map(tag => `  - ${tag}`).join('\n') : '  - AI\n  - Technology\n  - Athens'}
+${tagsSection}
 read: "${data.read || '5 min'}"
 ${data.image ? `image: "${data.image}"` : ''}
 status: "${status}"
