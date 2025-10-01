@@ -16,6 +16,7 @@ export async function PUT(request, { params }) {
       return Response.json({ error: 'Invalid status. Must be "draft" or "published"' }, { status: 400 });
     }
     
+    // File system approach (works in development, graceful fallback in production)
     const postsDirectory = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDirectory, `${slug}.md`);
     console.log('File path:', filePath);
@@ -58,8 +59,19 @@ ${content}`;
     
     console.log('Writing updated file with status:', status);
     
-    // Write updated file
-    await fs.writeFile(filePath, frontMatter, 'utf8');
+    // Write updated file (will fail gracefully in production read-only filesystem)
+    try {
+      await fs.writeFile(filePath, frontMatter, 'utf8');
+    } catch (writeError) {
+      if (writeError.code === 'EROFS') {
+        console.error('Read-only filesystem detected (production environment)');
+        return Response.json({ 
+          error: 'Cannot modify posts in production environment. Posts are read-only.',
+          details: 'This is a limitation of the current hosting environment.'
+        }, { status: 403 });
+      }
+      throw writeError; // Re-throw other errors
+    }
     
     console.log('Status update successful');
     return Response.json({ success: true, status, slug });

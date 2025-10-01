@@ -64,12 +64,6 @@ export async function PUT(request, { params }) {
     console.log(`Content length: ${content ? content.length : 'undefined'}`);
     console.log(`Featured Image: ${featuredImage}`);
     
-    const postsDir = path.join(process.cwd(), 'content', 'posts');
-    const filePath = path.join(postsDir, `${slug}.md`);
-    
-    console.log(`Posts directory: ${postsDir}`);
-    console.log(`File path: ${filePath}`);
-    
     // Validate required fields
     if (!title || !content) {
       console.error('Missing required fields:', { title: !!title, content: !!content });
@@ -78,6 +72,13 @@ export async function PUT(request, { params }) {
         received: { title: !!title, content: !!content }
       }, { status: 400 });
     }
+    
+    // File system approach (works in development, graceful fallback in production)
+    const postsDir = path.join(process.cwd(), 'content', 'posts');
+    const filePath = path.join(postsDir, `${slug}.md`);
+    
+    console.log(`Posts directory: ${postsDir}`);
+    console.log(`File path: ${filePath}`);
     
     // Check if directory exists
     if (!fs.existsSync(postsDir)) {
@@ -112,6 +113,13 @@ ${content}`;
       fs.writeFileSync(filePath, frontMatter, 'utf8');
       console.log('File write completed');
     } catch (writeError) {
+      if (writeError.code === 'EROFS') {
+        console.error('Read-only filesystem detected (production environment)');
+        return NextResponse.json({ 
+          error: 'Cannot modify posts in production environment. Posts are read-only.',
+          details: 'This is a limitation of the current hosting environment.'
+        }, { status: 403 });
+      }
       console.error('Error writing file:', writeError);
       return NextResponse.json({ 
         error: 'Failed to write file',
@@ -162,14 +170,26 @@ export async function DELETE(request, { params }) {
     const { slug } = params;
     console.log('Delete request for slug:', slug);
     
+    // File system approach (works in development, graceful fallback in production)
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
     console.log('Attempting to delete file:', filePath);
     
     if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-      console.log('File deleted successfully:', filePath);
+      try {
+        fs.unlinkSync(filePath);
+        console.log('File deleted successfully:', filePath);
+      } catch (deleteError) {
+        if (deleteError.code === 'EROFS') {
+          console.error('Read-only filesystem detected (production environment)');
+          return NextResponse.json({ 
+            error: 'Cannot delete posts in production environment. Posts are read-only.',
+            details: 'This is a limitation of the current hosting environment.'
+          }, { status: 403 });
+        }
+        throw deleteError; // Re-throw other errors
+      }
       
       // Auto backup after deletion (optional)
       try {
