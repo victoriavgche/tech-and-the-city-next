@@ -92,7 +92,12 @@ export async function PUT(request, { params }) {
     const frontMatter = `---
 title: "${title.replace(/"/g, '\\"')}"
 date: "${date || new Date().toISOString()}"
-excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"${featuredImage ? `
+excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"
+tags:
+  - AI
+  - Technology
+  - Athens
+read: "5 min"${featuredImage ? `
 image: "${featuredImage}"` : ''}
 status: "published"
 ---
@@ -101,21 +106,43 @@ ${content}`;
     
     // Write file
     console.log(`Writing to file: ${filePath}`);
-    fs.writeFileSync(filePath, frontMatter, 'utf8');
+    console.log('Front matter to write:', frontMatter);
+    
+    try {
+      fs.writeFileSync(filePath, frontMatter, 'utf8');
+      console.log('File write completed');
+    } catch (writeError) {
+      console.error('Error writing file:', writeError);
+      return NextResponse.json({ 
+        error: 'Failed to write file',
+        details: writeError.message
+      }, { status: 500 });
+    }
     
     // Verify file was written
     if (fs.existsSync(filePath)) {
       const writtenContent = fs.readFileSync(filePath, 'utf8');
       console.log(`File written successfully. Size: ${writtenContent.length} characters`);
+      
+      // Auto backup after successful edit
+      try {
+        const { autoBackup } = require('../../../../lib/backup-system');
+        await autoBackup('Post edit');
+        console.log('Auto backup completed after edit');
+      } catch (backupError) {
+        console.error('Auto backup failed after edit (optional):', backupError);
+      }
+      
       return NextResponse.json({ 
         success: true,
         message: `Post ${slug} updated successfully`,
-        size: writtenContent.length
+        size: writtenContent.length,
+        slug: slug
       });
     } else {
       console.error('File was not created');
       return NextResponse.json({ 
-        error: 'File was not created' 
+        error: 'File was not created after write attempt' 
       }, { status: 500 });
     }
     
