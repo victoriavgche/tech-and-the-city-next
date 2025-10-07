@@ -24,6 +24,18 @@ export async function POST(request) {
     if (!textContent) {
       return Response.json({ error: 'Content is required' }, { status: 400 });
     }
+
+    // Check if we're in a read-only environment (production)
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      console.warn('⚠️  Production environment detected - filesystem is read-only');
+      return Response.json({ 
+        error: '🚫 Admin features are disabled in production',
+        details: 'The admin panel only works in local development. In production, the filesystem is read-only. To manage content, please:\n1. Run the site locally (npm run dev)\n2. Make your changes in the admin panel\n3. Commit and push your changes to GitHub\n4. Vercel will automatically deploy the updates',
+        suggestion: 'Consider using a headless CMS (like Contentful, Sanity, or Strapi) for production content management.'
+      }, { status: 403 });
+    }
     
     const postsDirectory = path.join(process.cwd(), 'content', 'posts');
     
@@ -70,10 +82,11 @@ ${postData.content}`;
 
     // Write the file
     await fs.writeFile(filePath, frontMatter, 'utf8');
+    console.log('✅ Post created successfully:', slug);
     
     return Response.json({ success: true, slug });
   } catch (error) {
     console.error('Error creating post:', error);
-    return Response.json({ error: 'Failed to create post' }, { status: 500 });
+    return Response.json({ error: 'Failed to create post', details: error.message }, { status: 500 });
   }
 }

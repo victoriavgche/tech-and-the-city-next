@@ -64,12 +64,6 @@ export async function PUT(request, { params }) {
     console.log(`Content length: ${content ? content.length : 'undefined'}`);
     console.log(`Featured Image: ${featuredImage}`);
     
-    const postsDir = path.join(process.cwd(), 'content', 'posts');
-    const filePath = path.join(postsDir, `${slug}.md`);
-    
-    console.log(`Posts directory: ${postsDir}`);
-    console.log(`File path: ${filePath}`);
-    
     // Validate required fields
     if (!title || !content) {
       console.error('Missing required fields:', { title: !!title, content: !!content });
@@ -78,6 +72,25 @@ export async function PUT(request, { params }) {
         received: { title: !!title, content: !!content }
       }, { status: 400 });
     }
+
+    // Check if we're in a read-only environment (production)
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      console.warn('⚠️  Production environment detected - filesystem is read-only');
+      return NextResponse.json({ 
+        error: '🚫 Admin features are disabled in production',
+        details: 'The admin panel only works in local development. In production, the filesystem is read-only. To manage content, please:\n1. Run the site locally (npm run dev)\n2. Make your changes in the admin panel\n3. Commit and push your changes to GitHub\n4. Vercel will automatically deploy the updates',
+        suggestion: 'Consider using a headless CMS (like Contentful, Sanity, or Strapi) for production content management.'
+      }, { status: 403 });
+    }
+    
+    // File system approach (only works in development)
+    const postsDir = path.join(process.cwd(), 'content', 'posts');
+    const filePath = path.join(postsDir, `${slug}.md`);
+    
+    console.log(`Posts directory: ${postsDir}`);
+    console.log(`File path: ${filePath}`);
     
     // Check if directory exists
     if (!fs.existsSync(postsDir)) {
@@ -92,29 +105,39 @@ export async function PUT(request, { params }) {
     const frontMatter = `---
 title: "${title.replace(/"/g, '\\"')}"
 date: "${date || new Date().toISOString()}"
-excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"${featuredImage ? `
+excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"
+tags:
+  - AI
+  - Technology
+  - Athens
+read: "5 min"${featuredImage ? `
 image: "${featuredImage}"` : ''}
+status: "published"
 ---
 
 ${content}`;
     
     // Write file
     console.log(`Writing to file: ${filePath}`);
-    fs.writeFileSync(filePath, frontMatter, 'utf8');
     
-    // Verify file was written
-    if (fs.existsSync(filePath)) {
+    try {
+      fs.writeFileSync(filePath, frontMatter, 'utf8');
+      console.log('✅ File write completed');
+      
       const writtenContent = fs.readFileSync(filePath, 'utf8');
       console.log(`File written successfully. Size: ${writtenContent.length} characters`);
+      
       return NextResponse.json({ 
         success: true,
         message: `Post ${slug} updated successfully`,
-        size: writtenContent.length
+        size: writtenContent.length,
+        slug: slug
       });
-    } else {
-      console.error('File was not created');
+    } catch (writeError) {
+      console.error('Error writing file:', writeError);
       return NextResponse.json({ 
-        error: 'File was not created' 
+        error: 'Failed to write file',
+        details: writeError.message
       }, { status: 500 });
     }
     
@@ -132,15 +155,48 @@ ${content}`;
 export async function DELETE(request, { params }) {
   try {
     const { slug } = params;
+    console.log('Delete request for slug:', slug);
+
+    // Check if we're in a read-only environment (production)
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      console.warn('⚠️  Production environment detected - filesystem is read-only');
+      return NextResponse.json({ 
+        error: '🚫 Admin features are disabled in production',
+        details: 'The admin panel only works in local development. In production, the filesystem is read-only. To manage content, please:\n1. Run the site locally (npm run dev)\n2. Make your changes in the admin panel\n3. Commit and push your changes to GitHub\n4. Vercel will automatically deploy the updates',
+        suggestion: 'Consider using a headless CMS (like Contentful, Sanity, or Strapi) for production content management.'
+      }, { status: 403 });
+    }
+    
+    // File system approach (only works in development)
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
+    console.log('Attempting to delete file:', filePath);
+    
     if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+      try {
+        fs.unlinkSync(filePath);
+        console.log('✅ File deleted successfully:', filePath);
+        return NextResponse.json({ success: true, message: 'Post deleted successfully' });
+      } catch (deleteError) {
+        console.error('Error deleting file:', deleteError);
+        return NextResponse.json({ 
+          error: 'Failed to delete file',
+          details: deleteError.message
+        }, { status: 500 });
+      }
+    } else {
+      console.error('File not found for deletion:', filePath);
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
     
-    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 });
+    console.error('Error deleting post:', error);
+    return NextResponse.json({ 
+      error: 'Failed to delete post', 
+      details: error.message 
+    }, { status: 500 });
   }
 }
