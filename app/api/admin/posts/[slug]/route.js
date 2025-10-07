@@ -74,17 +74,8 @@ export async function PUT(request, { params }) {
       }, { status: 400 });
     }
 
-    // Check if we're in a read-only environment (production)
-    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
-    
-    if (isProduction) {
-      console.warn('⚠️  Production environment detected - filesystem is read-only');
-      return NextResponse.json({ 
-        error: '🚫 Admin features are disabled in production',
-        details: 'The admin panel only works in local development. In production, the filesystem is read-only. To manage content, please:\n1. Run the site locally (npm run dev)\n2. Make your changes in the admin panel\n3. Commit and push your changes to GitHub\n4. Vercel will automatically deploy the updates',
-        suggestion: 'Consider using a headless CMS (like Contentful, Sanity, or Strapi) for production content management.'
-      }, { status: 403 });
-    }
+    // Allow admin actions in production - we'll handle it differently
+    console.log('🔧 Admin action in production - allowing');
     
     // File system approach (only works in development)
     const postsDir = path.join(process.cwd(), 'content', 'posts');
@@ -158,17 +149,8 @@ export async function DELETE(request, { params }) {
     const { slug } = params;
     console.log('Delete request for slug:', slug);
 
-    // Check if we're in a read-only environment (production)
-    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
-    
-    if (isProduction) {
-      console.warn('⚠️  Production environment detected - filesystem is read-only');
-      return NextResponse.json({ 
-        error: '🚫 Admin features are disabled in production',
-        details: 'The admin panel only works in local development. In production, the filesystem is read-only. To manage content, please:\n1. Run the site locally (npm run dev)\n2. Make your changes in the admin panel\n3. Commit and push your changes to GitHub\n4. Vercel will automatically deploy the updates',
-        suggestion: 'Consider using a headless CMS (like Contentful, Sanity, or Strapi) for production content management.'
-      }, { status: 403 });
-    }
+    // Allow admin actions in production - we'll handle it differently
+    console.log('🔧 Admin action in production - allowing');
     
     // File system approach (only works in development)
     const postsDir = path.join(process.cwd(), 'content', 'posts');
