@@ -96,7 +96,7 @@ export default function SecretAdminDashboard() {
   const fetchPosts = async () => {
     try {
       console.log('Fetching posts...');
-      const response = await fetch('/api/posts');
+      const response = await fetch('/api/admin/posts'); // Use admin API to get ALL posts
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

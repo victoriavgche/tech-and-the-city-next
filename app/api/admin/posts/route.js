@@ -1,3 +1,16 @@
+import { getAllPostsMeta } from '../../../../lib/posts';
+
+export async function GET() {
+  try {
+    // Admin needs to see ALL posts (published and drafts)
+    const allPosts = await getAllPostsMeta();
+    return Response.json(allPosts);
+  } catch (error) {
+    console.error('Error fetching all posts for admin:', error);
+    return Response.json({ error: 'Failed to fetch posts' }, { status: 500 });
+  }
+}
+
 import { promises as fs } from 'fs';
 import path from 'path';
 // autoBackup removed - using simple backup system now

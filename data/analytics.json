@@ -1,5 +1,144 @@
 {
-  "pageViews": [],
+  "pageViews": [
+    {
+      "url": "/",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:12:15.522Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875135522_o7870aqlx",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:12:15.526Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875135527_di2jh6n49",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:12:21.697Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875141697_kmilowgvr",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:12:21.699Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875141699_vqexx3xki",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:12:51.544Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875171544_3i2f1z8l2",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:12:51.546Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875171546_mx4jsprmt",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    }
+  ],
   "events": [
     {
       "type": "time_spent",
@@ -7,6 +146,34 @@
         "timeSpent": 1449298
       },
       "timestamp": "2025-10-07T21:07:19.229Z"
+    },
+    {
+      "type": "time_spent",
+      "data": {
+        "timeSpent": 7545
+      },
+      "timestamp": "2025-10-07T22:12:20.731Z"
+    },
+    {
+      "type": "scroll_depth",
+      "data": {
+        "scrollDepth": 75
+      },
+      "timestamp": "2025-10-07T22:12:26.861Z"
+    },
+    {
+      "type": "scroll_depth",
+      "data": {
+        "scrollDepth": 100
+      },
+      "timestamp": "2025-10-07T22:12:29.331Z"
+    },
+    {
+      "type": "time_spent",
+      "data": {
+        "timeSpent": 29185
+      },
+      "timestamp": "2025-10-07T22:12:50.846Z"
     }
   ],
   "clicks": [
@@ -25,12 +192,168 @@
       "element": "SECTION",
       "deviceType": "desktop",
       "timestamp": "2025-10-07T20:47:57.920Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 31,
+      "y": 21,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:26.470Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 16,
+      "y": 17,
+      "element": "SPAN",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:32.003Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 41,
+      "y": 21,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:36.449Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 65,
+      "y": 29,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:42.359Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 39,
+      "y": 4,
+      "element": "SPAN",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:43.831Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 25,
+      "y": 19,
+      "element": "SPAN",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:45.720Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 430,
+      "y": 328,
+      "element": "DIV",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:46.873Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 14,
+      "y": 3,
+      "element": "SPAN",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:47.931Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 176,
+      "y": 12,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:48.022Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 91,
+      "y": 5,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:49.036Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 110,
+      "y": 10,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:53.740Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 65,
+      "y": 17,
+      "element": "SPAN",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:54.410Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 132,
+      "y": 41,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:55.477Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 75,
+      "y": 38,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:56.862Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 43,
+      "y": 14,
+      "element": "SPAN",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:57.420Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 85,
+      "y": 436,
+      "element": "DIV",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:58.178Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 84,
+      "y": 446,
+      "element": "DIV",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:58.902Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 102,
+      "y": 8,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:59.747Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 73,
+      "y": 37,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:12:59.750Z"
     }
   ],
   "sessions": [],
-  "uniqueUsers": [],
+  "uniqueUsers": [
+    "visitor_-5dfoxp"
+  ],
   "userActivity": {},
-  "trafficSources": {},
+  "trafficSources": {
+    "Direct": 6
+  },
   "heatmapData": {
     "/": [
       {
@@ -45,14 +368,130 @@
         "deviceType": "desktop",
         "timestamp": "2025-10-07T20:47:57.920Z"
       }
+    ],
+    "/admin-TC25": [
+      {
+        "x": 31,
+        "y": 21,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:26.470Z"
+      },
+      {
+        "x": 16,
+        "y": 17,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:32.003Z"
+      },
+      {
+        "x": 41,
+        "y": 21,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:36.449Z"
+      },
+      {
+        "x": 65,
+        "y": 29,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:42.359Z"
+      },
+      {
+        "x": 39,
+        "y": 4,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:43.831Z"
+      },
+      {
+        "x": 25,
+        "y": 19,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:45.720Z"
+      },
+      {
+        "x": 430,
+        "y": 328,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:46.873Z"
+      },
+      {
+        "x": 14,
+        "y": 3,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:47.931Z"
+      },
+      {
+        "x": 176,
+        "y": 12,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:48.022Z"
+      },
+      {
+        "x": 91,
+        "y": 5,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:49.036Z"
+      },
+      {
+        "x": 110,
+        "y": 10,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:53.740Z"
+      },
+      {
+        "x": 65,
+        "y": 17,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:54.410Z"
+      },
+      {
+        "x": 132,
+        "y": 41,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:55.477Z"
+      },
+      {
+        "x": 75,
+        "y": 38,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:56.862Z"
+      },
+      {
+        "x": 43,
+        "y": 14,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:57.420Z"
+      },
+      {
+        "x": 85,
+        "y": 436,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:58.178Z"
+      },
+      {
+        "x": 84,
+        "y": 446,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:58.902Z"
+      },
+      {
+        "x": 102,
+        "y": 8,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:59.747Z"
+      },
+      {
+        "x": 73,
+        "y": 37,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:12:59.750Z"
+      }
     ]
   },
   "socialShares": [],
   "metadata": {
-    "firstDay": null,
-    "lastUpdated": "2025-10-07T21:07:19.229Z",
+    "firstDay": "2025-10-07",
+    "lastUpdated": "2025-10-07T22:12:59.750Z",
     "totalSessions": 0,
-    "totalUniqueUsers": 0,
-    "totalVisits": 0
+    "totalUniqueUsers": 1,
+    "totalVisits": 6
   }
 }
