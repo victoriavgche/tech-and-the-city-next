@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail, MapPin } from 'lucide-react';
+import Link from 'next/link';
+import { getCurrentLanguage } from '../../lib/translations';
 import '../../components/analytics.js';
 
 export default function Contact() {
@@ -13,6 +15,21 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
+  const [currentLang, setCurrentLang] = useState('en');
+
+  useEffect(() => {
+    setCurrentLang(getCurrentLanguage());
+    
+    const handleLanguageChange = (event) => {
+      setCurrentLang(event.detail.language);
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +56,7 @@ export default function Contact() {
 
       if (response.ok) {
         console.log('Setting success message:', data.message);
-        setMessage('✅ Message sent successfully! We\'ll get back to you soon.');
+        setMessage("✅ Message sent successfully! We'll get back to you soon.");
         setFormData({ name: '', email: '', subject: '', message: '' });
         
         // Track successful form submission
@@ -70,22 +87,38 @@ export default function Contact() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
       <div className="container py-8">
+        {/* Back to Home Link */}
+        <div className="mb-6">
+          <Link 
+            href="/" 
+            className="inline-flex items-center text-gray-300 hover:text-white transition-colors"
+          >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </Link>
+        </div>
+        
         <header className="mb-8">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Contact</h1>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              {currentLang === 'el' ? 'Επικοινωνία' : 'Contact'}
+            </h1>
           </div>
         </header>
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Contact Form */}
         <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">Send us a Message</h2>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">
+            {currentLang === 'el' ? 'Στείλτε μας Μήνυμα' : 'Send us a Message'}
+          </h2>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Name
+                  {currentLang === 'el' ? 'Όνομα' : 'Name'}
                 </label>
                 <input
                   type="text"
@@ -95,7 +128,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
-                  placeholder="Your name"
+                  placeholder={currentLang === 'el' ? 'Το όνομά σας' : 'Your name'}
                 />
               </div>
               <div>
@@ -110,14 +143,14 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
-                  placeholder="your@email.com"
+                  placeholder={currentLang === 'el' ? 'το-email-σας@example.com' : 'your@email.com'}
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                Subject
+                {currentLang === 'el' ? 'Θέμα' : 'Subject'}
               </label>
               <input
                 type="text"
@@ -127,13 +160,13 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
-                placeholder="What's this about?"
+                placeholder={currentLang === 'el' ? 'Για ποιο θέμα;' : "What's this about?"}
               />
             </div>
 
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                Message
+                {currentLang === 'el' ? 'Μήνυμα' : 'Message'}
               </label>
               <textarea
                 id="message"
@@ -143,7 +176,7 @@ export default function Contact() {
                 rows="6"
                 required
                 className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white bg-gray-800/50"
-                placeholder="Tell us what's on your mind..."
+                placeholder={currentLang === 'el' ? 'Πείτε μας τι σκέφτεστε...' : "Tell us what's on your mind..."}
               />
             </div>
 
@@ -152,7 +185,10 @@ export default function Contact() {
               disabled={isSubmitting}
               className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg font-semibold"
             >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
+              {isSubmitting 
+                ? (currentLang === 'el' ? 'Αποστολή...' : 'Sending...') 
+                : (currentLang === 'el' ? 'Αποστολή Μηνύματος' : 'Send Message')
+              }
             </button>
           </form>
 
@@ -175,7 +211,9 @@ export default function Contact() {
         <div className="space-y-6">
           {/* Contact Information */}
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">Get in Touch</h2>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">
+              {currentLang === 'el' ? 'Επικοινωνήστε' : 'Get in Touch'}
+            </h2>
             
             <div className="space-y-4">
               <div className="flex items-center gap-4">
@@ -183,8 +221,7 @@ export default function Contact() {
                   <Mail className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Email</h3>
-                  <p className="text-gray-300">techandthecity101@gmail.com</p>
+                  <p className="text-gray-300 font-bold">techandthecity101@gmail.com</p>
                 </div>
               </div>
 
@@ -193,8 +230,9 @@ export default function Contact() {
                   <MapPin className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Location</h3>
-                  <p className="text-gray-300">Athens, Greece</p>
+                  <p className="text-gray-300 font-bold">
+                    {currentLang === 'el' ? 'Αθήνα, Ελλάδα' : 'Athens, Greece'}
+                  </p>
                 </div>
               </div>
             </div>

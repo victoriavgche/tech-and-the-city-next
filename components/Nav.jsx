@@ -1,19 +1,19 @@
 'use client';
 
 import Logo from "./Logo";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { t, getCurrentLanguage } from "../lib/translations";
+import { t, getCurrentLanguage } from '../lib/translations';
 import './analytics.js';
 
 export default function Nav(){
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState('en');
-  
+
   useEffect(() => {
     setCurrentLang(getCurrentLanguage());
     
-    // Listen for language changes
     const handleLanguageChange = (event) => {
       setCurrentLang(event.detail.language);
     };
@@ -76,6 +76,7 @@ export default function Nav(){
               {t('nav.contact', currentLang)}
             </a>
           </div>
+          <LanguageSwitcher />
         </div>
 
         {/* Mobile Layout */}
@@ -89,7 +90,7 @@ export default function Nav(){
               <div className="absolute top-0 left-0 w-1 h-6 bg-white"></div>
             </div>
             <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
-              T&C
+              TC
             </div>
           </div>
           
@@ -171,6 +172,9 @@ export default function Nav(){
             >
               {t('nav.contact', currentLang)}
             </a>
+            <div className="pt-4 border-t border-gray-700">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       )}

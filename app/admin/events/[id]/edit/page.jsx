@@ -123,9 +123,9 @@ export default function EditEvent({ params }) {
   };
 
   const eventTypes = [
-    { value: 'tech', label: 'Tech' },
-    { value: 'art', label: 'Art' },
-    { value: 'science', label: 'Science' }
+    { value: 'tech', label: 'Tech Events' },
+    { value: 'art', label: 'Cultural Events' },
+    { value: 'science', label: 'Science Events' }
   ];
 
   const eventColors = [

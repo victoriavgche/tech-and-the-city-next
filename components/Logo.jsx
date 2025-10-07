@@ -15,9 +15,9 @@ export default function Logo() {
           <div className="absolute top-0 left-0 w-1 h-8 lg:h-9 bg-white"></div>
           {/* Bottom-left corner is completely missing */}
         </div>
-        {/* T&C Text */}
+        {/* TC Text */}
         <div className="text-white font-bold text-xl lg:text-2xl tracking-wide relative z-10 flex items-center justify-center h-full">
-          T&C
+          TC
         </div>
       </div>
       {/* Company Name - responsive sizing */}

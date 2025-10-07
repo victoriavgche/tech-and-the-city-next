@@ -2,7 +2,7 @@
 
 import { Linkedin } from "lucide-react";
 import { useState, useEffect } from "react";
-import { t, getCurrentLanguage } from "../lib/translations";
+import { t, getCurrentLanguage } from '../lib/translations';
 
 export default function Footer(){
   const [currentLang, setCurrentLang] = useState('en');
@@ -10,7 +10,6 @@ export default function Footer(){
   useEffect(() => {
     setCurrentLang(getCurrentLanguage());
     
-    // Listen for language changes
     const handleLanguageChange = (event) => {
       setCurrentLang(event.detail.language);
     };
@@ -44,9 +43,9 @@ export default function Footer(){
                   <div className="absolute top-0 left-0 w-1 h-8 bg-white"></div>
                   {/* Bottom-left corner is completely missing */}
                 </div>
-                {/* T&C Text */}
+                {/* TC Text */}
                 <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
-                  T&C
+                  TC
                 </div>
               </div>
             </div>
@@ -54,7 +53,7 @@ export default function Footer(){
             {/* Sections Column - Center */}
             <div className="flex-1 text-center">
               <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                {t('footer.sections', currentLang)}
+                {currentLang === 'el' ? 'ΕΝΟΤΗΤΕΣ' : 'SECTIONS'}
               </div>
               <ul className="space-y-2">
                 <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">{t('nav.about', currentLang)}</a></li>
@@ -68,7 +67,7 @@ export default function Footer(){
             <div className="flex items-start">
               <div className="text-center">
                 <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                  {t('footer.followUs', currentLang)}
+                  {currentLang === 'el' ? 'ΑΚΟΛΟΥΘΗΣΤΕ ΜΑΣ' : 'FOLLOW US'}
                 </div>
                 <div className="flex items-center justify-center">
                   <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -98,9 +97,9 @@ export default function Footer(){
                   <div className="absolute top-0 left-0 w-1 h-9 bg-white"></div>
                   {/* Bottom-left corner is completely missing */}
                 </div>
-                {/* T&C Text */}
+                {/* TC Text */}
                 <div className="text-white font-bold text-xl tracking-wide relative z-10 flex items-center justify-center h-full">
-                  T&C
+                  TC
                 </div>
               </div>
             </div>
@@ -108,7 +107,7 @@ export default function Footer(){
             {/* Sections Column - Center */}
             <div className="flex-1 text-center">
               <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                {t('footer.sections', currentLang)}
+                {currentLang === 'el' ? 'ΕΝΟΤΗΤΕΣ' : 'SECTIONS'}
               </div>
               <ul className="space-y-2">
                 <li><a className="text-gray-300 hover:text-blue-400 transition-colors text-sm" href="/about">{t('nav.about', currentLang)}</a></li>
@@ -122,7 +121,7 @@ export default function Footer(){
             <div className="flex items-start">
               <div className="text-center">
                 <div className="text-blue-400 font-semibold text-sm uppercase tracking-wide mb-4">
-                  {t('footer.followUs', currentLang)}
+                  {currentLang === 'el' ? 'ΑΚΟΛΟΥΘΗΣΤΕ ΜΑΣ' : 'FOLLOW US'}
                 </div>
                 <div className="flex items-center justify-center">
                   <a className="hover:text-blue-400 transition-colors" href="https://www.linkedin.com/company/techandthecity101/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -142,11 +141,11 @@ export default function Footer(){
         <div className="max-w-6xl mx-auto px-6 py-2">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="text-gray-400 text-xs">
-              © {new Date().getFullYear()} Tech & the City • {t('footer.madeWith', currentLang)} • {t('footer.allRights', currentLang)}.
+              © {new Date().getFullYear()} Tech & the City • Made with attitude • All rights reserved.
             </div>
             <div className="flex flex-wrap gap-4 text-xs text-gray-400">
-              <a className="hover:text-gray-300 transition-colors" href="/privacy">{t('footer.privacyPolicy', currentLang)}</a>
-              <a className="hover:text-gray-300 transition-colors" href="/terms">{t('footer.termsOfService', currentLang)}</a>
+              <a className="hover:text-gray-300 transition-colors" href="/privacy">{currentLang === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}</a>
+              <a className="hover:text-gray-300 transition-colors" href="/terms">{currentLang === 'el' ? 'Όροι Χρήσης' : 'Terms of Service'}</a>
             </div>
           </div>
         </div>

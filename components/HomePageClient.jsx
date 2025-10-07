@@ -1,21 +1,71 @@
 'use client';
 
 import Link from "next/link";
-import { Calendar, ArrowRight, TrendingUp, Clock } from "lucide-react";
-import ClientWrapper from "./ClientWrapper";
+import { Calendar, Clock } from "lucide-react";
 import ShareDropdown from "./ShareDropdown";
+import { useState, useEffect } from "react";
+import { getCurrentLanguage, translateText, detectLanguage } from '../lib/translations';
 import './analytics.js';
 
 // Function to get reading time from post
-function getReadingTime(post) {
+function getReadingTime(post, lang = 'en') {
   // Always calculate real reading time based on content
   const wordsPerMinute = 200; // Average reading speed
   const wordCount = post.body ? post.body.split(/\s+/).length : 0;
   const readingTime = Math.ceil(wordCount / wordsPerMinute);
-  return `${readingTime} min`;
+  return `${readingTime} ${lang === 'el' ? 'λεπ' : 'min'}`;
 }
 
 export default function HomePageClient({ posts }) {
+  const [currentLang, setCurrentLang] = useState('en');
+  const [translatedPosts, setTranslatedPosts] = useState({});
+
+  useEffect(() => {
+    setCurrentLang(getCurrentLanguage());
+    
+    const handleLanguageChange = (event) => {
+      setCurrentLang(event.detail.language);
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
+  }, []);
+
+  // Translate posts when language changes
+  useEffect(() => {
+    const translatePosts = async () => {
+      if (!posts || posts.length === 0) return;
+      
+      // Detect original language from first post
+      const originalLang = detectLanguage(posts[0]?.content || posts[0]?.title || '');
+      
+      if (currentLang === originalLang) {
+        setTranslatedPosts({});
+        return;
+      }
+
+      const translations = {};
+      
+      for (const post of posts) {
+        try {
+          const [title, excerpt] = await Promise.all([
+            translateText(post.title, currentLang, originalLang),
+            translateText(post.excerpt, currentLang, originalLang)
+          ]);
+          translations[post.slug] = { title, excerpt };
+        } catch (error) {
+          console.error(`Translation error for ${post.slug}:`, error);
+        }
+      }
+      
+      setTranslatedPosts(translations);
+    };
+
+    translatePosts();
+  }, [currentLang, posts]);
   
   const handleArticleClick = (articleSlug, position = 'homepage') => {
     if (typeof window !== 'undefined' && window.analytics) {
@@ -38,10 +88,8 @@ export default function HomePageClient({ posts }) {
 
   const handleShare = (platform, articleSlug) => {
     if (typeof window !== 'undefined' && window.analytics) {
-      window.analytics.trackEvent('social_share', {
-        platform: platform,
-        article: articleSlug,
-        source: 'homepage'
+      window.analytics.trackEvent("social_share", platform, {
+        article: articleSlug
       });
     }
   };
@@ -59,7 +107,7 @@ export default function HomePageClient({ posts }) {
       <section className="pt-8 pb-8">
         <div className="max-w-7xl mx-auto px-8 text-center">
           <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-4">
-            Latest from Athens' cultural & tech scene with an atypical lens
+            {"Latest from Athens' tech & cultural scene with an atypical lens"}
           </h1>
           <p className="text-sm text-gray-400">
             Always unfiltered, never cliché, by the Silicon Whisperer.
@@ -103,7 +151,7 @@ export default function HomePageClient({ posts }) {
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock className="h-4 w-4" />
-                          {getReadingTime(featured)}
+                          {getReadingTime(featured, currentLang)}
                         </div>
                       </div>
                       <div className="flex items-start justify-between mb-4">
@@ -113,7 +161,7 @@ export default function HomePageClient({ posts }) {
                           onClick={() => handleArticleClick(featured.slug, 'featured_title')}
                         >
                           <h2 className="text-2xl md:text-3xl font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight">
-                            {featured.title}
+                            {translatedPosts[featured.slug]?.title || featured.title}
                           </h2>
                         </Link>
                         <div className="ml-4 flex-shrink-0">
@@ -129,7 +177,7 @@ export default function HomePageClient({ posts }) {
                         onClick={() => handleArticleClick(featured.slug, 'featured_excerpt')}
                       >
                         <p className="text-base text-gray-300 leading-relaxed">
-                          {featured.excerpt}
+                          {translatedPosts[featured.slug]?.excerpt || featured.excerpt}
                         </p>
                       </Link>
                     </div>
@@ -168,7 +216,7 @@ export default function HomePageClient({ posts }) {
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock className="h-3 w-3" />
-                            {getReadingTime(post)}
+                            {getReadingTime(post, currentLang)}
                         </div>
                       </div>
                       <div className="flex items-start justify-between mb-3">
@@ -178,7 +226,7 @@ export default function HomePageClient({ posts }) {
                           onClick={() => handleArticleClick(post.slug, 'popular_title')}
                         >
                           <h3 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight">
-                            {post.title}
+                            {translatedPosts[post.slug]?.title || post.title}
                           </h3>
                         </Link>
                         <div className="ml-2 flex-shrink-0">
@@ -194,7 +242,7 @@ export default function HomePageClient({ posts }) {
                         onClick={() => handleArticleClick(post.slug, 'popular_excerpt')}
                       >
                         <p className="text-gray-300 text-sm leading-relaxed">
-                          {post.excerpt}
+                          {translatedPosts[post.slug]?.excerpt || post.excerpt}
                         </p>
                       </Link>
                     </div>
@@ -210,9 +258,11 @@ export default function HomePageClient({ posts }) {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-8">
           <div className="flex items-center justify-between mb-12">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Latest Articles</h2>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              {currentLang === 'el' ? 'Τελευταία Άρθρα' : 'Latest Articles'}
+            </h2>
             <Link href="/articles" className="text-gray-300 hover:text-white transition-colors flex items-center gap-2">
-              View All
+              {currentLang === 'el' ? 'Όλα τα Άρθρα' : 'View All'}
             </Link>
           </div>
           
@@ -244,12 +294,12 @@ export default function HomePageClient({ posts }) {
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock className="h-3 w-3" />
-                            {getReadingTime(post)}
+                            {getReadingTime(post, currentLang)}
                         </div>
                       </div>
                       <div className="flex items-start justify-between mb-3">
                         <h3 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight flex-1 text-center">
-                          {post.title}
+                          {translatedPosts[post.slug]?.title || post.title}
                         </h3>
                         <div className="ml-2 flex-shrink-0">
                           <ShareDropdown 

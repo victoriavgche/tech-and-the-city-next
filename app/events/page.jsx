@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { Calendar, MapPin, Clock, Users, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { getCurrentLanguage, translateText, detectLanguage } from '../../lib/translations';
 import '../../components/analytics.js';
 
 export default function Events() {
@@ -10,13 +12,21 @@ export default function Events() {
   const [loading, setLoading] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showEventModal, setShowEventModal] = useState(false);
-
-  // Helper function to convert 24-hour to 12-hour format for display
-  const convertTo12Hour = (time24) => {
+  const [currentLang, setCurrentLang] = useState('en');
+  const [translatedDescription, setTranslatedDescription] = useState('');
+    // Helper function to convert 24-hour to 12-hour format for display
+  const convertTo12Hour = (time24, lang = 'en') => {
     if (!time24) return '';
     try {
-      const [hours, minutes] = time24.split(':');
+      const [hours, minutes] = time24.split(":");
       const hour24 = parseInt(hours);
+      
+      if (lang === 'el') {
+        // 24-hour format for Greek
+        return `${hours}:${minutes}`;
+      }
+      
+      // 12-hour format for English
       const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
       const ampm = hour24 >= 12 ? 'PM' : 'AM';
       return `${hour12}:${minutes} ${ampm}`;
@@ -25,8 +35,65 @@ export default function Events() {
     }
   };
 
+  const formatDate = (dateString, lang = 'en') => {
+    try {
+      const date = new Date(dateString);
+      if (lang === 'el') {
+        return date.toLocaleDateString('el-GR', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        });
+      }
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  const translateLocation = (location, lang) => {
+    if (lang !== 'el') return location;
+    
+    // Common Athens locations
+    const translations = {
+      'Odeon of Herodes Atticus, Athens': 'Ωδείο Ηρώδου Αττικού, Αθήνα',
+      'Odeon of Herodes Atticus': 'Ωδείο Ηρώδου Αττικού',
+      'Athens': 'Αθήνα',
+      'Greece': 'Ελλάδα'
+    };
+    
+    // Check for exact match first
+    if (translations[location]) {
+      return translations[location];
+    }
+    
+    // Check for partial matches
+    for (const [en, el] of Object.entries(translations)) {
+      if (location.includes(en)) {
+        return location.replace(en, el);
+      }
+    }
+    
+    return location;
+  };
+
   useEffect(() => {
     fetchEvents();
+    setCurrentLang(getCurrentLanguage());
+    
+    const handleLanguageChange = (event) => {
+      setCurrentLang(event.detail.language);
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
   }, []);
 
   const fetchEvents = async () => {
@@ -61,14 +128,49 @@ export default function Events() {
     }
   };
 
-  const filters = [
-    { id: 'all', label: 'All Events' },
-    { id: 'upcoming', label: 'Upcoming Events' },
-    { id: 'past', label: 'Past Events' },
-    { id: 'art', label: 'Art' },
-    { id: 'tech', label: 'Tech' },
-    { id: 'science', label: 'Science' }
+  // Translate event description when modal opens or language changes
+  useEffect(() => {
+    const translateDescription = async () => {
+      if (!selectedEvent || !selectedEvent.description) {
+        setTranslatedDescription('');
+        return;
+      }
+
+      // Detect original language from description
+      const originalLang = detectLanguage(selectedEvent.description);
+      
+      if (currentLang === originalLang) {
+        setTranslatedDescription('');
+        return;
+      }
+
+      try {
+        // Extract text from HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = selectedEvent.description;
+        const text = tempDiv.textContent || tempDiv.innerText;
+        
+        const translated = await translateText(text, currentLang, originalLang);
+        setTranslatedDescription(`<p>${translated}</p>`);
+      } catch (error) {
+        console.error('Event description translation error:', error);
+        setTranslatedDescription('');
+      }
+    };
+
+    translateDescription();
+  }, [selectedEvent, currentLang]);
+
+  const getFilters = () => [
+    { id: 'all', label: currentLang === 'el' ? "Όλες οι Εκδηλώσεις" : "All Events" },
+    { id: 'upcoming', label: currentLang === 'el' ? "Προσεχείς" : "Upcoming Events" },
+    { id: 'past', label: currentLang === 'el' ? "Παλιές" : "Past Events" },
+    { id: 'art', label: "Cultural" },
+    { id: 'tech', label: "Tech" },
+    { id: 'science', label: "Science" }
   ];
+
+  const filters = getFilters();
 
   const filteredEvents = selectedFilter === 'all' 
     ? events 
@@ -89,9 +191,23 @@ export default function Events() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600">
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Back to Home Link */}
+        <div className="mb-6">
+          <Link 
+            href="/" 
+            className="inline-flex items-center text-gray-300 hover:text-white transition-colors"
+          >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </Link>
+        </div>
+        
         <header className="mb-8">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Events</h1>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              {currentLang === 'el' ? 'Εκδηλώσεις' : 'Events'}
+            </h1>
           </div>
         </header>
 
@@ -176,21 +292,21 @@ export default function Events() {
                         onClick={() => handleLearnMore(event)}
                       >
                         <Calendar className="h-4 w-4" />
-                        <span className="text-base font-medium">{event.date}</span>
+                        <span className="text-base font-medium">{formatDate(event.date, currentLang)}</span>
                       </div>
                       <div 
                         className="flex items-center gap-2 text-gray-200 cursor-pointer hover:text-white transition-colors"
                         onClick={() => handleLearnMore(event)}
                       >
                         <Clock className="h-4 w-4" />
-                        <span className="text-base font-medium">{convertTo12Hour(event.time)}</span>
+                        <span className="text-base font-medium">{convertTo12Hour(event.time, currentLang)}</span>
                       </div>
                       <div 
                         className="flex items-center gap-2 text-gray-200 cursor-pointer hover:text-white transition-colors"
                         onClick={() => handleLearnMore(event)}
                       >
                         <MapPin className="h-4 w-4" />
-                        <span className="text-base font-medium">{event.location}</span>
+                        <span className="text-base font-medium">{translateLocation(event.location, currentLang)}</span>
                       </div>
                     </div>
                     
@@ -201,7 +317,7 @@ export default function Events() {
                             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium"
                             onClick={() => handleEventClick(event.title, 'register')}
                           >
-                            Register Now
+                            {currentLang === 'el' ? 'Εγγραφή' : 'Register Now'}
                           </button>
                         </>
                       ) : null}
@@ -272,18 +388,18 @@ export default function Events() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 text-gray-200">
                       <Calendar className="h-5 w-5 text-blue-400" />
-                      <span className="text-xl font-medium">{selectedEvent.date}</span>
+                      <span className="text-xl font-medium">{formatDate(selectedEvent.date, currentLang)}</span>
                     </div>
                     <div className="flex items-center gap-3 text-gray-200">
                       <Clock className="h-5 w-5 text-blue-400" />
-                      <span className="text-xl font-medium">{convertTo12Hour(selectedEvent.time)}</span>
+                      <span className="text-xl font-medium">{convertTo12Hour(selectedEvent.time, currentLang)}</span>
                     </div>
                     <div className="flex items-center gap-3 text-gray-200">
                       <MapPin className="h-5 w-5 text-blue-400" />
-                      <span className="text-xl font-medium">{selectedEvent.location}</span>
+                      <span className="text-xl font-medium">{translateLocation(selectedEvent.location, currentLang)}</span>
                     </div>
                     <div className="flex items-center gap-3 text-gray-400">
-                      <span className="text-base">Event Type:</span>
+                      <span className="text-base">{currentLang === 'el' ? 'Τύπος Εκδήλωσης:' : 'Event Type:'}</span>
                       <span className="text-base font-medium capitalize text-gray-300">{selectedEvent.type}</span>
                     </div>
                   </div>
@@ -291,10 +407,12 @@ export default function Events() {
 
                 {/* Description */}
                 <div className="mb-6">
-                  <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-3">About This Event</h3>
+                  <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-3">
+                    {currentLang === 'el' ? 'Σχετικά με την Εκδήλωση' : 'About This Event'}
+                  </h3>
                   <div 
                     className="prose prose-invert max-w-none text-gray-100 leading-relaxed text-lg"
-                    dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
+                    dangerouslySetInnerHTML={{ __html: translatedDescription || selectedEvent.description }}
                   />
                 </div>
 
@@ -303,7 +421,7 @@ export default function Events() {
                   {selectedEvent.status === 'upcoming' ? (
                     <>
                       <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium">
-                        Register Now
+                        {currentLang === 'el' ? 'Εγγραφή' : 'Register Now'}
                       </button>
                       <button 
                         onClick={() => {
@@ -314,7 +432,7 @@ export default function Events() {
                         }}
                         className="border border-gray-600 text-gray-300 px-8 py-3 rounded-lg hover:border-gray-500 hover:text-white transition-colors duration-300 font-medium"
                       >
-                        Close
+{currentLang === 'el' ? 'Κλείσιμο' : 'Close'}
                       </button>
                     </>
                   ) : (
@@ -327,7 +445,7 @@ export default function Events() {
                       }}
                       className="bg-gray-600 text-gray-300 px-8 py-3 rounded-lg hover:bg-gray-700 transition-colors duration-300 font-medium"
                     >
-                      Close
+                      {currentLang === 'el' ? 'Κλείσιμο' : 'Close'}
                     </button>
                   )}
                 </div>

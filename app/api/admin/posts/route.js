@@ -1,13 +1,28 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { autoBackup } from '../../../../lib/backup-system';
+// autoBackup removed - using simple backup system now
 
 export async function POST(request) {
   try {
     const postData = await request.json();
     
-    if (!postData.title || !postData.content) {
-      return Response.json({ error: 'Title and content are required' }, { status: 400 });
+    console.log('Received post data:', {
+      title: postData.title,
+      contentLength: postData.content?.length,
+      excerpt: postData.excerpt,
+      image: postData.image,
+      date: postData.date,
+      status: postData.status
+    });
+    
+    if (!postData.title) {
+      return Response.json({ error: 'Title is required' }, { status: 400 });
+    }
+    
+    // Check if content has actual text (not just HTML tags)
+    const textContent = postData.content ? postData.content.replace(/<[^>]*>/g, '').trim() : '';
+    if (!textContent) {
+      return Response.json({ error: 'Content is required' }, { status: 400 });
     }
     
     const postsDirectory = path.join(process.cwd(), 'content', 'posts');
@@ -47,7 +62,7 @@ tags:
   - Technology
   - Athens
 read: "5 min"
-${postData.featuredImage ? `image: "${postData.featuredImage}"` : ''}
+${postData.image ? `image: "${postData.image}"` : ''}
 ${postData.status ? `status: "${postData.status}"` : ''}
 ---
 
@@ -55,13 +70,6 @@ ${postData.content}`;
 
     // Write the file
     await fs.writeFile(filePath, frontMatter, 'utf8');
-    
-    // Auto backup after post creation
-    try {
-      await autoBackup('Post creation');
-    } catch (backupError) {
-      console.error('Auto backup failed:', backupError);
-    }
     
     return Response.json({ success: true, slug });
   } catch (error) {

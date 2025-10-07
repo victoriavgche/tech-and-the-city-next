@@ -180,23 +180,9 @@ export default function MobileAdmin() {
 
   if (!authenticated) {
     return (
-      <div style={{ 
-        minHeight: '100vh', 
-        background: 'linear-gradient(to bottom, #1f2937, #374151)',
-        padding: '20px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{
-          background: '#1e293b',
-          padding: '30px',
-          borderRadius: '10px',
-          border: '1px solid #334155',
-          width: '100%',
-          maxWidth: '400px'
-        }}>
-          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+      <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 p-5 flex items-center justify-center">
+        <div className="bg-gray-800 p-8 rounded-lg border border-gray-600 w-full max-w-md">
+          <div className="text-center mb-8">
             <h1 style={{ 
               color: 'white', 
               fontSize: '24px', 

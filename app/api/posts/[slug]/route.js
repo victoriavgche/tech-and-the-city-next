@@ -1,20 +1,18 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { getPostBySlug } from '../../../../lib/posts';
 
 export async function GET(request, { params }) {
   try {
     const { slug } = params;
-    const postsDir = path.join(process.cwd(), 'posts');
-    const filePath = path.join(postsDir, `${slug}.md`);
+    const post = await getPostBySlug(slug);
     
-    if (!fs.existsSync(filePath)) {
+    if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
     
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    return NextResponse.json({ content: fileContent });
+    return NextResponse.json(post);
   } catch (error) {
+    console.error('Error fetching post:', error);
     return NextResponse.json({ error: 'Failed to fetch post' }, { status: 500 });
   }
 }

@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
 import ShareDropdown from "./ShareDropdown";
-import ArticleTranslator from "./ArticleTranslator";
 import { useState, useEffect } from "react";
-import { t, getCurrentLanguage } from "../lib/translations";
+import { getCurrentLanguage, translateText, detectLanguage } from '../lib/translations';
 import './analytics.js';
 
 export default function ArticlesPageClient({ posts }) {
@@ -15,7 +14,6 @@ export default function ArticlesPageClient({ posts }) {
   useEffect(() => {
     setCurrentLang(getCurrentLanguage());
     
-    // Listen for language changes
     const handleLanguageChange = (event) => {
       setCurrentLang(event.detail.language);
     };
@@ -26,6 +24,38 @@ export default function ArticlesPageClient({ posts }) {
       window.removeEventListener('languageChanged', handleLanguageChange);
     };
   }, []);
+
+  // Translate posts when language changes
+  useEffect(() => {
+    const translatePosts = async () => {
+      if (!posts || posts.length === 0) return;
+      
+      const originalLang = detectLanguage(posts[0]?.body || posts[0]?.title || '');
+      
+      if (currentLang === originalLang) {
+        setTranslatedPosts({});
+        return;
+      }
+
+      const translations = {};
+      
+      for (const post of posts) {
+        try {
+          const [title, excerpt] = await Promise.all([
+            translateText(post.title, currentLang, originalLang),
+            translateText(post.excerpt, currentLang, originalLang)
+          ]);
+          translations[post.slug] = { title, excerpt };
+        } catch (error) {
+          console.error(`Translation error for ${post.slug}:`, error);
+        }
+      }
+      
+      setTranslatedPosts(translations);
+    };
+
+    translatePosts();
+  }, [currentLang, posts]);
 
   const handleArticleClick = (articleSlug) => {
     if (typeof window !== 'undefined' && window.analytics) {
@@ -38,47 +68,24 @@ export default function ArticlesPageClient({ posts }) {
 
   const handleShare = (platform, articleSlug) => {
     if (typeof window !== 'undefined' && window.analytics) {
-      window.analytics.trackEvent('social_share', {
-        platform: platform,
-        article: articleSlug,
-        source: 'articles_page'
+      window.analytics.trackEvent("social_share", platform, {
+        article: articleSlug
       });
     }
   };
 
   // Function to get reading time from post
-  function getReadingTime(post) {
+  function getReadingTime(post, lang = 'en') {
     const wordsPerMinute = 200;
     const wordCount = post.body ? post.body.split(/\s+/).length : 0;
     const readingTime = Math.ceil(wordCount / wordsPerMinute);
-    return `${readingTime} ${t('article.readTime', currentLang)}`;
+    return `${readingTime} ${lang === 'el' ? 'λεπ' : 'min'}`;
   }
 
-  const handleTranslatePost = (postSlug, translation) => {
-    setTranslatedPosts(prev => ({
-      ...prev,
-      [postSlug]: translation
-    }));
-  };
-
-  const getPostDisplayData = (post) => {
-    const translation = translatedPosts[post.slug];
-    if (translation && currentLang !== 'en') {
-      return {
-        title: translation.title || post.title,
-        excerpt: translation.excerpt || post.excerpt
-      };
-    }
-    return {
-      title: post.title,
-      excerpt: post.excerpt
-    };
-  };
 
   return (
     <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
       {posts.map((post) => {
-        const displayData = getPostDisplayData(post);
         return (
           <article key={post.slug} className="group">
           <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-white/20 hover:border-white/30 transition-all duration-300 h-full flex flex-col">
@@ -113,7 +120,7 @@ export default function ArticlesPageClient({ posts }) {
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  {getReadingTime(post)}
+                  {getReadingTime(post, currentLang)}
                 </div>
               </div>
               
@@ -125,7 +132,7 @@ export default function ArticlesPageClient({ posts }) {
                   onClick={() => handleArticleClick(post.slug)}
                 >
                   <h2 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-purple-500 transition-all leading-tight">
-                    {displayData.title}
+                    {translatedPosts[post.slug]?.title || post.title}
                   </h2>
                 </Link>
                 <ShareDropdown 
@@ -142,7 +149,7 @@ export default function ArticlesPageClient({ posts }) {
                 className="flex-grow"
               >
                 <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                  {displayData.excerpt}
+                  {translatedPosts[post.slug]?.excerpt || post.excerpt}
                 </p>
               </Link>
               
@@ -153,7 +160,7 @@ export default function ArticlesPageClient({ posts }) {
                 className="mt-auto"
               >
                 <div className="flex items-center text-purple-400 hover:text-purple-300 transition-colors text-sm font-medium">
-                  Read Article
+                  {currentLang === 'el' ? 'Διάβασε το Άρθρο' : 'Read Article'}
                   <svg className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>

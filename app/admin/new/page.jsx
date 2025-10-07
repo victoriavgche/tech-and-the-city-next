@@ -7,8 +7,10 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 // Dynamic import για ReactQuill
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-import 'react-quill/dist/quill.snow.css';
+const ReactQuill = dynamic(() => import('react-quill'), { 
+  ssr: false,
+  loading: () => <div className="p-4 text-gray-500 italic">Loading editor...</div>
+});
 
 export default function NewPost() {
   const router = useRouter();
@@ -24,21 +26,18 @@ export default function NewPost() {
   const [showPreview, setShowPreview] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  // ReactQuill modules για rich text editing - NO SIZE OPTION
+  // ReactQuill modules για rich text editing
   const quillModules = {
     toolbar: [
       ['bold', 'italic', 'underline'],
-      [{ 'color': [] }, { 'background': [] }],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'align': [] }],
       ['link']
     ],
   };
 
   const quillFormats = [
     'bold', 'italic', 'underline',
-    'color', 'background', 'list', 'bullet', 'align',
-    'link'
+    'list', 'bullet', 'link'
   ];
 
   const handleImageUpload = async (e) => {
@@ -110,8 +109,15 @@ export default function NewPost() {
   };
 
   const handleSave = async () => {
-    if (!title.trim() || !content.trim()) {
-      setError('Please fill in title and content');
+    if (!title.trim()) {
+      setError('Please fill in title');
+      return;
+    }
+    
+    // Check if content has actual text (not just HTML tags)
+    const textContent = content.replace(/<[^>]*>/g, '').trim();
+    if (!textContent) {
+      setError('Please fill in content');
       return;
     }
 
@@ -178,7 +184,11 @@ export default function NewPost() {
           <div className="flex gap-3">
             <button
               onClick={() => setShowPreview(!showPreview)}
-              className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-teal-700 transition-all duration-300 shadow-lg inline-flex items-center gap-2"
+              className={`px-6 py-3 rounded-lg transition-all duration-300 shadow-lg inline-flex items-center gap-2 ${
+                showPreview 
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700' 
+                  : 'bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700'
+              } text-white`}
             >
               <Eye className="h-5 w-5" />
               {showPreview ? 'Edit Mode' : 'Preview Mode'}
@@ -329,48 +339,100 @@ export default function NewPost() {
               <FileText className="h-5 w-5" />
               Article Content
             </h2>
-            <button
-              onClick={() => setShowPreview(!showPreview)}
-              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors inline-flex items-center gap-2"
-            >
-              <Eye className="h-4 w-4" />
-              {showPreview ? 'Edit Mode' : 'Preview Mode'}
-            </button>
+            <div className="flex items-center gap-2">
+              <div className="text-xs text-gray-400">
+                {showPreview ? 'Preview Mode' : 'Edit Mode'}
+              </div>
+              <button
+                onClick={() => setShowPreview(!showPreview)}
+                className={`px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2 ${
+                  showPreview 
+                    ? 'bg-blue-600 hover:bg-blue-700' 
+                    : 'bg-slate-700 hover:bg-slate-600'
+                } text-white`}
+              >
+                <Eye className="h-4 w-4" />
+                {showPreview ? 'Edit' : 'Preview'}
+              </button>
+            </div>
           </div>
 
           {showPreview ? (
-            <div className="prose prose-lg max-w-none prose-invert prose-headings:text-cyan-400 prose-a:text-cyan-400 prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 bg-slate-700 p-4 rounded-lg min-h-[400px]">
-              <style jsx>{`
-                .prose span[style*="font-size"] { 
-                  color: #22d3ee !important;
-                  font-weight: 500;
-                }
-                .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-                  margin-top: 1.5em;
-                  margin-bottom: 0.5em;
-                }
-                .prose p {
-                  margin-bottom: 1em;
-                  line-height: 1.7;
-                }
-                .prose ul, .prose ol {
-                  margin-bottom: 1em;
-                }
-                .prose li {
-                  margin-bottom: 0.5em;
-                }
-                .prose a {
-                  text-decoration: underline;
-                }
-                .prose a:hover {
-                  color: #67e8f9;
-                }
-              `}</style>
-              {content ? (
-                <div dangerouslySetInnerHTML={{ __html: content }} />
-              ) : (
-                <div className="text-gray-400 italic">No content to preview. Start writing to see your preview here.</div>
-              )}
+            <div className="bg-slate-700 p-6 rounded-lg min-h-[400px]">
+              <div className="mb-4 p-3 bg-slate-600 rounded-lg">
+                <h3 className="text-white font-semibold mb-2">Article Preview</h3>
+                <div className="text-sm text-gray-300">
+                  <strong>Title:</strong> {title || 'Untitled'}
+                </div>
+                <div className="text-sm text-gray-300">
+                  <strong>Excerpt:</strong> {excerpt || 'No excerpt provided'}
+                </div>
+                <div className="text-sm text-gray-300">
+                  <strong>Date:</strong> {articleDate}
+                </div>
+                {image && (
+                  <div className="text-sm text-gray-300">
+                    <strong>Image:</strong> <span className="text-blue-400">{image}</span>
+                    <div className="mt-2">
+                      <img 
+                        src={image} 
+                        alt="Featured" 
+                        className="w-32 h-20 object-cover rounded border border-slate-500"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="prose prose-lg max-w-none prose-invert prose-headings:text-cyan-400 prose-a:text-cyan-400 prose-strong:text-white prose-code:text-cyan-300 prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700">
+                <style jsx>{`
+                  .prose span[style*="font-size"] { 
+                    color: #22d3ee !important;
+                    font-weight: 500;
+                  }
+                  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+                    margin-top: 1.5em;
+                    margin-bottom: 0.5em;
+                  }
+                  .prose p {
+                    margin-bottom: 1em;
+                    line-height: 1.7;
+                  }
+                  .prose ul, .prose ol {
+                    margin-bottom: 1em;
+                  }
+                  .prose li {
+                    margin-bottom: 0.5em;
+                  }
+                  .prose a {
+                    text-decoration: underline;
+                  }
+                  .prose a:hover {
+                    color: #67e8f9;
+                  }
+                `}</style>
+                
+                {/* Article Title Preview */}
+                {title && (
+                  <h1 className="text-3xl font-bold text-cyan-400 mb-4 border-b border-slate-600 pb-2">
+                    {title}
+                  </h1>
+                )}
+                
+                {/* Article Excerpt Preview */}
+                {excerpt && (
+                  <div className="text-lg text-gray-300 mb-6 italic border-l-4 border-cyan-400 pl-4">
+                    {excerpt}
+                  </div>
+                )}
+                
+                {/* Article Content Preview */}
+                {content ? (
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                ) : (
+                  <div className="text-gray-400 italic">No content to preview. Start writing to see your preview here.</div>
+                )}
+              </div>
             </div>
           ) : (
             <div className="bg-white rounded-lg">
@@ -397,7 +459,10 @@ export default function NewPost() {
                   border-bottom-right-radius: 8px;
                 }
               `}</style>
-              {typeof window !== 'undefined' && (
+              <div>
+                <div className="text-xs text-gray-500 mb-2">
+                  Editor loaded. Content length: {content.length}
+                </div>
                 <ReactQuill
                   theme="snow"
                   value={content}
@@ -413,7 +478,7 @@ export default function NewPost() {
                     backgroundColor: 'white'
                   }}
                 />
-              )}
+              </div>
             </div>
           )}
         </article>

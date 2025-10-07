@@ -3,15 +3,23 @@
 import { useState, useEffect } from 'react';
 import { getCurrentLanguage, setCurrentLanguage } from '../lib/translations';
 
+// ==========================================
+// BEAUTIFUL LANGUAGE SWITCHER
+// With smooth animations and modern UI
+// ==========================================
+
 export default function LanguageSwitcher() {
   const [currentLang, setCurrentLang] = useState('en');
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     setCurrentLang(getCurrentLanguage());
     
-    // Listen for language changes
+    // Listen for language changes from other components
     const handleLanguageChange = (event) => {
       setCurrentLang(event.detail.language);
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 300);
     };
     
     window.addEventListener('languageChanged', handleLanguageChange);
@@ -21,20 +29,29 @@ export default function LanguageSwitcher() {
     };
   }, []);
 
+  const handleLanguageChange = (lang) => {
+    if (lang === currentLang) return; // Already selected
+    
+    setIsAnimating(true);
+    setCurrentLanguage(lang);
+    setCurrentLang(lang);
+    
+    // Reset animation after transition
+    setTimeout(() => setIsAnimating(false), 300);
+  };
+
   const toggleLanguage = () => {
     const newLang = currentLang === 'en' ? 'el' : 'en';
-    setCurrentLanguage(newLang);
+    handleLanguageChange(newLang);
   };
 
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center justify-center w-10 h-10 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors duration-200"
-      title={`Switch to ${currentLang === 'en' ? 'Greek' : 'English'}`}
+      className="relative px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/30 hover:from-blue-500 hover:to-blue-400"
     >
-      <span className="text-lg font-bold">
-        {currentLang === 'en' ? 'EL' : 'EN'}
-      </span>
+      {currentLang === 'en' ? 'EN' : 'EL'}
     </button>
   );
 }
+

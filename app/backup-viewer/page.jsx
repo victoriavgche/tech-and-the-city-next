@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Download, Upload, Trash2, Clock, HardDrive, RotateCcw, Save, ArrowLeft, Archive } from 'lucide-react';
+import { Download, Upload, Trash2, Clock, HardDrive, RotateCcw, Save, ArrowLeft, Archive, Lock, Settings, X, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 
 export default function BackupViewer() {
@@ -9,6 +9,18 @@ export default function BackupViewer() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [showSettings, setShowSettings] = useState(false);
+  const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [settingsError, setSettingsError] = useState('');
+  const [settingsSuccess, setSettingsSuccess] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Fetch backups and stats
   const fetchData = async () => {
@@ -30,7 +42,21 @@ export default function BackupViewer() {
   };
 
   useEffect(() => {
-    fetchData();
+    // Check if already authenticated
+    let isAuth = false;
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        isAuth = localStorage.getItem('backup_auth') === 'true';
+      }
+    } catch (error) {
+      isAuth = false;
+    }
+    
+    setAuthenticated(isAuth);
+    
+    if (isAuth) {
+      fetchData();
+    }
   }, []);
 
   // Create new backup
@@ -171,6 +197,213 @@ export default function BackupViewer() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
+  // Authentication functions
+  const handleLogin = (e) => {
+    e.preventDefault();
+    
+    setError('');
+    
+    // Default credentials that always work
+    const defaultEmail = 'admin@techandthecity.com';
+    const defaultPassword = 'TechAndTheCity2024!';
+    
+    // Get custom credentials from localStorage (if they exist)
+    let adminEmail, adminPassword;
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        adminEmail = localStorage.getItem('backup_email') || defaultEmail;
+        adminPassword = localStorage.getItem('backup_password') || defaultPassword;
+      } else {
+        adminEmail = defaultEmail;
+        adminPassword = defaultPassword;
+      }
+    } catch (error) {
+      adminEmail = defaultEmail;
+      adminPassword = defaultPassword;
+    }
+    
+    // Check against both default and custom credentials
+    if ((email === defaultEmail && password === defaultPassword) || 
+        (email === adminEmail && password === adminPassword)) {
+      setAuthenticated(true);
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('backup_auth', 'true');
+        }
+      } catch (error) {
+        // Continue anyway if localStorage fails
+      }
+      fetchData();
+    } else {
+      setError('Invalid email or password. Try: admin@techandthecity.com / TechAndTheCity2024!');
+    }
+  };
+
+  const handleLogout = () => {
+    setAuthenticated(false);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.removeItem('backup_auth');
+      }
+    } catch (error) {
+      // Continue anyway if localStorage fails
+    }
+    setEmail('');
+    setPassword('');
+  };
+
+  const handleUpdateCredentials = (e) => {
+    e.preventDefault();
+    setSettingsError('');
+    setSettingsSuccess('');
+
+    // Validation
+    if (!newEmail || !newPassword) {
+      setSettingsError('Please fill in all fields');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setSettingsError('Passwords do not match');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setSettingsError('Password must be at least 6 characters');
+      return;
+    }
+
+    // Save new credentials to localStorage
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('backup_email', newEmail);
+        localStorage.setItem('backup_password', newPassword);
+      } else {
+        setSettingsError('Could not save credentials (localStorage not available)');
+        return;
+      }
+    } catch (error) {
+      setSettingsError('Could not save credentials (localStorage not available)');
+      return;
+    }
+    
+    setSettingsSuccess('Credentials updated successfully!');
+    setShowSettings(false);
+    setNewEmail('');
+    setNewPassword('');
+    setConfirmPassword('');
+  };
+
+  const handleOpenSettings = () => {
+    // Load current credentials
+    let currentEmail = 'admin@techandthecity.com';
+    let currentPassword = 'TechAndTheCity2024!';
+    
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        currentEmail = localStorage.getItem('backup_email') || currentEmail;
+        currentPassword = localStorage.getItem('backup_password') || currentPassword;
+      }
+    } catch (error) {
+      // Use defaults if localStorage fails
+    }
+    
+    setNewEmail(currentEmail);
+    setNewPassword(currentPassword);
+    setConfirmPassword(currentPassword);
+    setShowSettings(true);
+    setSettingsError('');
+    setSettingsSuccess('');
+    setShowNewPassword(false);
+    setShowConfirmPassword(false);
+  };
+
+  // Show login form if not authenticated
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+        <div className="bg-slate-800 p-6 sm:p-8 rounded-lg border border-slate-700 max-w-md w-full mx-2 sm:mx-4">
+          <div className="text-center mb-6">
+            <Lock className="h-12 w-12 text-purple-400 mx-auto mb-4" />
+            <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">Backup Viewer Access</h1>
+            <p className="text-gray-400 text-sm sm:text-base">Enter your credentials to access backups</p>
+          </div>
+          
+          <form onSubmit={handleLogin}>
+            <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@techandthecity.com"
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none text-base"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-gray-300 text-sm mb-2">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none text-base"
+                required
+              />
+            </div>
+            
+            {error && (
+              <div className="text-red-400 text-sm mb-4 text-center bg-red-900/20 p-3 rounded border border-red-500/30">{error}</div>
+            )}
+            
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg mb-3"
+            >
+              Access Backup Viewer
+            </button>
+            
+            {/* Quick Login Button for Testing */}
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('admin@techandthecity.com');
+                setPassword('TechAndTheCity2024!');
+                setError('');
+              }}
+              className="w-full bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-all duration-300 text-sm"
+            >
+              Fill Default Credentials
+            </button>
+          </form>
+          
+          <div className="mt-6 text-center space-y-2">
+            <div className="text-xs text-gray-500">
+              Default: admin@techandthecity.com<br/>
+              Password: TechAndTheCity2024!
+            </div>
+            <div className="space-y-2">
+              <Link
+                href="/admin-TC25"
+                className="block text-blue-400 hover:text-blue-300 transition-colors text-sm font-bold"
+              >
+                🔐 Admin Panel
+              </Link>
+              <Link
+                href="/"
+                className="block text-gray-400 hover:text-gray-300 transition-colors text-sm"
+              >
+                ← Back to Site
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <div className="container max-w-6xl mx-auto px-4 pt-8 pb-8">
@@ -194,14 +427,29 @@ export default function BackupViewer() {
             </div>
           </div>
           
-          <button
-            onClick={() => createBackup('Emergency backup')}
-            disabled={loading}
-            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-          >
-            <Save className="h-5 w-5" />
-            Create Emergency Backup
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleOpenSettings}
+              className="bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors inline-flex items-center gap-2"
+            >
+              <Settings className="h-5 w-5" />
+              Settings
+            </button>
+            <button
+              onClick={() => createBackup('Emergency backup')}
+              disabled={loading}
+              className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+            >
+              <Save className="h-5 w-5" />
+              Create Emergency Backup
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {message && (
@@ -308,6 +556,103 @@ export default function BackupViewer() {
             </div>
           )}
         </div>
+
+        {/* Settings Modal */}
+        {showSettings && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-slate-800 p-6 sm:p-8 rounded-lg border border-slate-700 max-w-md w-full mx-2 sm:mx-4">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Update Credentials</h2>
+                <button
+                  onClick={() => setShowSettings(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              
+              <form onSubmit={handleUpdateCredentials}>
+                <div className="mb-4">
+                  <label className="block text-gray-300 text-sm mb-2">New Email</label>
+                  <input
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none text-base"
+                    required
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label className="block text-gray-300 text-sm mb-2">New Password</label>
+                  <div className="relative">
+                    <input
+                      type={showNewPassword ? "text" : "password"}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none pr-12"
+                      required
+                      minLength={6}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                    >
+                      {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="mb-4">
+                  <label className="block text-gray-300 text-sm mb-2">Confirm Password</label>
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="w-full bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none pr-12"
+                      required
+                      minLength={6}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                    >
+                      {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </button>
+                  </div>
+                </div>
+                
+                {settingsError && (
+                  <div className="text-red-400 text-sm mb-4 text-center">{settingsError}</div>
+                )}
+                
+                {settingsSuccess && (
+                  <div className="text-green-400 text-sm mb-4 text-center">{settingsSuccess}</div>
+                )}
+                
+                <div className="flex gap-3">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-2"
+                  >
+                    <Save className="h-4 w-4" />
+                    Save Changes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowSettings(false)}
+                    className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   );
