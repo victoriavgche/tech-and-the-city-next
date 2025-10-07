@@ -220,6 +220,13 @@
         "timeSpent": 29185
       },
       "timestamp": "2025-10-07T22:12:50.846Z"
+    },
+    {
+      "type": "time_spent",
+      "data": {
+        "timeSpent": 144354
+      },
+      "timestamp": "2025-10-07T22:17:41.259Z"
     }
   ],
   "clicks": [
@@ -563,7 +570,7 @@
   "socialShares": [],
   "metadata": {
     "firstDay": "2025-10-07",
-    "lastUpdated": "2025-10-07T22:15:23.180Z",
+    "lastUpdated": "2025-10-07T22:17:41.259Z",
     "totalSessions": 0,
     "totalUniqueUsers": 1,
     "totalVisits": 8
