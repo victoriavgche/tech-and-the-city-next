@@ -13,6 +13,7 @@ import { Edit, Trash2, Plus, Eye, EyeOff, Lock, Settings, Save, X, Share2, BarCh
 import EnhancedAnalytics from '@/components/EnhancedAnalytics';
 import MessagesDashboard from '@/components/MessagesDashboard';
 import SimpleBackup from '@/components/SimpleBackup';
+import SmartAdmin from '@/components/SmartAdmin';
 
 export default function SecretAdminDashboard() {
   const [posts, setPosts] = useState([]);
@@ -644,6 +645,9 @@ export default function SecretAdminDashboard() {
             <h1 className="text-3xl sm:text-4xl font-bold text-white">Admin Panel</h1>
             <p className="text-gray-400 mt-2">Secret Admin Panel</p>
           </div>
+
+        {/* Smart Admin Integration */}
+        <SmartAdmin />
           <div className="flex flex-wrap gap-2 sm:gap-4">
             <button
               onClick={handleOpenSettings}

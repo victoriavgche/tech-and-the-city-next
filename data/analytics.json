@@ -1,6 +1,14 @@
 {
   "pageViews": [],
-  "events": [],
+  "events": [
+    {
+      "type": "time_spent",
+      "data": {
+        "timeSpent": 1449298
+      },
+      "timestamp": "2025-10-07T21:07:19.229Z"
+    }
+  ],
   "clicks": [
     {
       "url": "/",
@@ -42,7 +50,7 @@
   "socialShares": [],
   "metadata": {
     "firstDay": null,
-    "lastUpdated": "2025-10-07T20:47:57.920Z",
+    "lastUpdated": "2025-10-07T21:07:19.229Z",
     "totalSessions": 0,
     "totalUniqueUsers": 0,
     "totalVisits": 0
