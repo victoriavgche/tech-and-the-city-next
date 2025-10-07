@@ -1,4 +1,7 @@
 import { getAllPostsMeta } from '../../../../lib/posts';
+import { githubAdmin } from '../../../../lib/github-admin';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 export async function GET() {
   try {
@@ -10,10 +13,6 @@ export async function GET() {
     return Response.json({ error: 'Failed to fetch posts' }, { status: 500 });
   }
 }
-
-import { promises as fs } from 'fs';
-import path from 'path';
-// autoBackup removed - using simple backup system now
 
 export async function POST(request) {
   try {
@@ -38,9 +37,30 @@ export async function POST(request) {
       return Response.json({ error: 'Content is required' }, { status: 400 });
     }
 
-    // Allow admin actions in production - we'll handle it differently
-    console.log('🔧 Admin action in production - allowing');
+    // Generate slug from title
+    const slug = postData.title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
     
+    // Check if in production and has GitHub access
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+    
+    if (isProduction && githubAdmin.hasGitHubAccess()) {
+      console.log('🚀 Production mode: Using GitHub API');
+      const result = await githubAdmin.createPost(postData);
+      
+      if (result.success) {
+        return Response.json({ success: true, slug: result.slug || slug });
+      } else if (result.error) {
+        return Response.json(result, { status: 503 });
+      }
+    }
+    
+    // Development mode or fallback: Use filesystem
+    console.log('💻 Development mode: Using filesystem');
     const postsDirectory = path.join(process.cwd(), 'content', 'posts');
     
     // Ensure posts directory exists
@@ -49,14 +69,6 @@ export async function POST(request) {
     } catch (error) {
       await fs.mkdir(postsDirectory, { recursive: true });
     }
-    
-    // Generate slug from title
-    const slug = postData.title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim();
     
     const filePath = path.join(postsDirectory, `${slug}.md`);
     

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-// import { githubAdmin } from '../../../../lib/github-admin';
+import { githubAdmin } from '../../../../lib/github-admin';
 
 export async function GET(request, { params }) {
   try {
@@ -74,10 +74,32 @@ export async function PUT(request, { params }) {
       }, { status: 400 });
     }
 
-    // Allow admin actions in production - we'll handle it differently
-    console.log('🔧 Admin action in production - allowing');
+    // Check if in production and has GitHub access
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    // File system approach (only works in development)
+    if (isProduction && githubAdmin.hasGitHubAccess()) {
+      console.log('🚀 Production mode: Using GitHub API');
+      const result = await githubAdmin.updatePost(slug, {
+        title,
+        excerpt,
+        content,
+        image: featuredImage,
+        date
+      });
+      
+      if (result.success) {
+        return NextResponse.json({ 
+          success: true,
+          message: result.message,
+          slug: slug
+        });
+      } else if (result.error) {
+        return NextResponse.json(result, { status: 503 });
+      }
+    }
+    
+    // Development mode or fallback: Use filesystem
+    console.log('💻 Development mode: Using filesystem');
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
@@ -111,32 +133,18 @@ ${content}`;
     
     // Write file
     console.log(`Writing to file: ${filePath}`);
+    fs.writeFileSync(filePath, frontMatter, 'utf8');
+    console.log('✅ File write completed');
     
-    try {
-      fs.writeFileSync(filePath, frontMatter, 'utf8');
-      console.log('✅ File write completed');
-      
-      const writtenContent = fs.readFileSync(filePath, 'utf8');
-      console.log(`File written successfully. Size: ${writtenContent.length} characters`);
-      
-      return NextResponse.json({ 
-        success: true,
-        message: `Post ${slug} updated successfully`,
-        size: writtenContent.length,
-        slug: slug
-      });
-    } catch (writeError) {
-      console.error('Write error:', writeError);
-      
-      // In production, simulate success - user will see the change in UI
-      console.log('🔧 Production mode: Simulating successful post update');
-      return NextResponse.json({ 
-        success: true,
-        message: `Post ${slug} update simulated (production filesystem is read-only)`,
-        slug: slug,
-        production: true
-      });
-    }
+    const writtenContent = fs.readFileSync(filePath, 'utf8');
+    console.log(`File written successfully. Size: ${writtenContent.length} characters`);
+    
+    return NextResponse.json({ 
+      success: true,
+      message: `Post ${slug} updated successfully`,
+      size: writtenContent.length,
+      slug: slug
+    });
     
   } catch (error) {
     console.error('Error updating post:', error);
@@ -154,27 +162,34 @@ export async function DELETE(request, { params }) {
     const { slug } = params;
     console.log('Delete request for slug:', slug);
 
-    // Allow admin actions in production - we'll handle it differently
-    console.log('🔧 Admin action in production - allowing');
+    // Check if in production and has GitHub access
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    // File system approach (only works in development)
+    if (isProduction && githubAdmin.hasGitHubAccess()) {
+      console.log('🚀 Production mode: Using GitHub API');
+      const result = await githubAdmin.deletePost(slug);
+      
+      if (result.success) {
+        return NextResponse.json({ 
+          success: true, 
+          message: result.message 
+        });
+      } else if (result.error) {
+        return NextResponse.json(result, { status: 503 });
+      }
+    }
+    
+    // Development mode or fallback: Use filesystem
+    console.log('💻 Development mode: Using filesystem');
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
     console.log('Attempting to delete file:', filePath);
     
     if (fs.existsSync(filePath)) {
-      try {
-        fs.unlinkSync(filePath);
-        console.log('✅ File deleted successfully:', filePath);
-        return NextResponse.json({ success: true, message: 'Post deleted successfully' });
-      } catch (deleteError) {
-        console.error('Error deleting file:', deleteError);
-        return NextResponse.json({ 
-          error: 'Failed to delete file',
-          details: deleteError.message
-        }, { status: 500 });
-      }
+      fs.unlinkSync(filePath);
+      console.log('✅ File deleted successfully:', filePath);
+      return NextResponse.json({ success: true, message: 'Post deleted successfully' });
     } else {
       console.error('File not found for deletion:', filePath);
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });

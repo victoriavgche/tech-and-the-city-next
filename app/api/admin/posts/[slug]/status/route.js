@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { githubAdmin } from '../../../../../lib/github-admin';
 
 export async function PUT(request, { params }) {
   try {
@@ -16,10 +17,27 @@ export async function PUT(request, { params }) {
       return Response.json({ error: 'Invalid status. Must be "draft" or "published"' }, { status: 400 });
     }
 
-    // Allow admin actions in production - we'll handle it differently
-    console.log('🔧 Admin action in production - allowing');
+    // Check if in production and has GitHub access
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    // File system approach (only works in development)
+    if (isProduction && githubAdmin.hasGitHubAccess()) {
+      console.log('🚀 Production mode: Using GitHub API');
+      const result = await githubAdmin.updatePostStatus(slug, status);
+      
+      if (result.success) {
+        return Response.json({ 
+          success: true, 
+          status, 
+          slug,
+          message: result.message
+        });
+      } else if (result.error) {
+        return Response.json(result, { status: 503 });
+      }
+    }
+    
+    // Development mode or fallback: Use filesystem
+    console.log('💻 Development mode: Using filesystem');
     const postsDirectory = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDirectory, `${slug}.md`);
     console.log('File path:', filePath);
@@ -63,23 +81,9 @@ ${content}`;
     console.log('Writing updated file with status:', status);
     
     // Write updated file
-    try {
-      await fs.writeFile(filePath, frontMatter, 'utf8');
-      console.log('✅ Status update successful');
-      return Response.json({ success: true, status, slug });
-    } catch (writeError) {
-      console.error('Write error:', writeError);
-      
-      // In production, simulate success - user will see the change in UI
-      console.log('🔧 Production mode: Simulating successful status change');
-      return Response.json({ 
-        success: true, 
-        status, 
-        slug,
-        message: 'Status change simulated (production filesystem is read-only)',
-        production: true
-      });
-    }
+    await fs.writeFile(filePath, frontMatter, 'utf8');
+    console.log('✅ Status update successful');
+    return Response.json({ success: true, status, slug });
   } catch (error) {
     console.error('Error updating post status:', error);
     return Response.json({ 
