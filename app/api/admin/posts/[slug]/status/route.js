@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { githubAdmin } from '../../../../../lib/github-admin';
+import { githubAdmin } from '@/lib/github-admin.js';
 
 export async function PUT(request, { params }) {
   try {

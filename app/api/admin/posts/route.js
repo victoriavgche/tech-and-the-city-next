@@ -1,5 +1,5 @@
 import { getAllPostsMeta } from '../../../../lib/posts';
-import { githubAdmin } from '../../../../lib/github-admin';
+import { githubAdmin } from '@/lib/github-admin.js';
 import { promises as fs } from 'fs';
 import path from 'path';
 

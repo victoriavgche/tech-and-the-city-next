@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { githubAdmin } from '../../../../lib/github-admin';
+import { githubAdmin } from '@/lib/github-admin.js';
 
 export async function GET(request, { params }) {
   try {
