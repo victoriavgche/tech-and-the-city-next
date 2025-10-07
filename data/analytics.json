@@ -137,6 +137,52 @@
       "language": "el",
       "platform": "Win32",
       "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:15:16.951Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875316952_jg7j54dv9",
+      "viewport": {
+        "width": 895,
+        "height": 750
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "",
+      "timestamp": "2025-10-07T22:15:17.578Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1759875317578_8v0elyvq3",
+      "viewport": {
+        "width": 895,
+        "height": 750
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
     }
   ],
   "events": [
@@ -344,6 +390,22 @@
       "element": "BUTTON",
       "deviceType": "desktop",
       "timestamp": "2025-10-07T22:12:59.750Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 28,
+      "y": 9,
+      "element": "SPAN",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:15:19.098Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 70,
+      "y": 13,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-07T22:15:23.180Z"
     }
   ],
   "sessions": [],
@@ -352,7 +414,7 @@
   ],
   "userActivity": {},
   "trafficSources": {
-    "Direct": 6
+    "Direct": 8
   },
   "heatmapData": {
     "/": [
@@ -483,15 +545,27 @@
         "y": 37,
         "deviceType": "desktop",
         "timestamp": "2025-10-07T22:12:59.750Z"
+      },
+      {
+        "x": 28,
+        "y": 9,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:15:19.098Z"
+      },
+      {
+        "x": 70,
+        "y": 13,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-07T22:15:23.180Z"
       }
     ]
   },
   "socialShares": [],
   "metadata": {
     "firstDay": "2025-10-07",
-    "lastUpdated": "2025-10-07T22:12:59.750Z",
+    "lastUpdated": "2025-10-07T22:15:23.180Z",
     "totalSessions": 0,
     "totalUniqueUsers": 1,
-    "totalVisits": 6
+    "totalVisits": 8
   }
 }
