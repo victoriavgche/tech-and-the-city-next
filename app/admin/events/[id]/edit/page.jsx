@@ -147,6 +147,13 @@ export default function EditEvent({ params }) {
         const response = await fetch(`/api/admin/events?id=${params.id}`);
         if (response.ok) {
           const event = await response.json();
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('📖 FETCHED EVENT');
+          console.log('Event ID:', params.id);
+          console.log('Event status:', event.status);
+          console.log('Event isDraft:', event.isDraft);
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          
           const { venue, city } = parseLocation(event.location);
           setFormData({
             title: event.title || '',
@@ -166,7 +173,8 @@ export default function EditEvent({ params }) {
               url: '',
               thumbnail: '',
               uploadMethod: 'url'
-            }
+            },
+            isDraft: event.isDraft || false // Preserve isDraft status
           });
         } else {
           setError('Event not found');
@@ -187,6 +195,12 @@ export default function EditEvent({ params }) {
     setIsSubmitting(true);
     setError('');
 
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📝 SUBMITTING EVENT UPDATE');
+    console.log('Current formData.isDraft:', formData.isDraft);
+    console.log('Save as draft clicked:', saveAsDraft);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
     try {
       const response = await fetch(`/api/admin/events?id=${params.id}`, {
         method: 'PUT',
@@ -199,7 +213,8 @@ export default function EditEvent({ params }) {
           date: formatDateForStorage(formData.date),
           time: formatTimeForStorage(formData.time),
           attendees: 0, // Default value since field is removed
-          isDraft: saveAsDraft
+          // Only set isDraft if explicitly saving as draft, otherwise preserve existing status
+          isDraft: saveAsDraft ? true : (formData.isDraft || false)
         }),
       });
 
@@ -545,37 +560,50 @@ export default function EditEvent({ params }) {
               </div>
             )}
 
+            {/* Status Indicator */}
+            {formData.isDraft && (
+              <div className="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
+                <p className="text-orange-400 font-medium flex items-center gap-2">
+                  <span className="text-2xl">○</span> This event is currently saved as a draft
+                </p>
+              </div>
+            )}
+
             {/* Submit Buttons */}
-            <div className="flex gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
                 onClick={() => setSaveAsDraft(false)}
-                className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2"
+                className={`${
+                  formData.isDraft 
+                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700' 
+                    : 'bg-blue-600 hover:bg-blue-700'
+                } text-white px-6 py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2`}
               >
                 <Save className="h-5 w-5" />
-                {isSubmitting ? (saveAsDraft ? 'Saving...' : 'Updating...') : 'Update Event'}
+                {isSubmitting && !saveAsDraft ? 'Updating...' : (formData.isDraft ? 'Update & Publish' : 'Update Event')}
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
                 onClick={() => setSaveAsDraft(true)}
-                className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2"
+                className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2"
               >
                 <Save className="h-5 w-5" />
-                {isSubmitting ? (saveAsDraft ? 'Saving...' : 'Updating...') : 'Save as Draft'}
+                {isSubmitting && saveAsDraft ? 'Saving...' : 'Save as Draft'}
               </button>
               <button
                 type="button"
                 onClick={() => setShowPreview(!showPreview)}
-                className="flex-1 bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2"
+                className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2"
               >
                 <Eye className="h-5 w-5" />
                 {showPreview ? 'Hide Preview' : 'Preview'}
               </button>
               <Link
                 href="/admin-TC25?tab=events"
-                className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2"
+                className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-all duration-300 shadow-lg font-semibold inline-flex items-center justify-center gap-2 text-center"
               >
                 <X className="h-5 w-5" />
                 Cancel

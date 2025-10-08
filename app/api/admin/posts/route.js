@@ -80,7 +80,8 @@ export async function POST(request) {
       // File doesn't exist, we can create it
     }
     
-    // Create front matter
+    // Create front matter with proper status handling
+    const status = postData.status || 'published'; // Default to published if not specified
     const frontMatter = `---
 title: "${postData.title.replace(/"/g, '\\"')}"
 excerpt: "${postData.excerpt ? postData.excerpt.replace(/"/g, '\\"') : ''}"
@@ -89,9 +90,9 @@ tags:
   - AI
   - Technology
   - Athens
-read: "5 min"
-${postData.image ? `image: "${postData.image}"` : ''}
-${postData.status ? `status: "${postData.status}"` : ''}
+read: "5 min"${postData.image ? `
+image: "${postData.image}"` : ''}
+status: "${status}"
 ---
 
 ${postData.content}`;
