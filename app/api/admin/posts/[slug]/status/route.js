@@ -40,8 +40,20 @@ export async function PUT(request, { params }) {
           method: 'github'
         });
       } else {
-        console.error('⚠️  GitHub status update failed, falling back to filesystem');
+        console.error('❌ GitHub status update failed:', result.error);
+        return Response.json({ 
+          error: 'Failed to update post status in production',
+          details: result.error || 'GitHub API error',
+          suggestion: 'Check GitHub token configuration or try again'
+        }, { status: 500 });
       }
+    } else if (isProduction) {
+      console.error('❌ No GitHub access in production');
+      return Response.json({ 
+        error: 'Cannot update post status in production',
+        details: 'GitHub integration not configured',
+        suggestion: 'Set GITHUB_TOKEN environment variable'
+      }, { status: 503 });
     }
     
     // Development mode or fallback: Use filesystem
