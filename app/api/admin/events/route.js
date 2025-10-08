@@ -32,8 +32,20 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Allow admin actions in production - we'll handle it differently
-    console.log('🔧 Admin action in production - allowing');
+    // Check if in production
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      console.log('🚀 Production mode detected');
+      console.log('⚠️  Events cannot be created in production - filesystem is read-only');
+      return NextResponse.json({ 
+        error: 'Cannot create events in production',
+        details: 'Production environment has read-only filesystem',
+        suggestion: 'Events can only be managed in development environment or through database integration'
+      }, { status: 503 });
+    } else {
+      console.log('💻 Development mode: Creating event');
+    }
     
     const newEvent = createEvent(eventData);
     
@@ -58,8 +70,20 @@ export async function PUT(request) {
       return NextResponse.json({ error: 'Event ID is required' }, { status: 400 });
     }
 
-    // Allow admin actions in production - we'll handle it differently
-    console.log('🔧 Admin action in production - allowing');
+    // Check if in production
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      console.log('🚀 Production mode detected');
+      console.log('⚠️  Events cannot be updated in production - filesystem is read-only');
+      return NextResponse.json({ 
+        error: 'Cannot update events in production',
+        details: 'Production environment has read-only filesystem',
+        suggestion: 'Events can only be managed in development environment or through database integration'
+      }, { status: 503 });
+    } else {
+      console.log('💻 Development mode: Updating event');
+    }
     
     const eventData = await request.json();
     const updatedEvent = updateEvent(id, eventData);
@@ -85,8 +109,20 @@ export async function DELETE(request) {
       return NextResponse.json({ error: 'Event ID is required' }, { status: 400 });
     }
 
-    // Allow admin actions in production - we'll handle it differently
-    console.log('🔧 Admin action in production - allowing');
+    // Check if in production
+    const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      console.log('🚀 Production mode detected');
+      console.log('⚠️  Events cannot be deleted in production - filesystem is read-only');
+      return NextResponse.json({ 
+        error: 'Cannot delete events in production',
+        details: 'Production environment has read-only filesystem',
+        suggestion: 'Events can only be managed in development environment or through database integration'
+      }, { status: 503 });
+    } else {
+      console.log('💻 Development mode: Deleting event');
+    }
     
     const success = deleteEvent(id);
     
