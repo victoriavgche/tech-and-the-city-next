@@ -6,14 +6,21 @@ import { githubAdmin } from '@/lib/github-admin.js';
 export async function GET(request, { params }) {
   try {
     const { slug } = params;
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📖 GET POST REQUEST');
+    console.log('Slug:', slug);
+    
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
+    console.log('File path:', filePath);
     
     if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+      console.error('❌ Post not found:', filePath);
+      return NextResponse.json({ error: 'Post not found', slug }, { status: 404 });
     }
     
     const fileContent = fs.readFileSync(filePath, 'utf8');
+    console.log('✓ File read successfully, length:', fileContent.length);
     
     // Parse front matter
     const frontMatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
@@ -26,30 +33,54 @@ export async function GET(request, { params }) {
       const excerptMatch = frontMatter.match(/^excerpt:\s*(.+)$/m);
       const imageMatch = frontMatter.match(/^image:\s*(.+)$/m);
       const dateMatch = frontMatter.match(/^date:\s*(.+)$/m);
+      const statusMatch = frontMatter.match(/^status:\s*(.+)$/m);
       
-      return NextResponse.json({
+      const postData = {
+        slug: slug,
         title: titleMatch ? titleMatch[1].replace(/^["']|["']$/g, '') : '',
         excerpt: excerptMatch ? excerptMatch[1].replace(/^["']|["']$/g, '') : '',
         body: content,
         content: content,
         image: imageMatch ? imageMatch[1].replace(/^["']|["']$/g, '') : '',
         featuredImage: imageMatch ? imageMatch[1].replace(/^["']|["']$/g, '') : '',
-        date: dateMatch ? dateMatch[1].replace(/^["']|["']$/g, '') : new Date().toISOString()
+        date: dateMatch ? dateMatch[1].replace(/^["']|["']$/g, '') : new Date().toISOString(),
+        status: statusMatch ? statusMatch[1].replace(/^["']|["']$/g, '') : 'published'
+      };
+      
+      console.log('Post data:', {
+        title: postData.title,
+        status: postData.status,
+        contentLength: postData.content.length
       });
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      
+      return NextResponse.json(postData);
     } else {
       // Fallback for files without front matter
+      console.log('⚠️  No front matter found, using defaults');
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       return NextResponse.json({
+        slug: slug,
         title: '',
         excerpt: '',
         body: fileContent,
         content: fileContent,
         image: '',
         featuredImage: '',
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        status: 'published'
       });
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch post' }, { status: 500 });
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.error('❌ ERROR fetching post:', error);
+    console.error('Stack:', error.stack);
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    return NextResponse.json({ 
+      error: 'Failed to fetch post',
+      details: error.message,
+      slug: params.slug
+    }, { status: 500 });
   }
 }
 
@@ -59,19 +90,63 @@ export async function PUT(request, { params }) {
     const body = await request.json();
     const { title, excerpt, content, featuredImage, date } = body;
     
-    console.log(`Attempting to update post: ${slug}`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('💾 PUT (UPDATE) POST REQUEST');
+    console.log(`Slug: ${slug}`);
     console.log(`Title: ${title}`);
     console.log(`Excerpt: ${excerpt}`);
     console.log(`Content length: ${content ? content.length : 'undefined'}`);
     console.log(`Featured Image: ${featuredImage}`);
+    console.log(`Date: ${date}`);
     
     // Validate required fields
     if (!title || !content) {
-      console.error('Missing required fields:', { title: !!title, content: !!content });
+      console.error('❌ Missing required fields:', { title: !!title, content: !!content });
       return NextResponse.json({ 
         error: 'Title and content are required',
         received: { title: !!title, content: !!content }
       }, { status: 400 });
+    }
+
+    // Read existing file to preserve status and other fields
+    const postsDir = path.join(process.cwd(), 'content', 'posts');
+    const filePath = path.join(postsDir, `${slug}.md`);
+    
+    let existingStatus = 'published'; // Default
+    let existingTags = ['AI', 'Technology', 'Athens']; // Default
+    let existingRead = '5 min'; // Default
+    
+    // Try to read existing file to preserve fields
+    if (fs.existsSync(filePath)) {
+      console.log('📖 Reading existing file to preserve fields...');
+      const existingContent = fs.readFileSync(filePath, 'utf8');
+      const frontMatterMatch = existingContent.match(/^---\n([\s\S]*?)\n---\n/);
+      
+      if (frontMatterMatch) {
+        const frontMatter = frontMatterMatch[1];
+        const statusMatch = frontMatter.match(/^status:\s*(.+)$/m);
+        const tagsMatch = frontMatter.match(/^tags:\s*\n((?:  - .+\n?)*)/m);
+        const readMatch = frontMatter.match(/^read:\s*(.+)$/m);
+        
+        if (statusMatch) {
+          existingStatus = statusMatch[1].replace(/^["']|["']$/g, '');
+          console.log('✓ Preserved status:', existingStatus);
+        }
+        
+        if (tagsMatch) {
+          const tagsContent = tagsMatch[1];
+          existingTags = tagsContent.split('\n')
+            .filter(line => line.trim().startsWith('- '))
+            .map(line => line.trim().substring(2))
+            .filter(Boolean);
+          console.log('✓ Preserved tags:', existingTags);
+        }
+        
+        if (readMatch) {
+          existingRead = readMatch[1].replace(/^["']|["']$/g, '');
+          console.log('✓ Preserved read time:', existingRead);
+        }
+      }
     }
 
     // Check if in production and has GitHub access
@@ -84,26 +159,29 @@ export async function PUT(request, { params }) {
         excerpt,
         content,
         image: featuredImage,
-        date
+        date,
+        status: existingStatus // Pass preserved status
       });
       
       if (result.success) {
+        console.log('✅ GitHub update successful');
         return NextResponse.json({ 
           success: true,
           message: result.message,
           slug: slug,
-          method: 'github'
+          method: 'github',
+          status: existingStatus
         });
       } else if (result.error) {
-        console.error('GitHub update failed, falling back to filesystem:', result);
+        console.error('⚠️  GitHub update failed, falling back to filesystem:', result.error);
         // Fall through to filesystem approach
       }
+    } else {
+      console.log('💻 Development mode or no GitHub access');
     }
     
     // Development mode or fallback: Use filesystem
-    console.log('💻 Development mode: Using filesystem');
-    const postsDir = path.join(process.cwd(), 'content', 'posts');
-    const filePath = path.join(postsDir, `${slug}.md`);
+    console.log('📁 Using filesystem approach');
     
     console.log(`Posts directory: ${postsDir}`);
     console.log(`File path: ${filePath}`);
@@ -114,47 +192,56 @@ export async function PUT(request, { params }) {
       fs.mkdirSync(postsDir, { recursive: true });
     }
     
-    // Directory exists, proceed with writing
-    console.log('Directory exists, proceeding with file write');
+    // Build tags section
+    const tagsSection = existingTags.map(tag => `  - ${tag}`).join('\n');
     
-    // Create markdown content with front matter
+    // Create markdown content with front matter preserving status
     const frontMatter = `---
 title: "${title.replace(/"/g, '\\"')}"
-date: "${date || new Date().toISOString()}"
 excerpt: "${excerpt ? excerpt.replace(/"/g, '\\"') : ''}"
+date: "${date || new Date().toISOString()}"
 tags:
-  - AI
-  - Technology
-  - Athens
-read: "5 min"${featuredImage ? `
+${tagsSection}
+read: "${existingRead}"${featuredImage ? `
 image: "${featuredImage}"` : ''}
-status: "published"
+status: "${existingStatus}"
 ---
 
 ${content}`;
     
     // Write file
-    console.log(`Writing to file: ${filePath}`);
+    console.log(`💾 Writing to file: ${filePath}`);
+    console.log(`Status being saved: ${existingStatus}`);
     fs.writeFileSync(filePath, frontMatter, 'utf8');
     console.log('✅ File write completed');
     
+    // Verify the write
     const writtenContent = fs.readFileSync(filePath, 'utf8');
-    console.log(`File written successfully. Size: ${writtenContent.length} characters`);
+    const verifyMatch = writtenContent.match(/^status:\s*"(.+)"$/m);
+    const verifiedStatus = verifyMatch ? verifyMatch[1] : 'unknown';
+    console.log(`✅ Verified status in file: ${verifiedStatus}`);
+    console.log(`File size: ${writtenContent.length} characters`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     
     return NextResponse.json({ 
       success: true,
       message: `Post ${slug} updated successfully`,
       size: writtenContent.length,
-      slug: slug
+      slug: slug,
+      status: existingStatus,
+      method: 'filesystem'
     });
     
   } catch (error) {
-    console.error('Error updating post:', error);
-    console.error('Error stack:', error.stack);
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.error('❌ ERROR updating post:', error);
+    console.error('Stack:', error.stack);
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     return NextResponse.json({ 
       error: 'Failed to update post', 
       details: error.message,
-      type: error.name
+      type: error.name,
+      slug: params.slug
     }, { status: 500 });
   }
 }

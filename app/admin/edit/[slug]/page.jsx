@@ -21,6 +21,7 @@ export default function EditPost() {
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
   const [articleDate, setArticleDate] = useState('');
+  const [status, setStatus] = useState('published'); // Track status for display only
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -66,6 +67,8 @@ export default function EditPost() {
         setExcerpt(postData.excerpt || '');
         setImage(postData.image || postData.featuredImage || '');
         setArticleDate(postData.date || new Date().toISOString().split('T')[0]);
+        setStatus(postData.status || 'published'); // Set status from post data
+        console.log('Post status:', postData.status || 'published');
         
         // Convert Markdown to HTML for ReactQuill
         let htmlContent = '';
@@ -320,12 +323,22 @@ export default function EditPost() {
         <div className="container max-w-4xl mx-auto px-4">
         {/* Back button and Action buttons */}
         <div className="flex justify-between items-center mb-8">
-          <Link 
-            href="/admin-TC25" 
-            className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-          >
-            ← Back to Admin
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/admin-TC25" 
+              className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+            >
+              ← Back to Admin
+            </Link>
+            {/* Status Badge (Read-Only) */}
+            <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+              status === 'published' 
+                ? 'bg-green-900/30 text-green-400 border border-green-500/30' 
+                : 'bg-orange-900/30 text-orange-400 border border-orange-500/30'
+            }`}>
+              {status === 'published' ? '✓ Published' : '○ Draft'}
+            </div>
+          </div>
           <div className="flex gap-3">
             <Link
               href={`/articles/${slug}`}
