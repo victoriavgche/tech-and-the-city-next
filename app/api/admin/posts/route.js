@@ -45,39 +45,22 @@ export async function POST(request) {
       .replace(/-+/g, '-')
       .trim();
     
-    // Check if in production
+    // Check if in production and try GitHub first
     const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    if (isProduction) {
-      console.log('🚀 Production mode detected');
-      if (githubAdmin.hasGitHubAccess()) {
-        console.log('✅ GitHub access available, using GitHub API');
-        const result = await githubAdmin.createPost(postData);
-        
-        if (result.success) {
-          return Response.json({ 
-            success: true, 
-            slug: result.slug || slug,
-            method: 'github'
-          });
-        } else {
-          console.error('⚠️  GitHub create failed:', result.error);
-          return Response.json({ 
-            error: 'Failed to create post in production',
-            details: result.error || 'GitHub API error',
-            suggestion: 'Check GitHub token configuration'
-          }, { status: 500 });
-        }
-      } else {
-        console.error('❌ No GitHub access in production');
+    if (isProduction && githubAdmin.hasGitHubAccess()) {
+      console.log('🚀 Production mode: Using GitHub API');
+      const result = await githubAdmin.createPost(postData);
+      
+      if (result.success) {
         return Response.json({ 
-          error: 'Cannot create posts in production',
-          details: 'GitHub integration not configured',
-          suggestion: 'Set GITHUB_TOKEN environment variable'
-        }, { status: 503 });
+          success: true, 
+          slug: result.slug || slug,
+          method: 'github'
+        });
+      } else {
+        console.error('⚠️  GitHub create failed, falling back to filesystem');
       }
-    } else {
-      console.log('💻 Development mode: Using filesystem');
     }
     
     // Development mode or fallback: Use filesystem

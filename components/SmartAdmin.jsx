@@ -15,35 +15,27 @@ export default function SmartAdmin() {
     setIsLoading(true);
     
     try {
-      // First try the production endpoint (with GitHub integration)
-      let response = await fetch(`/api/admin/production/${endpoint}`, {
+      console.log(`🔄 ${action} ${endpoint}`, data);
+      
+      const response = await fetch(`/api/admin/${endpoint}`, {
         method: action,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
 
-      // If production endpoint fails, try regular endpoint
-      if (!response.ok) {
-        response = await fetch(`/api/admin/${endpoint}`, {
-          method: action,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-      }
-
       const result = await response.json();
 
       if (response.ok) {
+        console.log('✅ Success:', result);
         showMessage(`✅ ${result.message || 'Action completed successfully'}`, 'success');
         return true;
       } else {
+        console.error('❌ Error:', result);
         showMessage(`❌ ${result.error || 'Action failed'}`, 'error');
-        if (result.details) {
-          console.log('Details:', result.details);
-        }
         return false;
       }
     } catch (error) {
+      console.error('❌ Network error:', error);
       showMessage(`❌ Network error: ${error.message}`, 'error');
       return false;
     } finally {

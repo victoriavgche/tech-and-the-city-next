@@ -23,42 +23,25 @@ export async function PUT(request, { params }) {
       }, { status: 400 });
     }
 
-    // Check if in production
+    // Check if in production and try GitHub first
     const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    if (isProduction) {
-      console.log('🚀 Production mode detected');
-      if (githubAdmin.hasGitHubAccess()) {
-        console.log('✅ GitHub access available, using GitHub API');
-        const result = await githubAdmin.updatePostStatus(slug, status);
-        
-        if (result.success) {
-          console.log('✅ GitHub update successful');
-          return Response.json({ 
-            success: true, 
-            status, 
-            slug,
-            message: `Post status updated to ${status} via GitHub`,
-            method: 'github'
-          });
-        } else {
-          console.error('⚠️  GitHub status update failed:', result.error);
-          return Response.json({ 
-            error: 'Failed to update post status in production',
-            details: result.error || 'GitHub API error',
-            suggestion: 'Check GitHub token configuration'
-          }, { status: 500 });
-        }
-      } else {
-        console.error('❌ No GitHub access in production');
+    if (isProduction && githubAdmin.hasGitHubAccess()) {
+      console.log('🚀 Production mode: Using GitHub API');
+      const result = await githubAdmin.updatePostStatus(slug, status);
+      
+      if (result.success) {
+        console.log('✅ GitHub update successful');
         return Response.json({ 
-          error: 'Cannot update post status in production',
-          details: 'GitHub integration not configured',
-          suggestion: 'Set GITHUB_TOKEN environment variable'
-        }, { status: 503 });
+          success: true, 
+          status, 
+          slug,
+          message: `Post status updated to ${status} via GitHub`,
+          method: 'github'
+        });
+      } else {
+        console.error('⚠️  GitHub status update failed, falling back to filesystem');
       }
-    } else {
-      console.log('💻 Development mode: Using filesystem');
     }
     
     // Development mode or fallback: Use filesystem

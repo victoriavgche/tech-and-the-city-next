@@ -149,49 +149,32 @@ export async function PUT(request, { params }) {
       }
     }
 
-    // Check if in production
+    // Check if in production and try GitHub first
     const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    if (isProduction) {
-      console.log('🚀 Production mode detected');
-      if (githubAdmin.hasGitHubAccess()) {
-        console.log('✅ GitHub access available, using GitHub API');
-        const result = await githubAdmin.updatePost(slug, {
-          title,
-          excerpt,
-          content,
-          image: featuredImage,
-          date,
-          status: existingStatus // Pass preserved status
-        });
-        
-        if (result.success) {
-          console.log('✅ GitHub update successful');
-          return NextResponse.json({ 
-            success: true,
-            message: result.message,
-            slug: slug,
-            method: 'github',
-            status: existingStatus
-          });
-        } else {
-          console.error('⚠️  GitHub update failed:', result.error);
-          return NextResponse.json({ 
-            error: 'Failed to update post in production',
-            details: result.error || 'GitHub API error',
-            suggestion: 'Check GitHub token configuration'
-          }, { status: 500 });
-        }
-      } else {
-        console.error('❌ No GitHub access in production');
+    if (isProduction && githubAdmin.hasGitHubAccess()) {
+      console.log('🚀 Production mode: Using GitHub API');
+      const result = await githubAdmin.updatePost(slug, {
+        title,
+        excerpt,
+        content,
+        image: featuredImage,
+        date,
+        status: existingStatus
+      });
+      
+      if (result.success) {
+        console.log('✅ GitHub update successful');
         return NextResponse.json({ 
-          error: 'Cannot update posts in production',
-          details: 'GitHub integration not configured',
-          suggestion: 'Set GITHUB_TOKEN environment variable'
-        }, { status: 503 });
+          success: true,
+          message: result.message,
+          slug: slug,
+          method: 'github',
+          status: existingStatus
+        });
+      } else {
+        console.error('⚠️  GitHub update failed, falling back to filesystem');
       }
-    } else {
-      console.log('💻 Development mode: Using filesystem');
     }
     
     // Development mode or fallback: Use filesystem

@@ -8,7 +8,7 @@ const isMobile = () => {
   return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
 import Link from 'next/link';
-import ProductionWarning from '../../components/ProductionWarning';
+// Removed ProductionWarning - keeping it simple
 import { Edit, Trash2, Plus, Eye, EyeOff, Lock, Settings, Save, X, Share2, BarChart3, Mail, Calendar, HardDrive } from 'lucide-react';
 // Full imports with all features
 import EnhancedAnalytics from '@/components/EnhancedAnalytics';
@@ -649,9 +649,6 @@ export default function SecretAdminDashboard() {
 
         {/* Smart Admin Integration */}
         <SmartAdmin />
-        
-        {/* Production Warning */}
-        <ProductionWarning />
           <div className="flex flex-wrap gap-2 sm:gap-4">
             <button
               onClick={handleOpenSettings}

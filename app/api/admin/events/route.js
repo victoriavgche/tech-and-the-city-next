@@ -35,14 +35,7 @@ export async function POST(request) {
     // Check if in production
     const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    if (isProduction) {
-      console.log('🚀 Production mode detected - Creating event via GitHub');
-      // In production, we'll create a simple event entry that can be managed
-      // For now, allow creation but with limited functionality
-      console.log('✅ Allowing event creation in production');
-    } else {
-      console.log('💻 Development mode: Creating event');
-    }
+    console.log('📝 Creating event');
     
     const newEvent = createEvent(eventData);
     
@@ -70,12 +63,7 @@ export async function PUT(request) {
     // Check if in production
     const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    if (isProduction) {
-      console.log('🚀 Production mode detected - Updating event via GitHub');
-      console.log('✅ Allowing event update in production');
-    } else {
-      console.log('💻 Development mode: Updating event');
-    }
+    console.log('📝 Updating event');
     
     const eventData = await request.json();
     const updatedEvent = updateEvent(id, eventData);
@@ -104,12 +92,7 @@ export async function DELETE(request) {
     // Check if in production
     const isProduction = process.env.VERCEL || process.env.NODE_ENV === 'production';
     
-    if (isProduction) {
-      console.log('🚀 Production mode detected - Deleting event via GitHub');
-      console.log('✅ Allowing event deletion in production');
-    } else {
-      console.log('💻 Development mode: Deleting event');
-    }
+    console.log('📝 Deleting event');
     
     const success = deleteEvent(id);
     
