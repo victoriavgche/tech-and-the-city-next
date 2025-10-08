@@ -29,10 +29,12 @@ export async function PUT(request, { params }) {
           success: true, 
           status, 
           slug,
-          message: result.message
+          message: result.message,
+          method: 'github'
         });
       } else if (result.error) {
-        return Response.json(result, { status: 503 });
+        console.error('GitHub status update failed, falling back to filesystem:', result);
+        // Fall through to filesystem approach
       }
     }
     

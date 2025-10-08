@@ -152,7 +152,7 @@ export default function EditPost() {
       if (response.ok) {
         const result = await response.json();
         console.log('Save successful:', result);
-        setSuccess('Post updated successfully!');
+        setSuccess(`Post updated successfully! ${result.method === 'github' ? '(via GitHub)' : '(local)'}`);
         // Update the post state to reflect changes
         setPost(prev => ({
           ...prev,
@@ -168,7 +168,7 @@ export default function EditPost() {
       } else {
         const errorData = await response.json();
         console.error('Save failed:', errorData);
-        setError(`Failed to update post: ${errorData.error || 'Unknown error'}`);
+        setError(`Failed to update post: ${errorData.error || 'Unknown error'}\nDetails: ${errorData.details || 'No details'}`);
       }
     } catch (error) {
       console.error('Network error during save:', error);

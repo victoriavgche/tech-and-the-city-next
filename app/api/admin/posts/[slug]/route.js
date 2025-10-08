@@ -91,10 +91,12 @@ export async function PUT(request, { params }) {
         return NextResponse.json({ 
           success: true,
           message: result.message,
-          slug: slug
+          slug: slug,
+          method: 'github'
         });
       } else if (result.error) {
-        return NextResponse.json(result, { status: 503 });
+        console.error('GitHub update failed, falling back to filesystem:', result);
+        // Fall through to filesystem approach
       }
     }
     

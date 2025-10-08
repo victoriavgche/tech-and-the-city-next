@@ -362,7 +362,7 @@ export default function SecretAdminDashboard() {
           console.log('Status update successful:', result);
           // Refresh posts immediately
           await fetchPosts();
-          alert(`Article ${action}ed successfully!`);
+          alert(`Article ${action}ed successfully! ${result.method === 'github' ? '(via GitHub)' : '(local)'}`);
         } else {
           const errorData = await response.json();
           console.error('Status update failed:', errorData);
