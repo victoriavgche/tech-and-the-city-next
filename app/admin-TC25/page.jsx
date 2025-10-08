@@ -819,10 +819,23 @@ export default function SecretAdminDashboard() {
                 </Link>
                 <button
                   onClick={() => handleToggleStatus(post.slug, post.status)}
-                  className="flex-1 bg-orange-600 text-white px-3 py-2 rounded text-sm hover:bg-orange-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
+                  className={`flex-1 text-white px-3 py-2 rounded text-sm transition-colors inline-flex items-center justify-center gap-1 min-w-0 ${
+                    post.status === 'published' 
+                      ? 'bg-orange-600 hover:bg-orange-700' 
+                      : 'bg-green-600 hover:bg-green-700'
+                  }`}
                 >
-                  <Edit className="h-4 w-4" />
-                  Unpublish
+                  {post.status === 'published' ? (
+                    <>
+                      <EyeOff className="h-4 w-4" />
+                      Unpublish
+                    </>
+                  ) : (
+                    <>
+                      <Eye className="h-4 w-4" />
+                      Publish
+                    </>
+                  )}
                 </button>
                 <button
                   onClick={() => handleLinkedInShare(post)}
@@ -899,9 +912,9 @@ export default function SecretAdminDashboard() {
                 </Link>
                 <button
                   onClick={() => handleToggleStatus(post.slug, post.status)}
-                  className="flex-1 bg-purple-600 text-white px-3 py-2 rounded text-sm hover:bg-purple-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
+                  className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-1 min-w-0"
                 >
-                  <Edit className="h-4 w-4" />
+                  <Eye className="h-4 w-4" />
                   Publish
                 </button>
                 <button
