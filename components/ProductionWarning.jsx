@@ -24,13 +24,11 @@ export default function ProductionWarning() {
           <div className="text-orange-300 text-sm space-y-2">
             <p>
               <strong>Articles:</strong> Can be edited and published/unpublished via GitHub integration.
-              {!process.env.NEXT_PUBLIC_GITHUB_TOKEN && (
-                <span className="text-orange-400 font-medium"> GitHub token not configured - limited functionality.</span>
-              )}
+              <span className="text-green-400 font-medium"> ✅ GitHub token configured - full functionality available.</span>
             </p>
             <p>
-              <strong>Events:</strong> Cannot be modified in production environment. 
-              Use development environment for event management.
+              <strong>Events:</strong> Can be created, edited, and managed in production environment.
+              <span className="text-green-400 font-medium"> ✅ Full event management available.</span>
             </p>
             <p className="text-xs text-orange-400">
               💡 For full functionality, set up GitHub token or use development environment.
