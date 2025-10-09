@@ -1,8 +1,8 @@
-import { getPublishedPosts } from "../lib/posts";
+import { getPublishedArticles } from "../lib/articles";
 import HomePageClient from "../components/HomePageClient";
 
 export default async function Home(){
-  const posts = await getPublishedPosts();
+  const posts = await getPublishedArticles();
   
   return <HomePageClient posts={posts} />;
 }
