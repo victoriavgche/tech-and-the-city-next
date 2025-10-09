@@ -1,8 +1,8 @@
-import { getPublishedPosts } from '../../../lib/posts';
+import { getPublishedArticles } from '../../../lib/articles';
 
 export async function GET() {
   try {
-    const posts = await getPublishedPosts();
+    const posts = await getPublishedArticles();
     return Response.json(posts);
   } catch (error) {
     console.error('Error fetching posts:', error);

@@ -1,19 +1,19 @@
 import { notFound } from "next/navigation";
-import { getPostBySlug, getAllPostsMeta } from "../../../../lib/posts";
+import { getArticleBySlug, getAllArticlesMeta } from "../../../../lib/articles";
 
 export async function generateStaticParams(){
-  const posts = await getAllPostsMeta();
+  const posts = await getAllArticlesMeta();
   return posts.map(p=>({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }){
-  const post = await getPostBySlug(params.slug);
+  const post = await getArticleBySlug(params.slug);
   if(!post) return { title: "Article — Tech & the City" };
   return { title: `${post.title} — Tech & the City`, description: post.excerpt };
 }
 
 export default async function Article({ params }){
-  const post = await getPostBySlug(params.slug);
+  const post = await getArticleBySlug(params.slug);
   if(!post) return notFound();
 
   return (

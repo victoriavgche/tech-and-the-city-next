@@ -1,4 +1,4 @@
-import { getAllPostsMeta } from '@/lib/posts';
+import { getAllArticlesMeta } from '@/lib/articles';
 
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
@@ -38,7 +38,7 @@ export async function GET() {
   ];
 
   // Dynamic pages (posts)
-  const posts = await getAllPostsMeta();
+  const posts = await getAllArticlesMeta();
   const postPages = posts.map((post) => ({
     url: `${baseUrl}/articles/${post.slug}`,
     lastModified: post.date ? new Date(post.date) : new Date(),

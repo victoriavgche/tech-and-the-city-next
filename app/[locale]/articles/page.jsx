@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { getAllPostsMeta } from "../../../lib/posts";
 
 export const metadata = { title: "Articles — Tech & the City" };
 
