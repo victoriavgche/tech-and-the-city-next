@@ -375,29 +375,27 @@ export default function SecretAdminDashboard() {
   const handleUnpublishEvent = async (id) => {
     if (confirm('Are you sure you want to unpublish this event?')) {
       try {
+        // Find the event to get its current data
+        const eventToMove = events.find(event => event.id === id);
+        if (!eventToMove) {
+          alert('Event not found');
+          return;
+        }
+
         const response = await fetch(`/api/admin/events?id=${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            isDraft: true
+            isDraft: true,
+            date: eventToMove.date // Include date for proper status calculation
           }),
         });
         
         if (response.ok) {
-          // Move event from published to draft locally
-          const eventToMove = events.find(event => event.id === id);
-          if (eventToMove) {
-            // Remove from all current lists
-            setEvents(events.filter(event => event.id !== id));
-            setUpcomingEvents(upcomingEvents.filter(event => event.id !== id));
-            setPastEvents(pastEvents.filter(event => event.id !== id));
-            
-            // Add to draft events
-            const updatedEvent = { ...eventToMove, isDraft: true, status: 'draft' };
-            setDraftEvents([...draftEvents, updatedEvent]);
-          }
+          // Refresh events from server
+          fetchEvents();
           // Switch to draft events tab
           setActiveTab('draftEvents');
         } else {
@@ -413,41 +411,27 @@ export default function SecretAdminDashboard() {
   const handlePublishEvent = async (id) => {
     if (confirm('Are you sure you want to publish this event?')) {
       try {
+        // Find the event to get its current data
+        const eventToMove = draftEvents.find(event => event.id === id);
+        if (!eventToMove) {
+          alert('Event not found');
+          return;
+        }
+
         const response = await fetch(`/api/admin/events?id=${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            isDraft: false
+            isDraft: false,
+            date: eventToMove.date // Include date for proper status calculation
           }),
         });
         
         if (response.ok) {
-          // Move event from draft to published locally
-          const eventToMove = draftEvents.find(event => event.id === id);
-          if (eventToMove) {
-            // Remove from draft events
-            setDraftEvents(draftEvents.filter(event => event.id !== id));
-            
-            // Add to published events
-            const updatedEvent = { ...eventToMove, isDraft: false };
-            // Determine status based on date
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const eventDate = new Date(eventToMove.date);
-            eventDate.setHours(0, 0, 0, 0);
-            updatedEvent.status = eventDate < today ? 'past' : 'upcoming';
-            
-            setEvents([...events, updatedEvent]);
-            
-            // Add to appropriate published list
-            if (updatedEvent.status === 'upcoming') {
-              setUpcomingEvents([...upcomingEvents, updatedEvent]);
-            } else {
-              setPastEvents([...pastEvents, updatedEvent]);
-            }
-          }
+          // Refresh events from server
+          fetchEvents();
           // Switch to published events tab
           setActiveTab('publishedEvents');
         } else {
