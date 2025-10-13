@@ -4,7 +4,9 @@ import path from 'path';
 
 export async function DELETE(request, { params }) {
   try {
-    const messageId = parseInt(params.id);
+    // Await params for Next.js 15+ compatibility
+    const resolvedParams = await params;
+    const messageId = parseInt(resolvedParams.id);
     
     if (isNaN(messageId)) {
       return NextResponse.json(

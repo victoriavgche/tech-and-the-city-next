@@ -3,7 +3,9 @@ import { getPostBySlug } from '../../../../lib/posts';
 
 export async function GET(request, { params }) {
   try {
-    const { slug } = params;
+    // Await params for Next.js 15+ compatibility
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     const post = await getPostBySlug(slug);
     
     if (!post) {

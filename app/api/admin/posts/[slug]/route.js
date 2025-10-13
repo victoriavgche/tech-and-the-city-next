@@ -4,7 +4,9 @@ import path from 'path';
 
 export async function GET(request, { params }) {
   try {
-    const { slug } = params;
+    // Await params for Next.js 15+ compatibility
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     
@@ -54,7 +56,9 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
-    const { slug } = params;
+    // Await params for Next.js 15+ compatibility
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     const body = await request.json();
     const { title, excerpt, content, featuredImage, date } = body;
     
@@ -131,7 +135,9 @@ ${content}`;
 
 export async function DELETE(request, { params }) {
   try {
-    const { slug } = params;
+    // Await params for Next.js 15+ compatibility
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     const postsDir = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDir, `${slug}.md`);
     

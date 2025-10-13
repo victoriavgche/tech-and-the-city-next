@@ -4,50 +4,54 @@ import matter from 'gray-matter';
 
 export async function PUT(request, { params }) {
   try {
-    const { slug } = params;
+    // Await params for Next.js 15+ compatibility
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
     const { status } = await request.json();
     
+    console.log('PUT request received for slug:', slug, 'with status:', status);
+    
     if (!status || !['draft', 'published'].includes(status)) {
+      console.error('Invalid status:', status);
       return Response.json({ error: 'Invalid status. Must be "draft" or "published"' }, { status: 400 });
     }
     
     const postsDirectory = path.join(process.cwd(), 'content', 'posts');
     const filePath = path.join(postsDirectory, `${slug}.md`);
     
+    console.log('File path:', filePath);
+    
     // Check if file exists
     try {
       await fs.access(filePath);
     } catch (error) {
+      console.error('File not found:', filePath);
       return Response.json({ error: 'Post not found' }, { status: 404 });
     }
     
     // Read current file
     const fileContent = await fs.readFile(filePath, 'utf8');
-    const { data, content } = matter(fileContent);
+    console.log('File read successfully, length:', fileContent.length);
     
-    // Update status
-    data.status = status;
+    // Parse with gray-matter
+    const parsed = matter(fileContent);
+    console.log('Parsed front matter:', parsed.data);
     
-    // Rebuild front matter
-    const frontMatter = `---
-title: "${data.title.replace(/"/g, '\\"')}"
-excerpt: "${data.excerpt ? data.excerpt.replace(/"/g, '\\"') : ''}"
-date: "${data.date}"
-tags:
-${data.tags ? data.tags.map(tag => `  - ${tag}`).join('\n') : '  - AI\n  - Technology\n  - Athens'}
-read: "${data.read || '5 min'}"
-${data.image ? `image: "${data.image}"` : ''}
-status: "${status}"
----
-
-${content}`;
+    // Update status in the data
+    parsed.data.status = status;
+    
+    // Use gray-matter to stringify back
+    const updatedContent = matter.stringify(parsed.content, parsed.data);
+    console.log('Updated content generated, length:', updatedContent.length);
     
     // Write updated file
-    await fs.writeFile(filePath, frontMatter, 'utf8');
+    await fs.writeFile(filePath, updatedContent, 'utf8');
+    console.log('File written successfully');
     
     return Response.json({ success: true, status });
   } catch (error) {
     console.error('Error updating post status:', error);
-    return Response.json({ error: 'Failed to update post status' }, { status: 500 });
+    console.error('Error stack:', error.stack);
+    return Response.json({ error: 'Failed to update post status', details: error.message }, { status: 500 });
   }
 }
