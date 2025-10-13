@@ -21,27 +21,42 @@ export async function POST(request) {
   try {
     const body = await request.json();
     
+    console.log('📨 Analytics POST received:', JSON.stringify(body, null, 2));
+    
     if (body.type === 'pageview') {
+      if (!body.url || !body.title) {
+        console.error('❌ Missing required pageview fields:', body);
+        return NextResponse.json({ error: 'Missing required fields: url and title' }, { status: 400 });
+      }
+      
       const success = addPageView(
         body.url, 
         body.title, 
-        body.referrer, 
+        body.referrer || '', 
         body.userAgent || 'Unknown',
-        body.sessionId,
-        body.viewport,
-        body.screen,
-        body.devicePixelRatio,
-        body.language,
-        body.platform
+        body.sessionId || 'unknown',
+        body.viewport || { width: 0, height: 0 },
+        body.screen || { width: 0, height: 0 },
+        body.devicePixelRatio || 1,
+        body.language || 'en',
+        body.platform || 'unknown'
       );
       if (success) {
-        console.log('Analytics POST: Successfully saved pageview data');
+        console.log('✅ Analytics POST: Successfully saved pageview data');
         return NextResponse.json({ success: true });
+      } else {
+        console.error('❌ Failed to save pageview data');
+        return NextResponse.json({ error: 'Failed to save pageview' }, { status: 500 });
       }
     } else if (body.type === 'event') {
-      const success = addEvent(body.eventType, body.eventData);
+      if (!body.eventType) {
+        console.error('❌ Missing eventType field:', body);
+        return NextResponse.json({ error: 'Missing required field: eventType' }, { status: 400 });
+      }
+      
+      const success = addEvent(body.eventType, body.eventData || {});
       if (success) {
-        console.log('Analytics POST: Successfully saved event data');
+        console.log('✅ Analytics POST: Successfully saved event data');
         
         // If it's a social share event, also save it to socialShares array
         if (body.eventType === 'social_share' && body.eventData) {
@@ -49,27 +64,45 @@ export async function POST(request) {
           if (!data.socialShares) data.socialShares = [];
           
           data.socialShares.push({
-            platform: body.eventData.platform,
-            url: body.eventData.url,
-            title: body.eventData.title,
+            platform: body.eventData.platform || 'unknown',
+            url: body.eventData.url || '',
+            title: body.eventData.title || 'Unknown',
             timestamp: body.eventData.timestamp || new Date().toISOString()
           });
           
           saveAnalytics(data);
-          console.log('Analytics POST: Successfully saved social share data');
+          console.log('✅ Analytics POST: Successfully saved social share data');
         }
         
         return NextResponse.json({ success: true });
+      } else {
+        console.error('❌ Failed to save event data');
+        return NextResponse.json({ error: 'Failed to save event' }, { status: 500 });
       }
     } else if (body.type === 'click') {
-      const success = addClick(body.url, body.x, body.y, body.element, body.userAgent);
+      if (!body.url) {
+        console.error('❌ Missing url field for click:', body);
+        return NextResponse.json({ error: 'Missing required field: url' }, { status: 400 });
+      }
+      
+      const success = addClick(
+        body.url, 
+        body.x || 0, 
+        body.y || 0, 
+        body.element || 'unknown', 
+        body.userAgent || 'Unknown'
+      );
       if (success) {
-        console.log('Analytics POST: Successfully saved click data');
+        console.log('✅ Analytics POST: Successfully saved click data');
         return NextResponse.json({ success: true });
+      } else {
+        console.error('❌ Failed to save click data');
+        return NextResponse.json({ error: 'Failed to save click' }, { status: 500 });
       }
     }
     
-    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    console.error('❌ Invalid request type:', body.type);
+    return NextResponse.json({ error: `Invalid request type: ${body.type}` }, { status: 400 });
   } catch (error) {
     console.error('Analytics POST error:', error);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
