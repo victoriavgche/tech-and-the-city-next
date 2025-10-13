@@ -15,28 +15,32 @@ class Analytics {
 
   // Track page view
   trackPageView(page, referrer = null) {
-    const pageView = {
-      sessionId: this.sessionId,
-      url: page,
-      title: document.title || page,
-      referrer: referrer || document.referrer,
-      timestamp: Date.now(),
-      userAgent: navigator.userAgent,
-      screen: {
-        width: window.screen.width,
-        height: window.screen.height
-      },
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight
-      },
-      devicePixelRatio: window.devicePixelRatio || 1,
-      language: navigator.language,
-      platform: navigator.platform
-    };
+    try {
+      const pageView = {
+        sessionId: this.sessionId,
+        url: page || window.location.pathname,
+        title: document.title || page || 'Untitled Page',
+        referrer: referrer || document.referrer || '',
+        timestamp: Date.now(),
+        userAgent: navigator.userAgent || 'Unknown',
+        screen: {
+          width: window.screen?.width || 0,
+          height: window.screen?.height || 0
+        },
+        viewport: {
+          width: window.innerWidth || 0,
+          height: window.innerHeight || 0
+        },
+        devicePixelRatio: window.devicePixelRatio || 1,
+        language: navigator.language || 'en',
+        platform: navigator.platform || 'unknown'
+      };
 
-    this.pageViews.push(pageView);
-    this.sendAnalytics('pageview', pageView);
+      this.pageViews.push(pageView);
+      this.sendAnalytics('pageview', pageView);
+    } catch (error) {
+      console.log('Analytics: trackPageView error', error);
+    }
   }
 
   // Track events (shares, clicks, etc.)
@@ -210,16 +214,29 @@ class Analytics {
 }
 
 // Auto-initialize analytics on client side
-if (typeof window !== 'undefined') {
-  window.analytics = new Analytics();
-  
-  // Track initial page view
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      window.analytics.trackPageView(window.location.pathname);
-    });
-  } else {
-    window.analytics.trackPageView(window.location.pathname);
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  try {
+    window.analytics = new Analytics();
+    
+    // Track initial page view only when document is ready
+    const trackInitialPageView = () => {
+      try {
+        if (window.analytics && window.location && document.title) {
+          window.analytics.trackPageView(window.location.pathname);
+        }
+      } catch (err) {
+        console.log('Analytics: Could not track initial pageview', err);
+      }
+    };
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', trackInitialPageView);
+    } else if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      // Delay slightly to ensure everything is ready
+      setTimeout(trackInitialPageView, 100);
+    }
+  } catch (err) {
+    console.log('Analytics: Initialization error', err);
   }
 }
 
