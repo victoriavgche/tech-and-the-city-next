@@ -323,8 +323,11 @@ export default function SecretAdminDashboard() {
     const newStatus = currentStatus === 'draft' ? 'published' : 'draft';
     const action = newStatus === 'published' ? 'publish' : 'unpublish';
     
+    console.log('🔄 Toggle status:', { slug, currentStatus, newStatus, action });
+    
     if (confirm(`Are you sure you want to ${action} this article?`)) {
       try {
+        console.log('📡 Calling API:', `/api/admin/posts/${slug}/status`);
         const response = await fetch(`/api/admin/posts/${slug}/status`, {
           method: 'PUT',
           headers: {
@@ -333,7 +336,12 @@ export default function SecretAdminDashboard() {
           body: JSON.stringify({ status: newStatus }),
         });
         
+        console.log('📥 Response status:', response.status);
+        const responseData = await response.json();
+        console.log('📥 Response data:', responseData);
+        
         if (response.ok) {
+          console.log('✅ Success! Refreshing posts...');
           // Refresh posts
           fetchPosts();
           // Switch to drafts tab if unpublishing
@@ -341,11 +349,12 @@ export default function SecretAdminDashboard() {
             setActiveTab('drafts');
           }
         } else {
-          alert(`Error ${action}ing article`);
+          console.error('❌ Error response:', responseData);
+          alert(`Error ${action}ing article: ${responseData.error || 'Unknown error'}`);
         }
       } catch (error) {
-        console.error(`Error ${action}ing post:`, error);
-        alert(`Error ${action}ing article`);
+        console.error(`❌ Error ${action}ing post:`, error);
+        alert(`Error ${action}ing article: ${error.message}`);
       }
     }
   };
