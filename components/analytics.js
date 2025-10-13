@@ -17,8 +17,9 @@ class Analytics {
   trackPageView(page, referrer = null) {
     const pageView = {
       sessionId: this.sessionId,
-      page: page,
-      referrer: referrer,
+      url: page,
+      title: document.title || page,
+      referrer: referrer || document.referrer,
       timestamp: Date.now(),
       userAgent: navigator.userAgent,
       screen: {
@@ -28,7 +29,10 @@ class Analytics {
       viewport: {
         width: window.innerWidth,
         height: window.innerHeight
-      }
+      },
+      devicePixelRatio: window.devicePixelRatio || 1,
+      language: navigator.language,
+      platform: navigator.platform
     };
 
     this.pageViews.push(pageView);
@@ -40,7 +44,7 @@ class Analytics {
     const event = {
       sessionId: this.sessionId,
       eventType: eventType,
-      data: data,
+      eventData: data,
       timestamp: Date.now(),
       page: window.location.pathname
     };
@@ -53,12 +57,16 @@ class Analytics {
   trackClick(elementType, targetUrl, additionalData = {}) {
     const clickData = {
       sessionId: this.sessionId,
-      elementType: elementType, // 'article_link', 'event_link', 'nav_link', 'social_share'
+      url: window.location.pathname,
+      x: additionalData.x || 0,
+      y: additionalData.y || 0,
+      element: elementType, // 'article_link', 'event_link', 'nav_link', 'social_share'
       targetUrl: targetUrl,
       sourcePage: window.location.pathname,
       position: additionalData.position || 'unknown',
       timestamp: Date.now(),
-      data: additionalData
+      userAgent: navigator.userAgent,
+      ...additionalData
     };
 
     this.sendAnalytics('click', clickData);
@@ -181,7 +189,7 @@ class Analytics {
         },
         body: JSON.stringify({
           type: type,
-          data: data
+          ...data
         })
       });
     } catch (error) {
@@ -201,5 +209,18 @@ class Analytics {
   }
 }
 
+// Auto-initialize analytics on client side
+if (typeof window !== 'undefined') {
+  window.analytics = new Analytics();
+  
+  // Track initial page view
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      window.analytics.trackPageView(window.location.pathname);
+    });
+  } else {
+    window.analytics.trackPageView(window.location.pathname);
+  }
+}
 
 export default Analytics;

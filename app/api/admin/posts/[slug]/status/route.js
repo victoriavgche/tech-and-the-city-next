@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -7,13 +8,14 @@ export async function PUT(request, { params }) {
     // Await params for Next.js 15+ compatibility
     const resolvedParams = await params;
     const { slug } = resolvedParams;
-    const { status } = await request.json();
+    const body = await request.json();
+    const { status } = body;
     
     console.log('PUT request received for slug:', slug, 'with status:', status);
     
     if (!status || !['draft', 'published'].includes(status)) {
       console.error('Invalid status:', status);
-      return Response.json({ error: 'Invalid status. Must be "draft" or "published"' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid status. Must be "draft" or "published"' }, { status: 400 });
     }
     
     const postsDirectory = path.join(process.cwd(), 'content', 'posts');
@@ -26,7 +28,7 @@ export async function PUT(request, { params }) {
       await fs.access(filePath);
     } catch (error) {
       console.error('File not found:', filePath);
-      return Response.json({ error: 'Post not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
     
     // Read current file
@@ -48,10 +50,10 @@ export async function PUT(request, { params }) {
     await fs.writeFile(filePath, updatedContent, 'utf8');
     console.log('File written successfully');
     
-    return Response.json({ success: true, status });
+    return NextResponse.json({ success: true, status });
   } catch (error) {
     console.error('Error updating post status:', error);
     console.error('Error stack:', error.stack);
-    return Response.json({ error: 'Failed to update post status', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to update post status', details: error.message }, { status: 500 });
   }
 }

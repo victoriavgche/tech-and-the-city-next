@@ -68,8 +68,12 @@ export default function ArticlesPageClient({ posts }) {
 
   const handleShare = (platform, articleSlug) => {
     if (typeof window !== 'undefined' && window.analytics) {
-      window.analytics.trackEvent("social_share", platform, {
-        article: articleSlug
+      window.analytics.trackEvent("social_share", {
+        platform: platform,
+        article: articleSlug,
+        url: `/articles/${articleSlug}`,
+        title: posts.find(p => p.slug === articleSlug)?.title || 'Unknown',
+        timestamp: new Date().toISOString()
       });
     }
   };

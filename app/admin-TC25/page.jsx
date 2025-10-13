@@ -52,8 +52,12 @@ export default function SecretAdminDashboard() {
   const [activeTab, setActiveTab] = useState('published');
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // Mark that we're now on the client
+    setIsClient(true);
+    
     // Detect mobile device
     setIsMobileDevice(isMobile());
     
@@ -530,17 +534,19 @@ export default function SecretAdminDashboard() {
             )}
             
             {/* Debug Info for Mobile */}
-            <div className="text-xs text-gray-500 mb-4 p-2 bg-gray-900/50 rounded border border-gray-600/30">
-              <div><strong>Debug Info:</strong></div>
-              <div>Device: {isMobileDevice ? 'Mobile' : 'Desktop'}</div>
-              <div>Screen: {typeof window !== 'undefined' ? `${window.innerWidth}x${window.innerHeight}` : 'Unknown'}</div>
-              <div>localStorage: {typeof window !== 'undefined' && window.localStorage ? 'Available' : 'Not Available'}</div>
-              {isMobileDevice && (
-                <div className="text-yellow-400 mt-1">
-                  📱 Mobile detected - using mobile-optimized interface
-                </div>
-              )}
-            </div>
+            {isClient && (
+              <div className="text-xs text-gray-500 mb-4 p-2 bg-gray-900/50 rounded border border-gray-600/30">
+                <div><strong>Debug Info:</strong></div>
+                <div>Device: {isMobileDevice ? 'Mobile' : 'Desktop'}</div>
+                <div>Screen: {`${window.innerWidth}x${window.innerHeight}`}</div>
+                <div>localStorage: {window.localStorage ? 'Available' : 'Not Available'}</div>
+                {isMobileDevice && (
+                  <div className="text-yellow-400 mt-1">
+                    📱 Mobile detected - using mobile-optimized interface
+                  </div>
+                )}
+              </div>
+            )}
             
             <button
               type="submit"
