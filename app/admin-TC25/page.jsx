@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 // Mobile detection utility
 const isMobile = () => {
@@ -15,6 +16,7 @@ import MessagesDashboard from '@/components/MessagesDashboard';
 import SimpleBackup from '@/components/SimpleBackup';
 
 export default function SecretAdminDashboard() {
+  const { data: session, status } = useSession();
   const [posts, setPosts] = useState([]);
   const [publishedPosts, setPublishedPosts] = useState([]);
   const [draftPosts, setDraftPosts] = useState([]);
@@ -24,7 +26,6 @@ export default function SecretAdminDashboard() {
   const [draftEvents, setDraftEvents] = useState([]);
   const [eventsFilter, setEventsFilter] = useState('all');
   const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isMobileDevice, setIsMobileDevice] = useState(false);
@@ -61,20 +62,6 @@ export default function SecretAdminDashboard() {
     // Detect mobile device
     setIsMobileDevice(isMobile());
     
-    // Check if already authenticated
-    let isAuth = false;
-    try {
-      // Check if we're in a browser environment and localStorage is available
-      if (typeof window !== 'undefined' && window.localStorage) {
-        isAuth = localStorage.getItem('admin_auth') === 'true';
-      }
-    } catch (error) {
-      // If localStorage fails, start fresh
-      isAuth = false;
-    }
-    
-    setAuthenticated(isAuth);
-    
     // Check URL parameters for tab and filter (only in browser)
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
@@ -87,18 +74,22 @@ export default function SecretAdminDashboard() {
         setActiveTab('publishedEvents');
       }
     }
-    
-    if (isAuth) {
+  }, []);
+
+  // Fetch data when session is authenticated
+  useEffect(() => {
+    if (status === 'authenticated') {
       fetchPosts();
       fetchEvents();
-    } else {
+    } else if (status === 'unauthenticated') {
       setLoading(false);
     }
-  }, []);
+  }, [status]);
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch('/api/posts');
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+      const response = await fetch(`${baseUrl}/api/posts`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -125,7 +116,8 @@ export default function SecretAdminDashboard() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('/api/admin/events');
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+      const response = await fetch(`${baseUrl}/api/admin/events`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -155,69 +147,33 @@ export default function SecretAdminDashboard() {
     }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     
     // Clear any previous errors
     setError('');
     
-    // Default credentials that always work
-    const defaultEmail = 'admin@techandthecity.com';
-    const defaultPassword = 'TechAndTheCity2024!';
-    
-    // Get custom credentials from localStorage (if they exist)
-    let adminEmail, adminPassword;
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        adminEmail = localStorage.getItem('admin_email') || defaultEmail;
-        adminPassword = localStorage.getItem('admin_password') || defaultPassword;
-      } else {
-        adminEmail = defaultEmail;
-        adminPassword = defaultPassword;
-      }
-    } catch (error) {
-      // If localStorage fails, use defaults
-      adminEmail = defaultEmail;
-      adminPassword = defaultPassword;
-    }
-    
-    // Debug logging for mobile
     console.log('Login attempt:', { email, hasPassword: !!password });
-    console.log('Expected credentials:', { defaultEmail, adminEmail });
     
-    // Check against both default and custom credentials
-    if ((email === defaultEmail && password === defaultPassword) || 
-        (email === adminEmail && password === adminPassword)) {
-      console.log('Login successful');
-      setAuthenticated(true);
-      try {
-        if (typeof window !== 'undefined' && window.localStorage) {
-          localStorage.setItem('admin_auth', 'true');
-          console.log('Authentication saved to localStorage');
-        }
-      } catch (error) {
-        console.log('localStorage error:', error);
-        // If localStorage fails, continue anyway
-        // localStorage not available, continuing without persistence
-      }
-      fetchPosts();
-      fetchEvents();
+    // Use NextAuth signIn
+    const result = await signIn('credentials', {
+      username: email,
+      password: password,
+      redirect: false,
+    });
+    
+    if (result?.error) {
+      console.log('Login failed:', result.error);
+      setError('Invalid email or password');
     } else {
-      console.log('Login failed - invalid credentials');
-      setError('Invalid email or password. Try: admin@techandthecity.com / TechAndTheCity2024!');
+      console.log('Login successful');
+      // NextAuth will handle the session
+      // Data will be fetched via useEffect when status changes to 'authenticated'
     }
   };
 
-  const handleLogout = () => {
-    setAuthenticated(false);
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        localStorage.removeItem('admin_auth');
-      }
-    } catch (error) {
-      // If localStorage fails, continue anyway
-      // localStorage not available during logout
-    }
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
     setEmail('');
     setPassword('');
   };
@@ -305,7 +261,8 @@ export default function SecretAdminDashboard() {
   const handleDelete = async (slug) => {
     if (confirm('Are you sure you want to delete this article?')) {
       try {
-        const response = await fetch(`/api/admin/posts/${slug}`, {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        const response = await fetch(`${baseUrl}/api/admin/posts/${slug}`, {
           method: 'DELETE',
         });
         
@@ -331,8 +288,9 @@ export default function SecretAdminDashboard() {
     
     if (confirm(`Are you sure you want to ${action} this article?`)) {
       try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
         console.log('📡 Calling API:', `/api/admin/posts/${slug}/status`);
-        const response = await fetch(`/api/admin/posts/${slug}/status`, {
+        const response = await fetch(`${baseUrl}/api/admin/posts/${slug}/status`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -366,7 +324,8 @@ export default function SecretAdminDashboard() {
   const handleDeleteEvent = async (id) => {
     if (confirm('Are you sure you want to delete this event?')) {
       try {
-        const response = await fetch(`/api/admin/events?id=${id}`, {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        const response = await fetch(`${baseUrl}/api/admin/events?id=${id}`, {
           method: 'DELETE',
         });
         
@@ -395,7 +354,8 @@ export default function SecretAdminDashboard() {
           return;
         }
 
-        const response = await fetch(`/api/admin/events?id=${id}`, {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        const response = await fetch(`${baseUrl}/api/admin/events?id=${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -431,7 +391,8 @@ export default function SecretAdminDashboard() {
           return;
         }
 
-        const response = await fetch(`/api/admin/events?id=${id}`, {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        const response = await fetch(`${baseUrl}/api/admin/events?id=${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -486,7 +447,16 @@ export default function SecretAdminDashboard() {
     }
   };
 
-  if (!authenticated) {
+  // Show login form if not authenticated
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center">
+        <div className="text-white text-xl">Loading authentication...</div>
+      </div>
+    );
+  }
+
+  if (status === 'unauthenticated') {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center p-4">
         {/* No-JS Fallback */}

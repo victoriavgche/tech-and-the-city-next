@@ -136,7 +136,8 @@ export default function NewEvent() {
     setError('');
 
     try {
-      const response = await fetch('/api/admin/events', {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+      const response = await fetch(`${baseUrl}/api/admin/events`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -198,10 +199,11 @@ export default function NewEvent() {
     setError('');
 
     try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`${baseUrl}/api/upload`, {
         method: 'POST',
         body: formData,
       });

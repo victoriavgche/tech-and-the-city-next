@@ -54,8 +54,9 @@ export default function EditPost() {
 
   const fetchPost = async () => {
     try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
       console.log('Fetching post for slug:', slug);
-      const response = await fetch(`/api/admin/posts/${slug}`);
+      const response = await fetch(`${baseUrl}/api/admin/posts/${slug}`);
       console.log('Response status:', response.status);
       
       if (response.ok) {
@@ -133,7 +134,8 @@ export default function EditPost() {
         date: articleDate
       });
 
-      const response = await fetch(`/api/admin/posts/${slug}`, {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+      const response = await fetch(`${baseUrl}/api/admin/posts/${slug}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -217,7 +219,8 @@ export default function EditPost() {
         
         console.log('Uploading image:', file.name);
         
-        const response = await fetch('/api/upload', {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        const response = await fetch(`${baseUrl}/api/upload`, {
           method: 'POST',
           body: formData,
         });
@@ -272,8 +275,9 @@ export default function EditPost() {
     formData.append('file', file);
 
     try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
       console.log('Sending upload request...');
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`${baseUrl}/api/upload`, {
         method: 'POST',
         body: formData,
       });

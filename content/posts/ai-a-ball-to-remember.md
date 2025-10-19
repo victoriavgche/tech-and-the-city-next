@@ -1,14 +1,14 @@
 ---
-title: "AI στο Ηρώδειο: A Ball to Remember"
-excerpt: "Last week, Athens turned into a cyberpunk dreamscape..."
-date: "2024-01-15"
+title: 'AI στο Ηρώδειο: A Ball to Remember'
+excerpt: 'Last week, Athens turned into a cyberpunk dreamscape...'
+date: '2024-01-15'
 tags:
   - AI
   - Technology
   - Athens
-read: "5 min"
-image: "https://picsum.photos/800/400"
-status: "draft"
+read: 5 min
+image: 'https://picsum.photos/800/400'
+status: published
 ---
 
 Last week, Athens turned into a cyberpunk dreamscape as the ancient Odeon of Herodes Atticus hosted an unprecedented AI showcase. The event, aptly named "A Ball to Remember," brought together tech innovators, cultural enthusiasts, and curious minds under the Athenian stars.

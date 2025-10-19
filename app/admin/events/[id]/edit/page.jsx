@@ -144,7 +144,8 @@ export default function EditEvent({ params }) {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await fetch(`/api/admin/events?id=${params.id}`);
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        const response = await fetch(`${baseUrl}/api/admin/events?id=${params.id}`);
         if (response.ok) {
           const event = await response.json();
           const { venue, city } = parseLocation(event.location);
@@ -188,7 +189,8 @@ export default function EditEvent({ params }) {
     setError('');
 
     try {
-      const response = await fetch(`/api/admin/events?id=${params.id}`, {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+      const response = await fetch(`${baseUrl}/api/admin/events?id=${params.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -250,10 +252,11 @@ export default function EditEvent({ params }) {
     setError('');
 
     try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`${baseUrl}/api/upload`, {
         method: 'POST',
         body: formData,
       });

@@ -14522,6 +14522,165 @@
       "language": "el",
       "platform": "Win32",
       "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-12T21:15:42.301Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1760303742301_90oljqjmu",
+      "viewport": {
+        "width": 893,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-12T21:15:42.392Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1760303742392_qe5z04912",
+      "viewport": {
+        "width": 893,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-13T17:32:58.358Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1760376778358_5h15uj7fo",
+      "viewport": {
+        "width": 893,
+        "height": 738
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-13T17:32:58.373Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "session_1760376778373_3wt5nbny4",
+      "viewport": {
+        "width": 893,
+        "height": 738
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-14T18:59:14.976Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "unknown",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-14T18:59:14.990Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "2fmkl8736qvmgqxeizy",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-14T18:59:15.015Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "unknown",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
     }
   ],
   "events": [
@@ -17394,6 +17553,41 @@
         "scrollDepth": 75
       },
       "timestamp": "2025-10-11T18:10:20.734Z"
+    },
+    {
+      "type": "scroll_depth",
+      "data": {
+        "scrollDepth": 100
+      },
+      "timestamp": "2025-10-12T22:17:35.547Z"
+    },
+    {
+      "type": "time_spent",
+      "data": {
+        "timeSpent": 73036139
+      },
+      "timestamp": "2025-10-13T17:32:55.526Z"
+    },
+    {
+      "type": "scroll_depth",
+      "data": {
+        "scrollDepth": 75
+      },
+      "timestamp": "2025-10-13T17:51:43.893Z"
+    },
+    {
+      "type": "scroll_depth",
+      "data": {
+        "scrollDepth": 25
+      },
+      "timestamp": "2025-10-13T17:51:43.909Z"
+    },
+    {
+      "type": "time_spent",
+      "data": {
+        "timeSpent": 91571354
+      },
+      "timestamp": "2025-10-14T18:59:12.057Z"
     }
   ],
   "clicks": [
@@ -27162,6 +27356,30 @@
       "element": "SPAN",
       "deviceType": "desktop",
       "timestamp": "2025-10-11T18:10:33.194Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 644,
+      "y": 33,
+      "element": "DIV",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-12T22:17:35.565Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 741,
+      "y": 228,
+      "element": "DIV",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-13T17:14:19.032Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 655,
+      "y": 392,
+      "element": "DIV",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-13T17:35:52.947Z"
     }
   ],
   "sessions": [],
@@ -27203,7 +27421,7 @@
   "userActivity": {},
   "trafficSources": {
     "Direct": 154,
-    "Other": 491
+    "Other": 498
   },
   "heatmapData": {
     "/admin-TC25": [
@@ -29466,6 +29684,24 @@
         "y": 18,
         "deviceType": "desktop",
         "timestamp": "2025-10-11T18:10:33.194Z"
+      },
+      {
+        "x": 644,
+        "y": 33,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-12T22:17:35.565Z"
+      },
+      {
+        "x": 741,
+        "y": 228,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-13T17:14:19.032Z"
+      },
+      {
+        "x": 655,
+        "y": 392,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-13T17:35:52.947Z"
       }
     ],
     "/about": [
@@ -34557,9 +34793,9 @@
   },
   "metadata": {
     "firstDay": "2025-10-03",
-    "lastUpdated": "2025-10-11T18:10:33.194Z",
+    "lastUpdated": "2025-10-14T18:59:15.016Z",
     "totalSessions": 0,
     "totalUniqueUsers": 33,
-    "totalVisits": 649
+    "totalVisits": 656
   }
 }
