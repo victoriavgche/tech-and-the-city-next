@@ -3,7 +3,7 @@ import './globals.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import AnalyticsScript from '@/components/AnalyticsScript';
-import { Providers } from './providers';
+// Simple auth without providers
 
 const inter = Inter({ subsets: ['latin'] });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] });
@@ -82,12 +82,10 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#6366f1" />
       </head>
       <body className={inter.className}>
-        <Providers>
-          <Nav />
-          <main>{children}</main>
-          <Footer />
-          <AnalyticsScript />
-        </Providers>
+        <Nav />
+        <main>{children}</main>
+        <Footer />
+        <AnalyticsScript />
       </body>
     </html>
   );

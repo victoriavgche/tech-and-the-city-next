@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+// Simple authentication without next-auth
 
 // Mobile detection utility
 const isMobile = () => {
@@ -16,7 +16,6 @@ import MessagesDashboard from '@/components/MessagesDashboard';
 import SimpleBackup from '@/components/SimpleBackup';
 
 export default function SecretAdminDashboard() {
-  const { data: session, status } = useSession();
   const [posts, setPosts] = useState([]);
   const [publishedPosts, setPublishedPosts] = useState([]);
   const [draftPosts, setDraftPosts] = useState([]);
@@ -26,6 +25,7 @@ export default function SecretAdminDashboard() {
   const [draftEvents, setDraftEvents] = useState([]);
   const [eventsFilter, setEventsFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isMobileDevice, setIsMobileDevice] = useState(false);
@@ -62,6 +62,18 @@ export default function SecretAdminDashboard() {
     // Detect mobile device
     setIsMobileDevice(isMobile());
     
+    // Check if already authenticated
+    let isAuth = false;
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        isAuth = localStorage.getItem('admin_auth') === 'true';
+      }
+    } catch (error) {
+      isAuth = false;
+    }
+    
+    setAuthenticated(isAuth);
+    
     // Check URL parameters for tab and filter (only in browser)
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
@@ -74,17 +86,14 @@ export default function SecretAdminDashboard() {
         setActiveTab('publishedEvents');
       }
     }
-  }, []);
-
-  // Fetch data when session is authenticated
-  useEffect(() => {
-    if (status === 'authenticated') {
+    
+    if (isAuth) {
       fetchPosts();
       fetchEvents();
-    } else if (status === 'unauthenticated') {
+    } else {
       setLoading(false);
     }
-  }, [status]);
+  }, []);
 
   const fetchPosts = async () => {
     try {
@@ -147,33 +156,43 @@ export default function SecretAdminDashboard() {
     }
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     
     // Clear any previous errors
     setError('');
     
-    console.log('Login attempt:', { email, hasPassword: !!password });
+    // Simple authentication check
+    const validEmail = 'techadmin';
+    const validPassword = 'TechCity2024!SecurePass';
     
-    // Use NextAuth signIn
-    const result = await signIn('credentials', {
-      username: email,
-      password: password,
-      redirect: false,
-    });
-    
-    if (result?.error) {
-      console.log('Login failed:', result.error);
-      setError('Invalid email or password');
-    } else {
+    if (email === validEmail && password === validPassword) {
       console.log('Login successful');
-      // NextAuth will handle the session
-      // Data will be fetched via useEffect when status changes to 'authenticated'
+      setAuthenticated(true);
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('admin_auth', 'true');
+        }
+      } catch (error) {
+        console.log('localStorage error:', error);
+      }
+      fetchPosts();
+      fetchEvents();
+    } else {
+      console.log('Login failed - invalid credentials');
+      setError('Invalid email or password');
     }
   };
 
-  const handleLogout = async () => {
-    await signOut({ redirect: false });
+  const handleLogout = () => {
+    setAuthenticated(false);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.removeItem('admin_auth');
+      }
+    } catch (error) {
+      console.log('localStorage error:', error);
+    }
     setEmail('');
     setPassword('');
   };
@@ -447,16 +466,7 @@ export default function SecretAdminDashboard() {
     }
   };
 
-  // Show login form if not authenticated
-  if (status === 'loading') {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center">
-        <div className="text-white text-xl">Loading authentication...</div>
-      </div>
-    );
-  }
-
-  if (status === 'unauthenticated') {
+  if (!authenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-600 flex items-center justify-center p-4">
         {/* No-JS Fallback */}
