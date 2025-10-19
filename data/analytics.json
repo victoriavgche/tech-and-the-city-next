@@ -14681,6 +14681,140 @@
       "language": "el",
       "platform": "Win32",
       "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-19T17:21:20.133Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "unknown",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-19T17:21:20.165Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "unknown",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-19T17:21:20.180Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "c5gisbag16tmgxz3tix",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-19T17:21:28.586Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "unknown",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-19T17:21:28.628Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "unknown",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864,
+        "colorDepth": 24,
+        "pixelDepth": 24
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
+    },
+    {
+      "url": "/admin-TC25",
+      "title": "Tech and the City",
+      "referrer": "http://localhost:3000/admin-TC25",
+      "timestamp": "2025-10-19T17:21:28.652Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+      "deviceType": "desktop",
+      "sessionId": "50ovrvozfbsmgxz430o",
+      "viewport": {
+        "width": 1707,
+        "height": 772
+      },
+      "screen": {
+        "width": 1536,
+        "height": 864
+      },
+      "devicePixelRatio": 1.125,
+      "language": "el",
+      "platform": "Win32",
+      "isMobileByViewport": false
     }
   ],
   "events": [
@@ -17588,6 +17722,20 @@
         "timeSpent": 91571354
       },
       "timestamp": "2025-10-14T18:59:12.057Z"
+    },
+    {
+      "type": "scroll_depth",
+      "data": {
+        "scrollDepth": 25
+      },
+      "timestamp": "2025-10-19T17:21:21.446Z"
+    },
+    {
+      "type": "time_spent",
+      "data": {
+        "timeSpent": 11555
+      },
+      "timestamp": "2025-10-19T17:21:27.901Z"
     }
   ],
   "clicks": [
@@ -27380,6 +27528,22 @@
       "element": "DIV",
       "deviceType": "desktop",
       "timestamp": "2025-10-13T17:35:52.947Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 20,
+      "y": 14,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-19T17:21:24.331Z"
+    },
+    {
+      "url": "/admin-TC25",
+      "x": 24,
+      "y": 19,
+      "element": "BUTTON",
+      "deviceType": "desktop",
+      "timestamp": "2025-10-19T17:21:31.916Z"
     }
   ],
   "sessions": [],
@@ -27421,7 +27585,7 @@
   "userActivity": {},
   "trafficSources": {
     "Direct": 154,
-    "Other": 498
+    "Other": 504
   },
   "heatmapData": {
     "/admin-TC25": [
@@ -29702,6 +29866,18 @@
         "y": 392,
         "deviceType": "desktop",
         "timestamp": "2025-10-13T17:35:52.947Z"
+      },
+      {
+        "x": 20,
+        "y": 14,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-19T17:21:24.331Z"
+      },
+      {
+        "x": 24,
+        "y": 19,
+        "deviceType": "desktop",
+        "timestamp": "2025-10-19T17:21:31.916Z"
       }
     ],
     "/about": [
@@ -34793,9 +34969,9 @@
   },
   "metadata": {
     "firstDay": "2025-10-03",
-    "lastUpdated": "2025-10-14T18:59:15.016Z",
+    "lastUpdated": "2025-10-19T17:21:31.916Z",
     "totalSessions": 0,
     "totalUniqueUsers": 33,
-    "totalVisits": 656
+    "totalVisits": 662
   }
 }
